@@ -1,0 +1,53 @@
+Feasiablity Study 
+
+Existing examples 
+
+https://mosaically.com/
+
+Completed on 17/8/2018
+
+Application Flow 
+
+1) Home
+	1.1) Contains may links in the header bar, create my miscai image is clear in the page 
+	contenets but many naviagtion possibilities
+	1.2) Header is main page is not the same for the rest of the workflow
+2) Chose your big picture
+	2.1) Select the location of the the big picture
+	2.2) One of the options is local storage and they are allowed integration so 
+	the windows file broweser loads up on requets and allows you the select the image
+		This bring up the problem of OS that will be supported is there a differece in the way this integration will 
+		have to be done for linux and windows
+		Also in local browser only valid format files are displayed 
+	2.3) Also allows the select of image to come from one of the following 
+		Facebook, Instagram, Google, Links. 
+		This would seem like on opportunity for a separta efeature whose the mvp is complete
+	2.4) The header of the page aftre the create my mosaic image is press is kept the same for the rest oof the workflow
+	2.5) Link on the page for instructions to get the best results
+	2.6) Once image is successfully uploaded it is displayed on full on the page
+		On first view would be better to not do this maybe a tooltip with the image or linked 
+		to view it rather than changing the page structure.
+		
+3) Add small picture same page structure as previous page 
+	3.1) Includes same location options
+	3.2) In local storage select a location rather than specific file
+	3.3) Same page structure make to clear still in the same workflow
+	3.4) Diffrent picture of page to indicate the user is in a different step of the workflow
+	3.5) Once step this step is complete(i.e performs a colour analysis and appears to display step 2.5)
+	3.6) Also displays information about the number of images supported, page is clunky no specfic sturture
+		for the display of the limits results from the analysis and the images that have been currently uploaded.
+		Doesn't seems optimum and requires scrolling and no real reason why it is there.
+		
+4) Creates the image mosaic in real time once page is loaded
+	4.1) Displays options to save or optimise mosacic and go back to previous steps in workflow 
+	
+
+5) Extra Features - Available for home page
+	5.1) Live gallary of created mosaics
+	5.2) Contact the developer
+	5.3) Gift 
+	5.4) Features i.e explaining, zooming, cropping, embeddable etc
+	5.5) Pricing, shipping etc rest can be viewed with the website link.
+	5.6) Accounts, appears as if from hear you can save images if you have 
+		a account and view or modify them later
+		

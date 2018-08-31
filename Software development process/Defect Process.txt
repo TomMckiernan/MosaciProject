@@ -1,0 +1,22 @@
+There will be a document with contains all of the curernt and fixed defects
+
+When a defect is encoutered a new defect can be raised 
+
+In the defect :
+ record the steps required to recreate the defect
+ the severity and occurance of the defect
+ the build or commit that the defect was noticed in
+ any screenshots that show the defect if appropriate
+ 
+ 
+When a defect is being fixed :
+
+create a new defect branch as described in document software development progress overview
+follow the same development process as descibe in the above mentioned document
+in the review section of the process however also check that the defect has been fixed and make a note on the defect
+record the build or commit that the defect has been fixed in.
+
+
+If a defect is found in another part of the product which could have the same underlying reason as existing defect :
+
+Add details of this defect to the existing defect and when fxing the defect if not the same underlying reason create another defect at this point
