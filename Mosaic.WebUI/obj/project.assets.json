@@ -11512,11 +11512,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Tom_m\\OneDrive\\Documents\\Mosaic Project\\Mosaic.WebUI\\Mosaic.WebUI.csproj",
+      "projectUniqueName": "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic.WebUI\\Mosaic.WebUI.csproj",
       "projectName": "Mosaic.WebUI",
-      "projectPath": "c:\\Users\\Tom_m\\OneDrive\\Documents\\Mosaic Project\\Mosaic.WebUI\\Mosaic.WebUI.csproj",
+      "projectPath": "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic.WebUI\\Mosaic.WebUI.csproj",
       "packagesPath": "C:\\Users\\Tom_m\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Tom_m\\OneDrive\\Documents\\Mosaic Project\\Mosaic.WebUI\\obj\\",
+      "outputPath": "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic.WebUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
