@@ -1,1 +1,1 @@
-# MosaciProject
+# MosaicProject
