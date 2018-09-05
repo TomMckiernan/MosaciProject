@@ -1613,6 +1613,19 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "Mosaic.WebUI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.1.0"
+        },
+        "compile": {
+          "bin/placeholder/Mosaic.WebUI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Mosaic.WebUI.dll": {}
+        }
       }
     }
   },
@@ -5678,6 +5691,11 @@
         "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "Mosaic.WebUI/1.0.0": {
+      "type": "project",
+      "path": "../Mosaic.WebUI/Mosaic.WebUI.csproj",
+      "msbuildProject": "../Mosaic.WebUI/Mosaic.WebUI.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5685,7 +5703,8 @@
       "MSTest.TestAdapter >= 1.2.1",
       "MSTest.TestFramework >= 1.2.1",
       "Microsoft.NET.Test.Sdk >= 15.7.0",
-      "Microsoft.NETCore.App >= 2.1.0"
+      "Microsoft.NETCore.App >= 2.1.0",
+      "Mosaic.WebUI >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5715,7 +5734,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic.WebUI\\Mosaic.WebUI.csproj": {
+              "projectPath": "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic.WebUI\\Mosaic.WebUI.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
