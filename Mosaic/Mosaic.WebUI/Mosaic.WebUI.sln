@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mosaic.WebUI", "Mosaic.WebUI\Mosaic.WebUI.csproj", "{EFE854FC-208F-414C-B9EE-8D51925B7B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mosaic.WebUITests", "Mosaic.WebUITests\Mosaic.WebUITests.csproj", "{24F1FFC4-E572-4EF4-9373-49C9EDFA30CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFE854FC-208F-414C-B9EE-8D51925B7B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE854FC-208F-414C-B9EE-8D51925B7B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE854FC-208F-414C-B9EE-8D51925B7B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE854FC-208F-414C-B9EE-8D51925B7B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F1FFC4-E572-4EF4-9373-49C9EDFA30CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F1FFC4-E572-4EF4-9373-49C9EDFA30CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F1FFC4-E572-4EF4-9373-49C9EDFA30CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F1FFC4-E572-4EF4-9373-49C9EDFA30CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {464F8E7A-E36D-46D9-B546-43556FA14995}
+	EndGlobalSection
+EndGlobal

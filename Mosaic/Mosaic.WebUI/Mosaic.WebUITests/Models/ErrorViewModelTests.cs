@@ -1,0 +1,17 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mosaic.WebUI.Models;
+
+namespace Mosaic.WebUITests.Models
+{
+    [TestClass]
+    public class ErrorViewModelTests
+    {
+        [TestMethod]
+        public void RequestIdNotNullShowRequestIdIsTrue()
+        {
+            var errorViewModel = new ErrorViewModel();
+            errorViewModel.RequestId = "requestId";
+            Assert.IsTrue(errorViewModel.ShowRequestId);
+        }
+    }
+}
