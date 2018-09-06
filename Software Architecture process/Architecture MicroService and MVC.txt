@@ -1,0 +1,11 @@
+Architecture MicroService and MVC front end
+
+Front end
+
+The front end created as a dotnet core mvc (model view controller)application.
+
+Back end inclding interaction with db made up of a number of microo services.
+
+Communictaion being the front end and backend through a series of protobuf messages which will include available to 3rd party api calls.
+
+Diagrams of the architecture design patterns can be found within this folder.
