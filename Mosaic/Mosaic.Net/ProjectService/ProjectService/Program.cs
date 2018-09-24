@@ -17,6 +17,7 @@ namespace ProjectService
             {
                 Console.WriteLine(item);
             }
+            Console.ReadKey();
         }
     }
 }

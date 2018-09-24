@@ -1,10 +1,12 @@
-Pull lastest chenages to branch
+Pull lastest changes to branch
 
 git pull --rebase
+
 
 Create a new story/ defect branch
 
 git checkout -b 'branch name'
+
 
 On branch merge into master
 
