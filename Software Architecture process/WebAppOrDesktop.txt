@@ -1,0 +1,7 @@
+Web app or desktop
+
+
+The question as to whether this application willl be deployed as a web app or as a desktop app is on eof the first quetsions to answer
+
+Functionlity relating to user and the storage of information will change depeneding on if this is a web app or a destop app
+	- As a result the overall design or the software will change depenedent on the answer to this question.
