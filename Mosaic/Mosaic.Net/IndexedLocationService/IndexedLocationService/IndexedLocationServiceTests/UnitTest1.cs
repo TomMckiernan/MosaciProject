@@ -6,8 +6,39 @@ namespace IndexedLocationServiceTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void CanInsertIndexedLocationIfNoneExist()
+        {
+
+        }
+
+        [TestMethod]
+        public void WillReplaceIndexedLocationIfOneExists()
         {
         }
+
+        [TestMethod]
+        public void DefaultIndexedLocationIfNoneExist()
+        {
+
+            Assert.AreEqual("M:\Private" , response.Location);
+        }
+
+        [TestMethod]
+        public void FirstIndexedLocationReturnedIfMultipleInDatabase()
+        {
+
+        }
+
+        [TestMethod]
+        public void ErrorReturnedIfNoIndexedLocationExists()
+        {
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
+        }
+
     }
 }

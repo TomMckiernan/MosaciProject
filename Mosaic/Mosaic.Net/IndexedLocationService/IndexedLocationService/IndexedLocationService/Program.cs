@@ -22,8 +22,9 @@ namespace IndexedLocationService
             }
 
             Console.ReadKey();
-            var item = new IndexedLocation() { Location = "nowhere"};
+            var item = new IndexedLocation() { Location = "somewhere"};
             var response2 = mongo.Insert(item, client);
+            Console.Write(response2.IsAcknowledged);
         }
     }
 }

@@ -7,8 +7,6 @@ namespace IndexedLocationService
 {
     public class IndexedLocation
     {
-        public ObjectId _id { get; set; }
-
         public string Location { get; set; }
     }
 }
