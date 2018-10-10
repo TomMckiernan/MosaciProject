@@ -12,21 +12,10 @@ namespace IndexedLocationService
             var client = new MongoClient();
             var database = client.GetDatabase("MosaicDatabase");
             
-            //var mongo = new MongoIndexedLocation();
-            //var response = mongo.Read(true, database);
-            //if (response == null)
-            //{
-            //    Console.WriteLine("no results found");
-            //}
-            //else
-            //{
-            //    Console.WriteLine(response.Location);
-            //}
+            //Need to deal with starting conditions for the index location collection
+            //Need to check there is only one indexed location in the collection
 
-            //Console.ReadKey();
-            //var item = new IndexedLocation() { Location = "somewhere"};
-            //var response2 = mongo.Insert(item, database);
-            //Console.Write(response2.IsAcknowledged);
+            //If no index location in the collection need to create default value
         }
     }
 }

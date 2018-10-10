@@ -25,12 +25,13 @@ namespace IndexedLocationService
         {
             var collection = db.GetCollection<IndexedLocation>("IndexedLocation");
 
-            collection.InsertOne(request, new InsertOneOptions());
-
+            if (String.IsNullOrEmpty(request.Location))
+            {
+                return new IndexedLocationResponse() { Location = request.Location, Error = "Location cannot be empty" };
+            }
             var result = collection.ReplaceOne(x => x.Location != null, request, new UpdateOptions { IsUpsert = true });
-            //Replace this with a insert response type
-            var response = new IndexedLocationResponse() { Location = request.Location };
-            return response;
+
+            return new IndexedLocationResponse() { Location = request.Location };
         }
 
     }

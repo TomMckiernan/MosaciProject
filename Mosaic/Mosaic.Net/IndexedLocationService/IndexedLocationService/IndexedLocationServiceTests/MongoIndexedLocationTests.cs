@@ -20,24 +20,27 @@ namespace IndexedLocationServiceTests
             MockMongoDatabase.Setup(x => x.GetCollection<IndexedLocation>("IndexedLocation", null)).Returns(MockMongoCollection.Object);
         }
 
+        // Integration Test
         [TestMethod]
         public void CanInsertIndexedLocationIfNoneExist()
         {
 
         }
 
+        // Integration Test
         [TestMethod]
         public void WillReplaceIndexedLocationIfOneExists()
         {
         }
 
+        // Integration Test
         [TestMethod]
         public void DefaultIndexedLocationIfNoneExist()
         {
 
-            //Assert.AreEqual("M:\Private" , response.Location);
         }
 
+        // Integration Test
         [TestMethod]
         public void FirstIndexedLocationReturnedIfMultipleInDatabase()
         {
@@ -45,8 +48,13 @@ namespace IndexedLocationServiceTests
         }
 
         [TestMethod]
-        public void ErrorReturnedIfNoIndexedLocationExists()
+        public void IndexLocationIsValidReturnsLocationAndNoError()
         {
+            var location = "TestLocation";
+            var request = new IndexedLocation() { Location = location };
+            var response = new MongoIndexedLocation().Insert(request, MockMongoDatabase.Object);
+            Assert.AreEqual(location, response.Location);
+            Assert.IsTrue(String.IsNullOrEmpty(response.Error));
         }
 
         [TestMethod]
