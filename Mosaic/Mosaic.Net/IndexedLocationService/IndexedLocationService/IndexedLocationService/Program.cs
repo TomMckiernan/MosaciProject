@@ -10,21 +10,23 @@ namespace IndexedLocationService
         {
             MongoClient dbClient = new MongoClient("mongodb://127.0.0.1:27017");
             var client = new MongoClient();
-            var mongo = new MongoIndexedLocation();
-            var response = mongo.Read(true, client);
-            if (response == null)
-            {
-                Console.WriteLine("no results found");
-            }
-            else
-            {
-                Console.WriteLine(response.Location);
-            }
+            var database = client.GetDatabase("MosaicDatabase");
+            
+            //var mongo = new MongoIndexedLocation();
+            //var response = mongo.Read(true, database);
+            //if (response == null)
+            //{
+            //    Console.WriteLine("no results found");
+            //}
+            //else
+            //{
+            //    Console.WriteLine(response.Location);
+            //}
 
-            Console.ReadKey();
-            var item = new IndexedLocation() { Location = "somewhere"};
-            var response2 = mongo.Insert(item, client);
-            Console.Write(response2.IsAcknowledged);
+            //Console.ReadKey();
+            //var item = new IndexedLocation() { Location = "somewhere"};
+            //var response2 = mongo.Insert(item, database);
+            //Console.Write(response2.IsAcknowledged);
         }
     }
 }
