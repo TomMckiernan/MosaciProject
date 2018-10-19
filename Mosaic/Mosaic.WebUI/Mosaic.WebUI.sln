@@ -29,12 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Infrastructure\Cl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{22D1E375-C459-44A1-BDE0-20F581C2D710}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generated", "Generated", "{E0E56034-547B-4C0D-892A-2E3AC884B873}"
-	ProjectSection(SolutionItems) = preProject
-		Infrastructure\IndexedLocation.g.cs = Infrastructure\IndexedLocation.g.cs
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{14CB1164-7243-4A46-98D0-1169F0EBDE45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{14CB1164-7243-4A46-98D0-1169F0EBDE45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,7 +83,6 @@ Global
 		{846EDC5D-3F01-4CE5-90EF-8D0572BE7CD5} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
 		{69538A27-D3D0-4B81-8EB7-83D42A7465A2} = {FA0B4815-E855-4832-A479-EC09EDC32CB3}
 		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
-		{E0E56034-547B-4C0D-892A-2E3AC884B873} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
 		{14CB1164-7243-4A46-98D0-1169F0EBDE45} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
