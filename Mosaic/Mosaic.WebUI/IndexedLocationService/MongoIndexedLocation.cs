@@ -9,7 +9,7 @@ namespace IndexedLocationService
     public class MongoIndexedLocation
     {
         // Once messaging service in place can replace bool type to request and response
-        public IndexedLocationResponse Read(bool request, IMongoDatabase db)
+        public IndexedLocationResponse Read(IMongoDatabase db)
         {
 
             var collection = db.GetCollection<IndexedLocationRequest>("IndexedLocation");

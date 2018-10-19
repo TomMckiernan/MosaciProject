@@ -8,5 +8,7 @@ namespace Infrastructure
     {
         IndexedLocationResponse UpdateIndexedLocation(string indexedLocation);
 
+        IndexedLocationResponse ReadIndexedLocation();
+
     }
 }
