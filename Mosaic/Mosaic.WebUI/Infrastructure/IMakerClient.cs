@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Infrastructure
 {
-    interface IMakerClient
+    public interface IMakerClient
     {
+        IndexedLocationResponse UpdateIndexedLocation(string indexedLocation);
+
     }
 }

@@ -10,14 +10,14 @@ namespace IndexedLocationServiceTests
     public class MongoIndexedLocationServiceTests
     {
         Mock<IMongoDatabase> MockMongoDatabase;
-        Mock<IMongoCollection<IndexedLocation>> MockMongoCollection;
+        Mock<IMongoCollection<IndexedLocationRequest>> MockMongoCollection;
 
         [TestInitialize]
         public void SetUpRepository()
         {
             MockMongoDatabase = new Mock<IMongoDatabase>();
-            MockMongoCollection = new Mock<IMongoCollection<IndexedLocation>>();
-            MockMongoDatabase.Setup(x => x.GetCollection<IndexedLocation>("IndexedLocation", null)).Returns(MockMongoCollection.Object);
+            MockMongoCollection = new Mock<IMongoCollection<IndexedLocationRequest>>();
+            MockMongoDatabase.Setup(x => x.GetCollection<IndexedLocationRequest>("IndexedLocation", null)).Returns(MockMongoCollection.Object);
         }
 
         // Integration Test
@@ -51,16 +51,16 @@ namespace IndexedLocationServiceTests
         public void IndexLocationIsValidReturnsLocationAndNoError()
         {
             var location = "TestLocation";
-            var request = new IndexedLocation() { Location = location };
+            var request = new IndexedLocationRequest() { IndexedLocation = location };
             var response = new MongoIndexedLocation().Insert(request, MockMongoDatabase.Object);
-            Assert.AreEqual(location, response.Location);
+            Assert.AreEqual(location, response.IndexedLocation);
             Assert.IsTrue(String.IsNullOrEmpty(response.Error));
         }
 
         [TestMethod]
         public void IndexedLocationIsNullOrEmptyIndexReturnsError()
         {
-            var request = new IndexedLocation() { Location = "" };
+            var request = new IndexedLocationRequest() { IndexedLocation = "" };
             var response = new MongoIndexedLocation().Insert(request, MockMongoDatabase.Object);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
