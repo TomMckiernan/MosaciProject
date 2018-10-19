@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message newMessage{
+    string indexedLocation = 1;
+}

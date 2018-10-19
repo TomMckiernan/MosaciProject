@@ -8,7 +8,7 @@
     <ItemGroup>
       <Protos Include="$(ProjectDir)*.proto" />
     </ItemGroup>
-    <Exec Command="$(NugetPackageRoot)google.protobuf.tools\3.6.1\tools\windows_x64\protoc.exe --proto_path=$(ProjectDir)Protobufs --csharp_out=$(ProjectDir)Generated --csharp_opt=file_extension=.g.cs @(Protos, ' ')" />
+    <Exec Command="$(NugetPackageRoot)google.protobuf.tools\3.6.1\tools\windows_x64\protoc.exe --proto_path=$(ProjectDir) --csharp_out=$(ProjectDir) --csharp_opt=file_extension=.g.cs @(Protos, ' ')" />
   </Target>
 
 
