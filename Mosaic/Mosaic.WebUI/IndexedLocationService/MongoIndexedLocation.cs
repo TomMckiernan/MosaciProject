@@ -11,6 +11,7 @@ namespace IndexedLocationService
         // Once messaging service in place can replace bool type to request and response
         public IndexedLocationResponse Read(bool request, IMongoDatabase db)
         {
+
             var collection = db.GetCollection<IndexedLocation>("IndexedLocation");
             // In error checking if an error occured this will report back in the respons message
             var result = collection.Find(x => x.Location != null).FirstOrDefault();

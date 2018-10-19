@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mosaic.WebUITests", "Mosaic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FA0B4815-E855-4832-A479-EC09EDC32CB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{06D811E0-8DF8-4F5F-A850-2643483C2A8B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndexedLocationService", "IndexedLocationService\IndexedLocationService.csproj", "{0F98CEB6-5D7F-4ED8-8CA7-D88A5A43A724}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{21186CB8-8355-4A32-847E-CE5FCF6F753A}"
@@ -25,7 +23,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndexedLocationServiceTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectServiceTests", "ProjectServiceTests\ProjectServiceTests.csproj", "{846EDC5D-3F01-4CE5-90EF-8D0572BE7CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectService", "ProjectService\ProjectService.csproj", "{69538A27-D3D0-4B81-8EB7-83D42A7465A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectService", "ProjectService\ProjectService.csproj", "{69538A27-D3D0-4B81-8EB7-83D42A7465A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protobufs", "Protobufs", "{5B885838-1DAB-45F4-B553-8A0D711EF1A5}"
+	ProjectSection(SolutionItems) = preProject
+		IndexedLocation.proto = IndexedLocation.proto
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Infrastructure\Client.csproj", "{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{22D1E375-C459-44A1-BDE0-20F581C2D710}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generated", "Generated", "{FDF22E0B-EA41-42E2-9CC8-C0D95BA7C4F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +66,10 @@ Global
 		{69538A27-D3D0-4B81-8EB7-83D42A7465A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69538A27-D3D0-4B81-8EB7-83D42A7465A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69538A27-D3D0-4B81-8EB7-83D42A7465A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +83,9 @@ Global
 		{6320606F-8B07-4294-BB4A-5DDAC8F8ABDD} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
 		{846EDC5D-3F01-4CE5-90EF-8D0572BE7CD5} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
 		{69538A27-D3D0-4B81-8EB7-83D42A7465A2} = {FA0B4815-E855-4832-A479-EC09EDC32CB3}
+		{5B885838-1DAB-45F4-B553-8A0D711EF1A5} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
+		{6999EC48-E9F3-46EA-8B87-E14F6E00FBEC} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
+		{FDF22E0B-EA41-42E2-9CC8-C0D95BA7C4F7} = {22D1E375-C459-44A1-BDE0-20F581C2D710}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {464F8E7A-E36D-46D9-B546-43556FA14995}
