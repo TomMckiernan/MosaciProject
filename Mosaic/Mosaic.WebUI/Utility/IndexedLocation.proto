@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+
+message IndexedLocationRequest{
+    string IndexedLocation = 1;
+}
+
+message IndexedLocationResponse {
+    string IndexedLocation = 1;
+	string Error           = 2;
+}
