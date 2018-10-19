@@ -34,6 +34,12 @@ namespace Mosaic.WebUI.Controllers
             return View();
         }
 
+        public IActionResult Create()
+        {
+            ViewData["Message"] = "Begin the creation of your Mosaic Image";
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
