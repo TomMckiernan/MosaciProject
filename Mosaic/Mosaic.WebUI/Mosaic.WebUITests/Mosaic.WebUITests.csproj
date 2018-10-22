@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Protobuf.Tools" Version="3.6.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Moq" Version="4.10.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
   </ItemGroup>
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Client.csproj" />
     <ProjectReference Include="..\Mosaic.WebUI\Mosaic.WebUI.csproj" />
   </ItemGroup>
 

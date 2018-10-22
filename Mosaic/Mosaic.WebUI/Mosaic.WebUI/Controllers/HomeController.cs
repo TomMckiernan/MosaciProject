@@ -37,6 +37,7 @@ namespace Mosaic.WebUI.Controllers
         public IActionResult Create()
         {
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
+
             return View();
         }
 
