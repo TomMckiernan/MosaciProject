@@ -1,17 +1,49 @@
-﻿
+﻿@model Mosaic.WebUI.Models.IndexedLocationModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Indexed Files";
 }
 
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<h2>Indexed Files</h2>
+
+
+<input type="text"/>
+<button class="btn">button</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IndexedLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Error)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsIndexedLocationValid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var item in Model)
+        {*@
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.IndexedLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Error)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.IsIndexedLocationValid)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        @*}*@
+    </tbody>
+</table>

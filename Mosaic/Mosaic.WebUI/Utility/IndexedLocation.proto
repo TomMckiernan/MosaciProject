@@ -8,3 +8,8 @@ message IndexedLocationResponse {
     string IndexedLocation = 1;
 	string Error           = 2;
 }
+
+message IndexedLocationStructure {
+    bson.ObjectId id              = 1;
+	string IndexedLocation = 2;
+}

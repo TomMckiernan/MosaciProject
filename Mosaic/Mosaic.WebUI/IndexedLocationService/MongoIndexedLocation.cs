@@ -14,7 +14,9 @@ namespace IndexedLocationService
 
             var collection = db.GetCollection<IndexedLocationRequest>("IndexedLocation");
             // In error checking if an error occured this will report back in the respons message
-            var result = collection.Find(x => x.IndexedLocation != null).FirstOrDefault();
+            var projection = Builders<BsonDocument>.Projection.Exclude("_id");
+
+            var result = collection.Find(x).FirstOrDefault();
 
             var response = new IndexedLocationResponse() { IndexedLocation = result.IndexedLocation };
             return response;

@@ -35,24 +35,30 @@ namespace Mosaic.WebUITests.Models
         public void IndexedLocationNotSetIfErrorReturned()
         {
             var newIndexedLocation = "NewLocation";
-            MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { IndexedLocation = newIndexedLocation, Error = "Error"});
+            var error = "Error";
+            MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { IndexedLocation = newIndexedLocation, Error = error});
 
             var originalIndexedLocation = "OriginalLocation";
             var model = new IndexedLocationModel() { IndexedLocation = originalIndexedLocation};
             model.RequestIndexedLocation(MockMakerClient.Object);
             Assert.AreEqual(originalIndexedLocation, model.IndexedLocation);
+            Assert.AreEqual(error, model.Error);
         }
 
+        // Add more invalid paths
         [TestMethod]
-        public void ModelStateInvalidIfIndexedLocationInvalid()
+        public void IsValidFalseIfIndexedLocationInvalid()
         {
-
+            var model = new IndexedLocationModel();
+            Assert.IsFalse(model.IsIndexedLocationValid);
         }
 
+        // Add more valid paths
         [TestMethod]
-        public void ModelStateValidIfIndexedLocationValid()
+        public void IsValidTrueIfIndexedLocationValid()
         {
-
+            var model = new IndexedLocationModel() { IndexedLocation = "C:\\"};
+            Assert.IsTrue(model.IsIndexedLocationValid);
         }
     }
 }
