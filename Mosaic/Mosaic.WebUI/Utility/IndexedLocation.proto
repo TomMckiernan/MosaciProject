@@ -9,7 +9,12 @@ message IndexedLocationResponse {
 	string Error           = 2;
 }
 
+message UUID {
+    string value = 1;
+}
+
 message IndexedLocationStructure {
-    bson.ObjectId id              = 1;
+    UUID id              = 1;
 	string IndexedLocation = 2;
 }
+

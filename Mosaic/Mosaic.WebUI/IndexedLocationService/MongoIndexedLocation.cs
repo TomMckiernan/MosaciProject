@@ -11,12 +11,15 @@ namespace IndexedLocationService
         // Once messaging service in place can replace bool type to request and response
         public IndexedLocationResponse Read(IMongoDatabase db)
         {
-
-            var collection = db.GetCollection<IndexedLocationRequest>("IndexedLocation");
+            //Returning BsonDocument since protobuf doesn't support ObjectId type
+            var collection = db.GetCollection<BsonDocument>("IndexedLocation");
             // In error checking if an error occured this will report back in the respons message
-            var projection = Builders<BsonDocument>.Projection.Exclude("_id");
 
-            var result = collection.Find(x).FirstOrDefault();
+            var bsonResult = collection.Find(x => true).FirstOrDefault();
+            var result = new IndexedLocationResponse()
+            {
+                IndexedLocation = bsonResult.GetValue("Location").ToString()
+            };
 
             var response = new IndexedLocationResponse() { IndexedLocation = result.IndexedLocation };
             return response;
