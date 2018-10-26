@@ -6,44 +6,94 @@
 
 <h2>Indexed Files</h2>
 
-
-<input type="text"/>
-<button class="btn">button</button>
+@Html.ValidationMessageFor(m => m.IndexedLocation)
+@Html.TextBoxFor(m => m.IndexedLocation)
+<button id="update_indexed_location" class="btn">Update</button>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IndexedLocation)
+                Image File Path
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Error)
+                Image File Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsIndexedLocationValid)
+                Date Last Modified
             </th>
-            <th></th>
+            <th>
+                File Options
+            </th>
         </tr>
     </thead>
     <tbody>
         @*@foreach (var item in Model)
-        {*@
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.IndexedLocation)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Error)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.IsIndexedLocationValid)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+            {*@
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.IndexedLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Error)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.IsIndexedLocationValid)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
         @*}*@
     </tbody>
 </table>
+
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+
+    $(function () {
+        ////jquery
+        //$(location).attr('href');
+
+        ////pure javascript
+        //var pathname = window.location.pathname;
+
+        //// to show it in an alert window
+        //alert(window.location);
+
+        $("#update_indexed_location").click(function () {
+            alert("Handler for .click() called.");
+            debugger;
+            var data = $("#IndexedLocation").val()
+            debugger;
+            updateIndexedLocation(data);
+        });
+
+        @* document.getElementById("indexed_location").value = "@Model.IndexedLocation";*@
+
+
+        var updateIndexedLocation = function (data) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateIndexedLocation", "Create")',
+                data: data,
+                contentType: "application/json",
+                //dataType: 'json',
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    debugger;
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                },
+                success: function () {
+                    debugger;
+                    alert("We returned: ");
+                }
+            });
+        }
+    });
+
+
+
+</script>
