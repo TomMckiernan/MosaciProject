@@ -9,12 +9,8 @@ message IndexedLocationResponse {
 	string Error           = 2;
 }
 
-message UUID {
-    string value = 1;
-}
-
 message IndexedLocationStructure {
-    UUID id              = 1;
-	string IndexedLocation = 2;
+    string id              = 1;
+	string IndexedLocation = 2; 
 }
 

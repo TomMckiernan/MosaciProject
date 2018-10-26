@@ -1,5 +1,6 @@
 using IndexedLocationService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Moq;
 using System;
@@ -40,9 +41,14 @@ namespace IndexedLocationServiceTests
 
         }
 
-        // Integration Test
+
         [TestMethod]
-        public void FirstIndexedLocationReturnedIfMultipleInDatabase()
+        public void IndexedLocationInDatabaseValidReturnsWithNoError()
+        {
+        }
+
+        [TestMethod]
+        public void IndexedLocationInDatabaseNullReturnsError()
         {
 
         }

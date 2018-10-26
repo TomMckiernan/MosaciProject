@@ -25,15 +25,13 @@ public static partial class IndexedLocationReflection {
           "ChVJbmRleGVkTG9jYXRpb24ucHJvdG8iMQoWSW5kZXhlZExvY2F0aW9uUmVx",
           "dWVzdBIXCg9JbmRleGVkTG9jYXRpb24YASABKAkiQQoXSW5kZXhlZExvY2F0",
           "aW9uUmVzcG9uc2USFwoPSW5kZXhlZExvY2F0aW9uGAEgASgJEg0KBUVycm9y",
-          "GAIgASgJIhUKBFVVSUQSDQoFdmFsdWUYASABKAkiRgoYSW5kZXhlZExvY2F0",
-          "aW9uU3RydWN0dXJlEhEKAmlkGAEgASgLMgUuVVVJRBIXCg9JbmRleGVkTG9j",
-          "YXRpb24YAiABKAliBnByb3RvMw=="));
+          "GAIgASgJIj8KGEluZGV4ZWRMb2NhdGlvblN0cnVjdHVyZRIKCgJpZBgBIAEo",
+          "CRIXCg9JbmRleGVkTG9jYXRpb24YAiABKAliBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::IndexedLocationRequest), global::IndexedLocationRequest.Parser, new[]{ "IndexedLocation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::IndexedLocationResponse), global::IndexedLocationResponse.Parser, new[]{ "IndexedLocation", "Error" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::UUID), global::UUID.Parser, new[]{ "Value" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::IndexedLocationStructure), global::IndexedLocationStructure.Parser, new[]{ "Id", "IndexedLocation" }, null, null, null)
         }));
   }
@@ -327,135 +325,6 @@ public sealed partial class IndexedLocationResponse : pb::IMessage<IndexedLocati
 
 }
 
-public sealed partial class UUID : pb::IMessage<UUID> {
-  private static readonly pb::MessageParser<UUID> _parser = new pb::MessageParser<UUID>(() => new UUID());
-  private pb::UnknownFieldSet _unknownFields;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<UUID> Parser { get { return _parser; } }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pbr::MessageDescriptor Descriptor {
-    get { return global::IndexedLocationReflection.Descriptor.MessageTypes[2]; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  pbr::MessageDescriptor pb::IMessage.Descriptor {
-    get { return Descriptor; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public UUID() {
-    OnConstruction();
-  }
-
-  partial void OnConstruction();
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public UUID(UUID other) : this() {
-    value_ = other.value_;
-    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public UUID Clone() {
-    return new UUID(this);
-  }
-
-  /// <summary>Field number for the "value" field.</summary>
-  public const int ValueFieldNumber = 1;
-  private string value_ = "";
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Value {
-    get { return value_; }
-    set {
-      value_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override bool Equals(object other) {
-    return Equals(other as UUID);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(UUID other) {
-    if (ReferenceEquals(other, null)) {
-      return false;
-    }
-    if (ReferenceEquals(other, this)) {
-      return true;
-    }
-    if (Value != other.Value) return false;
-    return Equals(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override int GetHashCode() {
-    int hash = 1;
-    if (Value.Length != 0) hash ^= Value.GetHashCode();
-    if (_unknownFields != null) {
-      hash ^= _unknownFields.GetHashCode();
-    }
-    return hash;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override string ToString() {
-    return pb::JsonFormatter.ToDiagnosticString(this);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void WriteTo(pb::CodedOutputStream output) {
-    if (Value.Length != 0) {
-      output.WriteRawTag(10);
-      output.WriteString(Value);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(output);
-    }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int CalculateSize() {
-    int size = 0;
-    if (Value.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Value);
-    }
-    if (_unknownFields != null) {
-      size += _unknownFields.CalculateSize();
-    }
-    return size;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(UUID other) {
-    if (other == null) {
-      return;
-    }
-    if (other.Value.Length != 0) {
-      Value = other.Value;
-    }
-    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(pb::CodedInputStream input) {
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-        case 10: {
-          Value = input.ReadString();
-          break;
-        }
-      }
-    }
-  }
-
-}
-
 public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocationStructure> {
   private static readonly pb::MessageParser<IndexedLocationStructure> _parser = new pb::MessageParser<IndexedLocationStructure>(() => new IndexedLocationStructure());
   private pb::UnknownFieldSet _unknownFields;
@@ -464,7 +333,7 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::IndexedLocationReflection.Descriptor.MessageTypes[3]; }
+    get { return global::IndexedLocationReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -481,7 +350,7 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public IndexedLocationStructure(IndexedLocationStructure other) : this() {
-    id_ = other.id_ != null ? other.id_.Clone() : null;
+    id_ = other.id_;
     indexedLocation_ = other.indexedLocation_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -493,12 +362,12 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
 
   /// <summary>Field number for the "id" field.</summary>
   public const int IdFieldNumber = 1;
-  private global::UUID id_;
+  private string id_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::UUID Id {
+  public string Id {
     get { return id_; }
     set {
-      id_ = value;
+      id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -526,7 +395,7 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(Id, other.Id)) return false;
+    if (Id != other.Id) return false;
     if (IndexedLocation != other.IndexedLocation) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -534,7 +403,7 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (id_ != null) hash ^= Id.GetHashCode();
+    if (Id.Length != 0) hash ^= Id.GetHashCode();
     if (IndexedLocation.Length != 0) hash ^= IndexedLocation.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -549,9 +418,9 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (id_ != null) {
+    if (Id.Length != 0) {
       output.WriteRawTag(10);
-      output.WriteMessage(Id);
+      output.WriteString(Id);
     }
     if (IndexedLocation.Length != 0) {
       output.WriteRawTag(18);
@@ -565,8 +434,8 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (id_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
+    if (Id.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
     }
     if (IndexedLocation.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(IndexedLocation);
@@ -582,11 +451,8 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
     if (other == null) {
       return;
     }
-    if (other.id_ != null) {
-      if (id_ == null) {
-        id_ = new global::UUID();
-      }
-      Id.MergeFrom(other.Id);
+    if (other.Id.Length != 0) {
+      Id = other.Id;
     }
     if (other.IndexedLocation.Length != 0) {
       IndexedLocation = other.IndexedLocation;
@@ -603,10 +469,7 @@ public sealed partial class IndexedLocationStructure : pb::IMessage<IndexedLocat
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (id_ == null) {
-            id_ = new global::UUID();
-          }
-          input.ReadMessage(id_);
+          Id = input.ReadString();
           break;
         }
         case 18: {
