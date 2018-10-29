@@ -50,45 +50,32 @@
     </tbody>
 </table>
 
-<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
 
     $(function () {
-        ////jquery
-        //$(location).attr('href');
-
-        ////pure javascript
-        //var pathname = window.location.pathname;
-
-        //// to show it in an alert window
-        //alert(window.location);
 
         $("#update_indexed_location").click(function () {
-            alert("Handler for .click() called.");
-            debugger;
             var data = $("#IndexedLocation").val()
-            debugger;
             updateIndexedLocation(data);
         });
 
-        @* document.getElementById("indexed_location").value = "@Model.IndexedLocation";*@
+        var updateIndexedLocation = function (IndexedLocation) {
 
-
-        var updateIndexedLocation = function (data) {
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("UpdateIndexedLocation", "Create")',
-                data: data,
-                contentType: "application/json",
-                //dataType: 'json',
+                dataType: 'json',
+                cache: false,
+                data: { IndexedLocation: IndexedLocation },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    debugger;
-                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                    alert("Invalid request");
+                    // Display a toastr message to indicate failure
                 },
                 success: function () {
-                    debugger;
-                    alert("We returned: ");
+                    alert("Valid request");
+                    // Once implemented this will call the function to update the file list
                 }
             });
         }

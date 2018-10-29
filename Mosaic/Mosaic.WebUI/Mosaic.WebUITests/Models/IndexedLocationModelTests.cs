@@ -18,6 +18,7 @@ namespace Mosaic.WebUITests.Models
         {
             MockMakerClient = new Mock<IMakerClient>();
             MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { });
+            //MockMakerClient.Setup(x => x.UpdateIndexedLocation()).Returns(new IndexedLocationResponse { });
         }
 
         [TestMethod]
@@ -59,6 +60,12 @@ namespace Mosaic.WebUITests.Models
         {
             var model = new IndexedLocationModel() { IndexedLocation = "C:\\"};
             Assert.IsTrue(model.IsIndexedLocationValid);
+        }
+
+        [TestMethod]
+        public void Ind()
+        {
+
         }
     }
 }

@@ -35,6 +35,12 @@ namespace Mosaic.WebUI.Models
             Error = response.Error;
         }
 
+        public IndexedLocationResponse UpdateIndexedLocation(IMakerClient client, string indexedLocation)
+        {
+            var response = client.UpdateIndexedLocation(indexedLocation);
+            return response;
+        }
+
         private bool IsPathValid()
         {
             try
