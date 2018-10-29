@@ -22,8 +22,16 @@ namespace Mosaic.WebUI.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("The indexed location cannot be null or empty");
             }
+
+            var model = new IndexedLocationModel();
+            if (!model.IsPathValid(IndexedLocation))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("The indexed location is not a valid directory");
+            }
+
             // add test for the null check
-            var response = new IndexedLocationModel().UpdateIndexedLocation(client, IndexedLocation);
+            var response = model.UpdateIndexedLocation(client, IndexedLocation);
             if (String.IsNullOrEmpty(response.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;

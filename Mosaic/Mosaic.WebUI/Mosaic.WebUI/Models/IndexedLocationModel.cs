@@ -13,12 +13,11 @@ namespace Mosaic.WebUI.Models
         private readonly string INVALID_PATH_STRUCTURE = "Indexed location must have directory path structure";
         private readonly string INVALID_PATH_LENGTH = "Indexed location is required";
 
-        [StringLength(500, ErrorMessage = "User name is too short", MinimumLength = 3)]
         public string IndexedLocation { get; set; }
 
         public string Error { get; set; }
 
-        public bool IsIndexedLocationValid => IsPathValid();
+        public bool IsIndexedLocationValid => IsPathValid(IndexedLocation);
 
         public IndexedLocationModel()
         {
@@ -41,19 +40,9 @@ namespace Mosaic.WebUI.Models
             return response;
         }
 
-        private bool IsPathValid()
+        public bool IsPathValid(string location)
         {
-            try
-            {
-                Path.GetFullPath(IndexedLocation);
-                return true;
-            }
-            catch (Exception)
-            {
-                Error = INVALID_PATH_STRUCTURE;
-                return false;
-            }
-
+            return Directory.Exists(location);
         }
     }
 }
