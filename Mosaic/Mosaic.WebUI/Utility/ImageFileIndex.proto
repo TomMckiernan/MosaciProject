@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+message ImageFileIndexRequest {
+    string IndexedLocation = 1;
+}
+
+message ImageFileIndexResponse {
+    repeated ImageFileIndexStructure File = 1;
+	string Error                          = 2;
+}
+
+message ImageFileIndexStructure {
+    string id              = 1;
+	string FilePath        = 2;
+	string FileName        = 3;
+	string Metadata        = 4;
+
+}

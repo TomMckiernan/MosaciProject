@@ -3,10 +3,11 @@ Database Structure
 MongoDB
 
 (Unsure whether to store file content in this collection or for this just to be pointer)
-ImageFileCollection
+ImageFileIndexCollection
 	- ImageFileIndexID
 	- FilePath
-	- 
+	- FileName
+        - Metadata - to be decided
 
 IndexedLocationCollection
 	- indexedLocation
