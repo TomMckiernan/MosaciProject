@@ -27,7 +27,7 @@ namespace ImageFileIndexService
             //};
 
             var result = new ImageFileIndexResponse();
-            result.Files
+            result.Files = response;
 
             return response;
         }
