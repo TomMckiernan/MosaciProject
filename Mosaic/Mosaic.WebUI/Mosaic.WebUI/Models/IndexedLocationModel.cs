@@ -10,9 +10,6 @@ namespace Mosaic.WebUI.Models
 {
     public class IndexedLocationModel
     {
-        private readonly string INVALID_PATH_STRUCTURE = "Indexed location must have directory path structure";
-        private readonly string INVALID_PATH_LENGTH = "Indexed location is required";
-
         public string IndexedLocation { get; set; }
 
         public string Error { get; set; }
@@ -36,7 +33,20 @@ namespace Mosaic.WebUI.Models
 
         public IndexedLocationResponse UpdateIndexedLocation(IMakerClient client, string indexedLocation)
         {
-            var response = client.UpdateIndexedLocation(indexedLocation);
+            var response = new IndexedLocationResponse();
+            if (String.IsNullOrEmpty(indexedLocation))
+            {
+                response.Error = "The indexed location cannot be null or empty";
+                return response;
+            }
+
+            if (!IsPathValid(indexedLocation))
+            {
+                response.Error = "The indexed location is not a valid directory";
+                return response;
+            }
+
+            response = client.UpdateIndexedLocation(indexedLocation);
             return response;
         }
 

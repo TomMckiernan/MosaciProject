@@ -11,6 +11,13 @@ namespace Mosaic.WebUITests.Models
     [TestClass]
     public class IndexedLocationModelTests
     {
+        List<string> invalidLocations = new List<string> {
+            "", "invalidLocation", "C/"
+        };
+        List<string> validLocations = new List<string> {
+            "C:\\", "C:\\Users\\Tom_m\\OneDrive\\Pictures", "C:\\Users\\Tom_m"
+        };
+
         Mock<IMakerClient> MockMakerClient;
 
         [TestInitialize]
@@ -46,26 +53,45 @@ namespace Mosaic.WebUITests.Models
             Assert.AreEqual(error, model.Error);
         }
 
-        // Add more invalid paths
         [TestMethod]
-        public void IsValidFalseIfIndexedLocationInvalid()
+        public void UpdateIndexedLocationReturnsErrorIfIndexedLocationEmpty()
         {
             var model = new IndexedLocationModel();
-            Assert.IsFalse(model.IsIndexedLocationValid);
+            var indexedLocation = String.Empty;
+            var response = model.UpdateIndexedLocation(MockMakerClient.Object, indexedLocation);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void UpdateIndexedLocationReturnsErrorIfIndexedLocationNull()
+        {
+            var model = new IndexedLocationModel();
+            var response = model.UpdateIndexedLocation(MockMakerClient.Object, null);
+            Assert.IsTrue(!String.IsNullOrEmpty(response.Error));
+        }
+
+        // Add more invalid paths
+        [TestMethod]
+        public void IsPathValidFalseIfIndexedLocationInvalid()
+        {
+            var model = new IndexedLocationModel();
+            foreach (var location in invalidLocations)
+            {
+                model.IndexedLocation = location;
+                Assert.IsFalse(model.IsIndexedLocationValid);
+            }
         }
 
         // Add more valid paths
         [TestMethod]
-        public void IsValidTrueIfIndexedLocationValid()
+        public void IsPathValidTrueIfIndexedLocationValid()
         {
-            var model = new IndexedLocationModel() { IndexedLocation = "C:\\"};
-            Assert.IsTrue(model.IsIndexedLocationValid);
-        }
-
-        [TestMethod]
-        public void Ind()
-        {
-
+            var model = new IndexedLocationModel();
+            foreach (var location in validLocations)
+            {
+                model.IndexedLocation = location;
+                Assert.IsTrue(model.IsIndexedLocationValid);
+            }
         }
     }
 }

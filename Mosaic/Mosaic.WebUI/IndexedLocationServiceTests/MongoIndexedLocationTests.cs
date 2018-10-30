@@ -21,38 +21,6 @@ namespace IndexedLocationServiceTests
             MockMongoDatabase.Setup(x => x.GetCollection<IndexedLocationRequest>("IndexedLocation", null)).Returns(MockMongoCollection.Object);
         }
 
-        // Integration Test
-        [TestMethod]
-        public void CanInsertIndexedLocationIfNoneExist()
-        {
-
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void WillReplaceIndexedLocationIfOneExists()
-        {
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void DefaultIndexedLocationIfNoneExist()
-        {
-
-        }
-
-
-        [TestMethod]
-        public void IndexedLocationInDatabaseValidReturnsWithNoError()
-        {
-        }
-
-        [TestMethod]
-        public void IndexedLocationInDatabaseNullReturnsError()
-        {
-
-        }
-
         [TestMethod]
         public void IndexLocationIsValidReturnsLocationAndNoError()
         {

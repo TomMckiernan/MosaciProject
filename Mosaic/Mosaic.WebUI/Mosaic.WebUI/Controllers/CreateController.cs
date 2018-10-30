@@ -16,21 +16,8 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult UpdateIndexedLocation(string IndexedLocation)
         {
-            //If using MVC5
-            if (String.IsNullOrEmpty(IndexedLocation))
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("The indexed location cannot be null or empty");
-            }
-
             var model = new IndexedLocationModel();
-            if (!model.IsPathValid(IndexedLocation))
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json("The indexed location is not a valid directory");
-            }
 
-            // add test for the null check
             var response = model.UpdateIndexedLocation(client, IndexedLocation);
             if (String.IsNullOrEmpty(response.Error))
             {
@@ -38,7 +25,7 @@ namespace Mosaic.WebUI.Controllers
                 return Json("The indexed location request was valid");
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json("The indexed location request was not valid");
+            return Json(response.Error);
         }
 
     }
