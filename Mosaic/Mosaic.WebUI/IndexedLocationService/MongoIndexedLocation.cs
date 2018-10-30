@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Utility;
 
 namespace IndexedLocationService
 {
@@ -11,12 +12,22 @@ namespace IndexedLocationService
         // Once messaging service in place can replace bool type to request and response
         public IndexedLocationResponse Read(IMongoDatabase db)
         {
+            //Returning BsonDocument since protobuf doesn't support ObjectId type
+            var collection = db.GetCollection<BsonDocument>("IndexedLocation");
+            // In error checking if an error occured this will report back in the response message
 
-            var collection = db.GetCollection<IndexedLocationRequest>("IndexedLocation");
-            // In error checking if an error occured this will report back in the respons message
-            var result = collection.Find(x => x.IndexedLocation != null).FirstOrDefault();
+            var bsonResult = collection.Find(x => true).FirstOrDefault();
+            if (bsonResult == null)
+            {
+                return new IndexedLocationResponse() { Error = "No indexed location in database" };
+            }
+            var result = new IndexedLocationStructure().ConvertFromBsonDocument(bsonResult);
 
-            var response = new IndexedLocationResponse() { IndexedLocation = result.IndexedLocation };
+            var response = new IndexedLocationResponse()
+            {
+                IndexedLocation = result.IndexedLocation
+            };
+
             return response;
         }
 

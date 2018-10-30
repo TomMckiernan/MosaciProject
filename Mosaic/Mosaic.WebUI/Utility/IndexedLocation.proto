@@ -8,3 +8,9 @@ message IndexedLocationResponse {
     string IndexedLocation = 1;
 	string Error           = 2;
 }
+
+message IndexedLocationStructure {
+    string id              = 1;
+	string IndexedLocation = 2; 
+}
+

@@ -1,5 +1,6 @@
 using IndexedLocationService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Moq;
 using System;
@@ -18,33 +19,6 @@ namespace IndexedLocationServiceTests
             MockMongoDatabase = new Mock<IMongoDatabase>();
             MockMongoCollection = new Mock<IMongoCollection<IndexedLocationRequest>>();
             MockMongoDatabase.Setup(x => x.GetCollection<IndexedLocationRequest>("IndexedLocation", null)).Returns(MockMongoCollection.Object);
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void CanInsertIndexedLocationIfNoneExist()
-        {
-
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void WillReplaceIndexedLocationIfOneExists()
-        {
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void DefaultIndexedLocationIfNoneExist()
-        {
-
-        }
-
-        // Integration Test
-        [TestMethod]
-        public void FirstIndexedLocationReturnedIfMultipleInDatabase()
-        {
-
         }
 
         [TestMethod]
