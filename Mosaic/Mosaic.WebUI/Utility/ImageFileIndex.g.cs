@@ -23,16 +23,16 @@ public static partial class ImageFileIndexReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "ChRJbWFnZUZpbGVJbmRleC5wcm90byIwChVJbWFnZUZpbGVJbmRleFJlcXVl",
-          "c3QSFwoPSW5kZXhlZExvY2F0aW9uGAEgASgJIk8KFkltYWdlRmlsZUluZGV4",
-          "UmVzcG9uc2USJgoERmlsZRgBIAMoCzIYLkltYWdlRmlsZUluZGV4U3RydWN0",
-          "dXJlEg0KBUVycm9yGAIgASgJIlsKF0ltYWdlRmlsZUluZGV4U3RydWN0dXJl",
-          "EgoKAmlkGAEgASgJEhAKCEZpbGVQYXRoGAIgASgJEhAKCEZpbGVOYW1lGAMg",
-          "ASgJEhAKCE1ldGFkYXRhGAQgASgJYgZwcm90bzM="));
+          "c3QSFwoPSW5kZXhlZExvY2F0aW9uGAEgASgJIlAKFkltYWdlRmlsZUluZGV4",
+          "UmVzcG9uc2USJwoFRmlsZXMYASADKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVj",
+          "dHVyZRINCgVFcnJvchgCIAEoCSJbChdJbWFnZUZpbGVJbmRleFN0cnVjdHVy",
+          "ZRIKCgJpZBgBIAEoCRIQCghGaWxlUGF0aBgCIAEoCRIQCghGaWxlTmFtZRgD",
+          "IAEoCRIQCghNZXRhZGF0YRgEIAEoCWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexRequest), global::ImageFileIndexRequest.Parser, new[]{ "IndexedLocation" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexResponse), global::ImageFileIndexResponse.Parser, new[]{ "File", "Error" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexResponse), global::ImageFileIndexResponse.Parser, new[]{ "Files", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Metadata" }, null, null, null)
         }));
   }
@@ -194,7 +194,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public ImageFileIndexResponse(ImageFileIndexResponse other) : this() {
-    file_ = other.file_.Clone();
+    files_ = other.files_.Clone();
     error_ = other.error_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -204,14 +204,14 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
     return new ImageFileIndexResponse(this);
   }
 
-  /// <summary>Field number for the "File" field.</summary>
-  public const int FileFieldNumber = 1;
-  private static readonly pb::FieldCodec<global::ImageFileIndexStructure> _repeated_file_codec
+  /// <summary>Field number for the "Files" field.</summary>
+  public const int FilesFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::ImageFileIndexStructure> _repeated_files_codec
       = pb::FieldCodec.ForMessage(10, global::ImageFileIndexStructure.Parser);
-  private readonly pbc::RepeatedField<global::ImageFileIndexStructure> file_ = new pbc::RepeatedField<global::ImageFileIndexStructure>();
+  private readonly pbc::RepeatedField<global::ImageFileIndexStructure> files_ = new pbc::RepeatedField<global::ImageFileIndexStructure>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<global::ImageFileIndexStructure> File {
-    get { return file_; }
+  public pbc::RepeatedField<global::ImageFileIndexStructure> Files {
+    get { return files_; }
   }
 
   /// <summary>Field number for the "Error" field.</summary>
@@ -238,7 +238,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if(!file_.Equals(other.file_)) return false;
+    if(!files_.Equals(other.files_)) return false;
     if (Error != other.Error) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -246,7 +246,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    hash ^= file_.GetHashCode();
+    hash ^= files_.GetHashCode();
     if (Error.Length != 0) hash ^= Error.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -261,7 +261,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    file_.WriteTo(output, _repeated_file_codec);
+    files_.WriteTo(output, _repeated_files_codec);
     if (Error.Length != 0) {
       output.WriteRawTag(18);
       output.WriteString(Error);
@@ -274,7 +274,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    size += file_.CalculateSize(_repeated_file_codec);
+    size += files_.CalculateSize(_repeated_files_codec);
     if (Error.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Error);
     }
@@ -289,7 +289,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
     if (other == null) {
       return;
     }
-    file_.Add(other.file_);
+    files_.Add(other.files_);
     if (other.Error.Length != 0) {
       Error = other.Error;
     }
@@ -305,7 +305,7 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          file_.AddEntriesFrom(input, _repeated_file_codec);
+          files_.AddEntriesFrom(input, _repeated_files_codec);
           break;
         }
         case 18: {

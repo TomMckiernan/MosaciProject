@@ -5,8 +5,8 @@ message ImageFileIndexRequest {
 }
 
 message ImageFileIndexResponse {
-    repeated ImageFileIndexStructure File = 1;
-	string Error                          = 2;
+    repeated ImageFileIndexStructure Files = 1;
+	string Error                           = 2;
 }
 
 message ImageFileIndexStructure {
@@ -14,5 +14,4 @@ message ImageFileIndexStructure {
 	string FilePath        = 2;
 	string FileName        = 3;
 	string Metadata        = 4;
-
 }
