@@ -27,9 +27,8 @@ namespace ImageFileIndexService
             //};
 
             var result = new ImageFileIndexResponse();
-            result.Files = response;
-
-            return response;
+            result.Files.AddRange(response);
+            return result;
         }
 
         //public ImageFileIndexResponse Insert(ImageFileIndexRequest request, IMongoDatabase db)

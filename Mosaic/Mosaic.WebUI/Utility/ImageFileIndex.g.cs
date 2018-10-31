@@ -25,15 +25,16 @@ public static partial class ImageFileIndexReflection {
           "ChRJbWFnZUZpbGVJbmRleC5wcm90byIwChVJbWFnZUZpbGVJbmRleFJlcXVl",
           "c3QSFwoPSW5kZXhlZExvY2F0aW9uGAEgASgJIlAKFkltYWdlRmlsZUluZGV4",
           "UmVzcG9uc2USJwoFRmlsZXMYASADKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVj",
-          "dHVyZRINCgVFcnJvchgCIAEoCSJbChdJbWFnZUZpbGVJbmRleFN0cnVjdHVy",
+          "dHVyZRINCgVFcnJvchgCIAEoCSJyChdJbWFnZUZpbGVJbmRleFN0cnVjdHVy",
           "ZRIKCgJpZBgBIAEoCRIQCghGaWxlUGF0aBgCIAEoCRIQCghGaWxlTmFtZRgD",
-          "IAEoCRIQCghNZXRhZGF0YRgEIAEoCWIGcHJvdG8z"));
+          "IAEoCRIQCghNZXRhZGF0YRgEIAEoCRIVCg1MYXN0V3JpdGVUaW1lGAUgASgJ",
+          "YgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexRequest), global::ImageFileIndexRequest.Parser, new[]{ "IndexedLocation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexResponse), global::ImageFileIndexResponse.Parser, new[]{ "Files", "Error" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Metadata" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Metadata", "LastWriteTime" }, null, null, null)
         }));
   }
   #endregion
@@ -347,6 +348,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     filePath_ = other.filePath_;
     fileName_ = other.fileName_;
     metadata_ = other.metadata_;
+    lastWriteTime_ = other.lastWriteTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -399,6 +401,17 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     }
   }
 
+  /// <summary>Field number for the "LastWriteTime" field.</summary>
+  public const int LastWriteTimeFieldNumber = 5;
+  private string lastWriteTime_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string LastWriteTime {
+    get { return lastWriteTime_; }
+    set {
+      lastWriteTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ImageFileIndexStructure);
@@ -416,6 +429,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (FilePath != other.FilePath) return false;
     if (FileName != other.FileName) return false;
     if (Metadata != other.Metadata) return false;
+    if (LastWriteTime != other.LastWriteTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -426,6 +440,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (FilePath.Length != 0) hash ^= FilePath.GetHashCode();
     if (FileName.Length != 0) hash ^= FileName.GetHashCode();
     if (Metadata.Length != 0) hash ^= Metadata.GetHashCode();
+    if (LastWriteTime.Length != 0) hash ^= LastWriteTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -455,6 +470,10 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
       output.WriteRawTag(34);
       output.WriteString(Metadata);
     }
+    if (LastWriteTime.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(LastWriteTime);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -474,6 +493,9 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     }
     if (Metadata.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Metadata);
+    }
+    if (LastWriteTime.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(LastWriteTime);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -497,6 +519,9 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     }
     if (other.Metadata.Length != 0) {
       Metadata = other.Metadata;
+    }
+    if (other.LastWriteTime.Length != 0) {
+      LastWriteTime = other.LastWriteTime;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -523,6 +548,10 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
         }
         case 34: {
           Metadata = input.ReadString();
+          break;
+        }
+        case 42: {
+          LastWriteTime = input.ReadString();
           break;
         }
       }
