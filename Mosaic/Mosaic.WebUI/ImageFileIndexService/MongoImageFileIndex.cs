@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Linq;
 
 namespace ImageFileIndexService
 {
@@ -15,6 +16,11 @@ namespace ImageFileIndexService
             // In error checking if an error occured this will report back in the response message
 
             var response = collection.Find(x => x.FilePath.Contains(indexedLocation)).ToList();
+            
+            // This will fail initially, needs changing to bson doc structure and then add
+            // extension method to ImageFileIndexStructure to allow id to serialize correcty
+
+
             //if (bsonResult == null)
             //{
             //    return new IndexedLocationResponse() { Error = "No indexed location in database" };
@@ -31,17 +37,18 @@ namespace ImageFileIndexService
             return result;
         }
 
-        //public ImageFileIndexResponse Insert(ImageFileIndexRequest request, IMongoDatabase db)
-        //{
-        //    var collection = db.GetCollection<IndexedLocationRequest>("IndexedLocation");
+        public ImageFileIndexStructureResponse Insert(ImageFileIndexStructure request, IMongoDatabase db)
+        {
+            var collection = db.GetCollection<ImageFileIndexStructure>("IndexedLocation");
+            // check if this works, may need to change working with objectID
+            // add further checks to make sure no part of object is empty
+            if (String.IsNullOrEmpty(request.Id))
+            {
+                return new ImageFileIndexStructureResponse() {  FilePath = request.FilePath, Error = "Location cannot be empty" };
+            }
+            var result = collection.ReplaceOne(x => x.Id.Equals(request.Id), request, new UpdateOptions { IsUpsert = true });
 
-        //    if (String.IsNullOrEmpty(request.IndexedLocation))
-        //    {
-        //        return new IndexedLocationResponse() { IndexedLocation = request.IndexedLocation, Error = "Location cannot be empty" };
-        //    }
-        //    var result = collection.ReplaceOne(x => x.IndexedLocation != null, request, new UpdateOptions { IsUpsert = true });
-
-        //    return new IndexedLocationResponse() { IndexedLocation = request.IndexedLocation };
-        //}
+            return new ImageFileIndexStructureResponse() { FilePath = request.FilePath };
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace ImageFileIndexService
             // Get deleted files
             var deletedFiles = existingFiles.Where(f => !directoryFiles.Any(f2 => f2.FullName == f.FilePath));
 
-
+            // Methods call to perform appropriate operations with these calculated lists
         }
     }
 }

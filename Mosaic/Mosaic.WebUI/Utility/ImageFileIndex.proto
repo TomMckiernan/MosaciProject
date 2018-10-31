@@ -16,3 +16,8 @@ message ImageFileIndexStructure {
 	string Metadata        = 4;
 	string LastWriteTime   = 5;
 }
+
+message ImageFileIndexStructureResponse {
+	string FilePath        = 1;
+	string Error           = 2;
+}
