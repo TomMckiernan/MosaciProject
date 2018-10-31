@@ -43,6 +43,22 @@ namespace ImageFileIndexService
             var deletedFiles = existingFiles.Where(f => !directoryFiles.Any(f2 => f2.FullName == f.FilePath));
 
             // Methods call to perform appropriate operations with these calculated lists
+            // async perform all methods and await at this point and return complete or error message
+        }
+
+        public void AnalyseNewFiles()
+        {
+
+        }
+
+        public void AnalyseUpdatedFiles()
+        {
+
+        }
+
+        public void AnalyseDeletedFiles()
+        {
+
         }
     }
 }
