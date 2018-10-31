@@ -1,6 +1,9 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ImageFileIndexService
 {
@@ -20,45 +23,60 @@ namespace ImageFileIndexService
             return new MongoImageFileIndex().Read(database, indexedLocation);
         }
 
-        public void AnalyseImageFileIndex(string indexedLocation)
+        public async Task AnalyseImageFileIndex(string indexedLocation)
         {
+            await Task.Run(() => {
 
-            // Store all files in indexed location
-            var indexedDirectory = new DirectoryInfo(indexedLocation);
-            // Returns filenames in all sub directories as well
-            var directoryFiles = indexedDirectory.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
+                // Store all files in indexed location
+                var indexedDirectory = new DirectoryInfo(indexedLocation);
+                // Returns filenames in all sub directories as well
+                var directoryFiles = indexedDirectory.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
 
-            // Get exisiting files in location
-            var existingFiles = ReadImageFileIndex(indexedLocation).Files.ToList();
+                // Get exisiting files in location
+                var existingFiles = ReadImageFileIndex(indexedLocation).Files.ToList();
 
-            // Get new files
-            var newFiles = directoryFiles.Where(f => !existingFiles.Any(f2 => f2.FilePath == f.FullName));
+                // Get new files
+                var newFiles = directoryFiles.Where(f => !existingFiles.Any(f2 => f2.FilePath == f.FullName));
+                var newTask = newFiles.Select(async x => await AnalyseNewFiles(x));
 
-            // Get updated files
-            var updatedFiles = directoryFiles.Where(f => existingFiles.Any(f2 => f2.FilePath == f.FullName && f.LastWriteTime.ToString() != f2.LastWriteTime));
+                // Get updated files
+                var updatedFiles = directoryFiles.Where(f => existingFiles.Any(f2 => f2.FilePath == f.FullName && f.LastWriteTime.ToString() != f2.LastWriteTime));
+                var updatedTask = updatedFiles.Select(async x => await AnalyseUpdatedFiles(x));
 
-            // Will need to get more back from initial file search
+                // Get deleted files
+                var deletedFiles = existingFiles.Where(f => !directoryFiles.Any(f2 => f2.FullName == f.FilePath));
+                var deleteTask = deletedFiles.Select(async x => await AnalyseDeletedFiles(x.Id));
 
-            // Get deleted files
-            var deletedFiles = existingFiles.Where(f => !directoryFiles.Any(f2 => f2.FullName == f.FilePath));
+                Task.WhenAll(newTask.Concat(updatedTask.Concat(deleteTask)));
+            });
+       }
 
-            // Methods call to perform appropriate operations with these calculated lists
-            // async perform all methods and await at this point and return complete or error message
+        public async Task AnalyseNewFiles(FileInfo x)
+        {
+            var request = new ImageFileIndexStructure()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                FileName = x.Name,
+                FilePath = x.FullName,
+                LastWriteTime = x.LastWriteTime.ToString(),
+                Metadata = GenerateMetaData()
+            };
+     
         }
 
-        public void AnalyseNewFiles()
+        private string GenerateMetaData()
+        {
+            return String.Empty;
+        }
+
+        public async Task AnalyseUpdatedFiles(FileInfo x)
         {
 
         }
 
-        public void AnalyseUpdatedFiles()
+        public async Task AnalyseDeletedFiles(string id)
         {
-
-        }
-
-        public void AnalyseDeletedFiles()
-        {
-
+            new MongoImageFileIndex().Delete(database, id);
         }
     }
 }

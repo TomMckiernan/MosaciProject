@@ -32,11 +32,29 @@ namespace ImageFileIndexService
             // add further checks to make sure no part of object is empty
             if (String.IsNullOrEmpty(request.Id))
             {
-                return new ImageFileIndexStructureResponse() {  FilePath = request.FilePath, Error = "Location cannot be empty" };
+                return new ImageFileIndexStructureResponse() {  FilePath = request.FilePath, Error = "Id cannot be null or empty" };
             }
             var result = collection.ReplaceOne(x => x.Id.Equals(request.Id), request, new UpdateOptions { IsUpsert = true });
 
             return new ImageFileIndexStructureResponse() { FilePath = request.FilePath };
+        }
+
+        // Can change the request type
+        public ImageFileIndexStructureResponse Delete(IMongoDatabase db, string id)
+        {
+            var collection = db.GetCollection<ImageFileIndexStructure>("ImageFileIndex");
+
+            if (String.IsNullOrEmpty(id))
+            {
+                return new ImageFileIndexStructureResponse() { Error = "Id cannot be null or empty" };
+            }
+            var result = collection.DeleteOne(x => x.Id.Equals(id));
+            if (result.DeletedCount == 0)
+            {
+                return new ImageFileIndexStructureResponse() { Error = "File with Id cannot be deleted" };
+            }
+            return new ImageFileIndexStructureResponse() { };
+
         }
     }
 }

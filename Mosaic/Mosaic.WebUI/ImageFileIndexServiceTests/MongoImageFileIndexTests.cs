@@ -52,7 +52,7 @@ namespace ImageFileIndexServiceTests
             var indexedLocation = "Pictures";
             var responseRead = collection.Read(database, indexedLocation);
             Assert.AreEqual(1, responseRead.Files.Count);
-            Assert.AreEqual(request, responseRead.Files[0]);
+            Assert.IsTrue(responseRead.Files.Contains(request));
         }
 
         [TestMethod]
@@ -68,8 +68,27 @@ namespace ImageFileIndexServiceTests
             var responseRead = collection.Read(database, indexedLocation);
 
             Assert.AreEqual(1, responseRead.Files.Count);
-            Assert.AreEqual(request, responseRead.Files[0]);
+            Assert.IsTrue(responseRead.Files.Contains(request));
         }
+
+        [TestMethod]
+        public void ImageFileIndexReadReturnsFilesInSubDirectories()
+        {
+            var collection = new MongoImageFileIndex();
+            var request = CreateImageFileIndexStructure();
+            var responseInsert = collection.Insert(database, request);
+            var request2 = CreateImageFileIndexStructure(filePath: "Pictures\\SubPictures\\Image.jpg");
+            var responseInsert2 = collection.Insert(database, request2);
+
+            var indexedLocation = "Pictures";
+            var responseRead = collection.Read(database, indexedLocation);
+
+            Assert.AreEqual(2, responseRead.Files.Count);
+            Assert.IsTrue(responseRead.Files.Contains(request));
+            Assert.IsTrue(responseRead.Files.Contains(request2));
+
+        }
+
 
         [TestCleanup]
         public void cleanup()
