@@ -12,10 +12,11 @@ namespace ImageFileIndexService
         MongoClient client;
         IMongoDatabase database;
 
-        public ImageFileIndex()
+        // Default database name can be changed during testing
+        public ImageFileIndex(string dbName = "MosaicDatabase")
         {
             client = new MongoClient();
-            database = client.GetDatabase("MosaicDatabase");
+            database = client.GetDatabase(dbName);
         }
 
         public ImageFileIndexResponse ReadImageFileIndex(string indexedLocation)
@@ -61,6 +62,7 @@ namespace ImageFileIndexService
                 LastWriteTime = x.LastWriteTime.ToString(),
                 Metadata = GenerateMetaData()
             };
+            var response = new MongoImageFileIndex().Insert(database, request);
      
         }
 
