@@ -21,3 +21,8 @@ message ImageFileIndexStructureResponse {
 	string FilePath        = 1;
 	string Error           = 2;
 }
+
+message ImageFileIndexUpdateResponse {
+	string FilePath        = 1;
+	string Error           = 2;
+}

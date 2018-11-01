@@ -29,8 +29,9 @@ namespace ImageFileIndexServiceTests
             await Task.Run(async () =>
             {
                 // Actual test code here.
+                var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
                 var service = new ImageFileIndex("TestMosaicDatabase");
-                await service.AnalyseImageFileIndex(indexedLocation);
+                await service.AnalyseImageFileIndex(request);
             });
             var result = new MongoImageFileIndex().Read(database, indexedLocation);
             Assert.AreEqual(7, result.Files.Count);

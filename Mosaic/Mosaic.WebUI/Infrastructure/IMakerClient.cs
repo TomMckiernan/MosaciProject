@@ -10,5 +10,9 @@ namespace Infrastructure
 
         IndexedLocationResponse ReadIndexedLocation();
 
+        ImageFileIndexResponse ReadImageFileIndex(string indexedLocation);
+        
+        Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(string indexedLocation);
+
     }
 }

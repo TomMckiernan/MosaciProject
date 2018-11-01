@@ -19,22 +19,22 @@ namespace ImageFileIndexService
             database = client.GetDatabase(dbName);
         }
 
-        public ImageFileIndexResponse ReadImageFileIndex(string indexedLocation)
+        public ImageFileIndexResponse ReadImageFileIndex(ImageFileIndexRequest request)
         {
-            return new MongoImageFileIndex().Read(database, indexedLocation);
+            return new MongoImageFileIndex().Read(database, request.IndexedLocation);
         }
 
-        public async Task AnalyseImageFileIndex(string indexedLocation)
+        public async Task<ImageFileIndexUpdateResponse> AnalyseImageFileIndex(ImageFileIndexRequest request)
         {
             await Task.Run(() => {
 
                 // Store all files in indexed location
-                var indexedDirectory = new DirectoryInfo(indexedLocation);
+                var indexedDirectory = new DirectoryInfo(request.IndexedLocation);
                 // Returns filenames in all sub directories as well
                 var directoryFiles = indexedDirectory.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
 
                 // Get exisiting files in location
-                var existingFiles = ReadImageFileIndex(indexedLocation).Files.ToList();
+                var existingFiles = ReadImageFileIndex(request).Files.ToList();
 
                 // Get new files
                 var newFiles = directoryFiles.Where(f => !existingFiles.Any(f2 => f2.FilePath == f.FullName));
@@ -50,6 +50,8 @@ namespace ImageFileIndexService
 
                 Task.WhenAll(newTask.Concat(updatedTask.Concat(deleteTask)));
             });
+
+            return new ImageFileIndexUpdateResponse() { FilePath = request.IndexedLocation }
        }
 
         public async Task AnalyseNewFiles(FileInfo x)
