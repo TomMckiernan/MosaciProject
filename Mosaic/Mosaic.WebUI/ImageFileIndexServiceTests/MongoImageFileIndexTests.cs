@@ -13,7 +13,7 @@ namespace ImageFileIndexServiceTests
         IMongoDatabase database;
 
         [TestInitialize]
-        public void init()
+        public void Init()
         {
             client = new MongoClient();
             database = client.GetDatabase("TestMosaicDatabase");
@@ -91,7 +91,7 @@ namespace ImageFileIndexServiceTests
 
 
         [TestCleanup]
-        public void cleanup()
+        public void Cleanup()
         {
             database.DropCollection("ImageFileIndex");
         }

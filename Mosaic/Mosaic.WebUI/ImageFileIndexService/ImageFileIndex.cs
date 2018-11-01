@@ -51,7 +51,7 @@ namespace ImageFileIndexService
                 Task.WhenAll(newTask.Concat(updatedTask.Concat(deleteTask)));
             });
 
-            return new ImageFileIndexUpdateResponse() { FilePath = request.IndexedLocation }
+            return new ImageFileIndexUpdateResponse() { FilePath = request.IndexedLocation };
        }
 
         public async Task AnalyseNewFiles(FileInfo x)

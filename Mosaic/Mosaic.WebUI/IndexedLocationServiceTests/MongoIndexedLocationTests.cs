@@ -38,6 +38,5 @@ namespace IndexedLocationServiceTests
             var response = new MongoIndexedLocation().Insert(request, MockMongoDatabase.Object);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
-
     }
 }
