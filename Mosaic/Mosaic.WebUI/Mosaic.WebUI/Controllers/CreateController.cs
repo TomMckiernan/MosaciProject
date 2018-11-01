@@ -28,5 +28,41 @@ namespace Mosaic.WebUI.Controllers
             return Json(response.Error);
         }
 
+        [HttpPost]
+        public ActionResult ReadImageFileIndex(string IndexedLocation)
+        {
+            var model = new ImageFileIndexModel();
+
+            var response = model.ReadImageFileIndex(client, IndexedLocation);
+
+            // Instead of return a proto may be appropriate to deserialize into model
+
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("The read image file index request was valid");
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateImageFileIndex(string IndexedLocation)
+        {
+            var model = new ImageFileIndexModel();
+
+            var response = model.UpdateImageFileIndex(client, IndexedLocation);
+            if (String.IsNullOrEmpty(response.Result.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("The update image file index request was valid");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Result.Error);
+        }
+
+
+
     }
 }

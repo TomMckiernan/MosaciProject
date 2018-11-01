@@ -35,9 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InfrastructureTests", "Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilityTests", "UtilityTests\UtilityTests.csproj", "{4AFEDED8-7787-424B-AB85-949521D9AFEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageFileIndexService", "ImageFileIndexService\ImageFileIndexService.csproj", "{FB4F9FBA-F636-4B20-BB67-603F07939EBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFileIndexService", "ImageFileIndexService\ImageFileIndexService.csproj", "{FB4F9FBA-F636-4B20-BB67-603F07939EBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageFileIndexServiceTests", "ImageFileIndexServiceTests\ImageFileIndexServiceTests.csproj", "{BB234614-E4BD-4D62-949C-FF6965503A0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFileIndexServiceTests", "ImageFileIndexServiceTests\ImageFileIndexServiceTests.csproj", "{BB234614-E4BD-4D62-949C-FF6965503A0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{496FB012-7BF9-4934-8F7D-FCBE33274207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +110,7 @@ Global
 		{4AFEDED8-7787-424B-AB85-949521D9AFEA} = {C263C870-DE19-48EC-8D43-778F872B4131}
 		{FB4F9FBA-F636-4B20-BB67-603F07939EBF} = {FA0B4815-E855-4832-A479-EC09EDC32CB3}
 		{BB234614-E4BD-4D62-949C-FF6965503A0A} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
+		{496FB012-7BF9-4934-8F7D-FCBE33274207} = {21186CB8-8355-4A32-847E-CE5FCF6F753A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {464F8E7A-E36D-46D9-B546-43556FA14995}
