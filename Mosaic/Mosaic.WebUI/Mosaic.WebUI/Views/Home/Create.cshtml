@@ -40,6 +40,7 @@
 
         //$('#example').DataTable();
 
+
         $("#update_indexed_location").click(function () {
             var data = $("#IndexedLocation").val();
             updateIndexedLocation(data);
@@ -109,7 +110,8 @@
             });
         }
 
-        updateImageFileIndex("@Model.IndexedLocation");
+        var t = $("#IndexedLocation").val()
+        updateImageFileIndex(t);
         //readImageFileIndex();
     });
 
