@@ -46,6 +46,13 @@
 
         });
 
+        // To Do 
+        // On change index location, pass the following three ajax calls
+        // in a method which will perform all three in turn
+        // In this method will also perform the javascript to indicate the
+        // indexing is occuring
+
+
         var updateIndexedLocation = function (IndexedLocation) {
 
             $.ajax({
@@ -64,6 +71,46 @@
                 }
             });
         }
+
+
+        var updateImageFileIndex = function (IndexedLocation) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateImageFileIndex", "Create")',
+                dataType: 'json',
+                cache: false,
+                data: { IndexedLocation: IndexedLocation },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                    // Display a toastr message to indicate failure
+                },
+                success: function () {
+                    alert("Valid request");
+                    // Once implemented this will call the function to update the file list
+                }
+            });
+        }
+
+        var readImageFileIndex = function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ReadImageFileIndex", "Create")',
+                dataType: 'json',
+                cache: false,
+                data: { IndexedLocation: IndexedLocation },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                    // Display a toastr message to indicate failure
+                },
+                success: function () {
+                    alert("Valid request");
+                    // Once implemented this will call the function to update the file list
+                }
+            });
+        }
+
+        updateImageFileIndex("@Model.IndexedLocation");
+        //readImageFileIndex();
     });
 
 

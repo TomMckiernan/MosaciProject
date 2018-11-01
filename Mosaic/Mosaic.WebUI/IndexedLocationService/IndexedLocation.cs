@@ -10,7 +10,7 @@ namespace IndexedLocationService
         MongoClient client;
         IMongoDatabase database;
 
-        public IndexedLocation(string dbName = "MosaicDataBase")
+        public IndexedLocation(string dbName = "MosaicDatabase")
         {
             client = new MongoClient();
             database = client.GetDatabase(dbName);
