@@ -52,7 +52,7 @@ namespace IndexedLocationServiceTests
         [TestCleanup]
         public void Cleanup()
         {
-            database.DropCollection("ImageFileIndex");
+            database.DropCollection("IndexedLocation");
         }
     }
 }

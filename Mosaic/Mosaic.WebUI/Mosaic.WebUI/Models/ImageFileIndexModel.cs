@@ -16,12 +16,6 @@ namespace Mosaic.WebUI.Models
         public async Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(IMakerClient client, string indexedLocation)
         {
             var response = await client.UpdateImageFileIndex(indexedLocation);
-
-            if (String.IsNullOrEmpty(response.Error))
-            {
-                return response;
-            }
-
             return response;
         }
     }

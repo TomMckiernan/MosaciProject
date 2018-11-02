@@ -20,30 +20,32 @@
             <th>Last Write Time</th>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <th>ID</th>
+            <th>FileName</th>
+            <th>FilePath</th>
+            <th>Metadata</th>
+            <th>Last Write Time</th>
+        </tr>
+    </tfoot>
 </table>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"> </script>
 @*<link rel="stylesheet" type="text/css" href="~/lib/DataTables/datatables.css">*@
 <script src="~/lib/DataTables/datatables.js" type="text/javascript" charset="utf8"></script>
+
 <script>
 
     $(function () {
         $.noConflict();
         var table = $('#example').DataTable();
 
-
-        $("#update_indexed_location").click(function () {
-            var data = $("#IndexedLocation").val();
-            updateIndexedLocation(data);
-        });
-
         // To Do 
         // On change index location, pass the following three ajax calls
         // in a method which will perform all three in turn
         // In this method will also perform the javascript to indicate the
         // indexing is occuring
-
-
         var updateIndexedLocation = function (IndexedLocation) {
 
             $.ajax({
@@ -57,7 +59,7 @@
                     // Display a toastr message to indicate failure
                 },
                 success: function () {
-                    alert("Valid request");
+                    //alert("Valid request");
                     // Once implemented this will call the function to update the file list
                 }
             });
@@ -76,7 +78,7 @@
                     // Display a toastr message to indicate failure
                 },
                 success: function () {
-                    alert("Valid request");
+                    //alert("Valid request");
                     // Once implemented this will call the function to update the file list
                 }
             });
@@ -94,19 +96,24 @@
                     // Display a toastr message to indicate failure
                 },
                 success: function (response) {
-                    alert("Valid request");
+                    // alert("Valid request");
                     // Once implemented this will call the function to update the file list
-                    console.log(response);
                     populateTable(response);
                 }
             });
         }
 
+        $("#update_indexed_location").click(function () {
+            var data = $("#IndexedLocation").val();
+            updateIndexedLocation(data);
+        });
+
+
         var location = $("#IndexedLocation").val()
         updateImageFileIndex(location);
         readImageFileIndex(location);
 
-        populateTable = function (data) {
+        var populateTable = function (data) {
 
             table.clear();
             table.destroy();

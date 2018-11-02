@@ -86,9 +86,22 @@ namespace ImageFileIndexServiceTests
             Assert.AreEqual(2, responseRead.Files.Count);
             Assert.IsTrue(responseRead.Files.Contains(request));
             Assert.IsTrue(responseRead.Files.Contains(request2));
-
         }
 
+        [TestMethod]
+        public void ImageFileIndexReadReturnsErrorIfIndexedLocationNull()
+        {
+            var response = new MongoImageFileIndex().Read(database, null);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void ImageFileIndexReadReturnsErrorIfIndexedLocationEmpty()
+        {
+            var indexedLocation = String.Empty;
+            var response = new MongoImageFileIndex().Read(database, indexedLocation);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
 
         [TestCleanup]
         public void Cleanup()

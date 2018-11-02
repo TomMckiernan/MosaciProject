@@ -14,11 +14,11 @@ namespace Mosaic.WebUI.Controllers
         IMakerClient client = new MakerClient();
 
         [HttpPost]
-        public ActionResult UpdateIndexedLocation(string IndexedLocation)
+        public ActionResult UpdateIndexedLocation(string indexedLocation)
         {
             var model = new IndexedLocationModel();
 
-            var response = model.UpdateIndexedLocation(client, IndexedLocation);
+            var response = model.UpdateIndexedLocation(client, indexedLocation);
             if (String.IsNullOrEmpty(response.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
@@ -29,13 +29,11 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReadImageFileIndex(string IndexedLocation)
+        public ActionResult ReadImageFileIndex(string indexedLocation)
         {
             var model = new ImageFileIndexModel();
 
-            var response = model.ReadImageFileIndex(client, IndexedLocation);
-
-            // Instead of return a proto may be appropriate to deserialize into model
+            var response = model.ReadImageFileIndex(client, indexedLocation);
 
             if (String.IsNullOrEmpty(response.Error))
             {
@@ -48,11 +46,11 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateImageFileIndex(string IndexedLocation)
+        public ActionResult UpdateImageFileIndex(string indexedLocation)
         {
             var model = new ImageFileIndexModel();
 
-            var response = model.UpdateImageFileIndex(client, IndexedLocation);
+            var response = model.UpdateImageFileIndex(client, indexedLocation);
             if (String.IsNullOrEmpty(response.Result.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;

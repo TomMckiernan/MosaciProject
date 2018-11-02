@@ -11,14 +11,13 @@ namespace ImageFileIndexService
     {
         public ImageFileIndexResponse Read(IMongoDatabase db, string indexedLocation)
         {
-            //Returning BsonDocument since protobuf doesn't support ObjectId type
             var collection = db.GetCollection<ImageFileIndexStructure>("ImageFileIndex");
-            // In error checking if an error occured this will report back in the response message
 
+            if (String.IsNullOrEmpty(indexedLocation))
+            {
+                return new ImageFileIndexResponse() { Error = "Indexed location cannot be null or empty" };
+            }
             var response = collection.Find(x => x.FilePath.Contains(indexedLocation)).ToList();
-            
-            // This will fail initially, needs changing to bson doc structure and then add
-            // extension method to ImageFileIndexStructure to allow id to serialize correcty
 
             var result = new ImageFileIndexResponse();
             result.Files.AddRange(response);
@@ -28,7 +27,7 @@ namespace ImageFileIndexService
         public ImageFileIndexStructureResponse Insert(IMongoDatabase db, ImageFileIndexStructure request)
         {
             var collection = db.GetCollection<ImageFileIndexStructure>("ImageFileIndex");
-            // check if this works, may need to change working with objectID
+
             // add further checks to make sure no part of object is empty
             if (String.IsNullOrEmpty(request.Id))
             {
@@ -39,7 +38,6 @@ namespace ImageFileIndexService
             return new ImageFileIndexStructureResponse() { FilePath = request.FilePath };
         }
 
-        // Can change the request type
         public ImageFileIndexStructureResponse Delete(IMongoDatabase db, string id)
         {
             var collection = db.GetCollection<ImageFileIndexStructure>("ImageFileIndex");
@@ -54,7 +52,6 @@ namespace ImageFileIndexService
                 return new ImageFileIndexStructureResponse() { Error = "File with Id cannot be deleted" };
             }
             return new ImageFileIndexStructureResponse() { };
-
         }
     }
 }
