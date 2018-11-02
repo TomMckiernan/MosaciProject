@@ -40,7 +40,7 @@ namespace Mosaic.WebUI.Controllers
             if (String.IsNullOrEmpty(response.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json("The read image file index request was valid");
+                return Json(response.Files);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -61,8 +61,5 @@ namespace Mosaic.WebUI.Controllers
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Result.Error);
         }
-
-
-
     }
 }
