@@ -24,7 +24,7 @@ namespace ImageFileIndexService
             return new MongoImageFileIndex().Read(database, request.IndexedLocation);
         }
 
-        // Find way to cope with errors in the methods called from this method
+        // Analyse all files in current directory and update collection to reflect directory
         public async Task<ImageFileIndexUpdateResponse> AnalyseImageFileIndex(ImageFileIndexRequest request)
         {
             try
