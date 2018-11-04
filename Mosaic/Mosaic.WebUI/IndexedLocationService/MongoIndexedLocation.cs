@@ -9,7 +9,6 @@ namespace IndexedLocationService
 {
     public class MongoIndexedLocation
     {
-        // Once messaging service in place can replace bool type to request and response
         public IndexedLocationResponse Read(IMongoDatabase db)
         {
             //Returning BsonDocument since protobuf doesn't support ObjectId type

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ImageFileIndexService\ImageFileIndexService.csproj" />
     <ProjectReference Include="..\IndexedLocationService\IndexedLocationService.csproj" />
     <ProjectReference Include="..\ProjectService\ProjectService.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />

@@ -1,0 +1,19 @@
+Cases for Image File Index service to account for when analysing files in current indexed location
+
+File not in ImageFileIndex Collection (new)
+  - Generate ObjectID
+  - Recored FileName, FilePath and date modified
+  - File path is the directory path as well as filename (will act as identifier)
+  - Generate metadata
+  - Store into new proto message
+  - Store the proto message into the mongo collection
+  
+File already in ImageFileIndexCollection (existing)
+  - do nothing
+
+File already in ImageFileIndexCollection but date modified not the same (updated)
+  - Same process as new 
+  - However replace exsiting file in mongo with the new generated data
+
+File in ImageFileIndexCollection but not in indexed location (deleted)
+  - Remove the file from the ImageFileIndexCollection

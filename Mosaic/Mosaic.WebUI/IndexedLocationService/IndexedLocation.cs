@@ -7,15 +7,13 @@ namespace IndexedLocationService
 {
     public class IndexedLocation
     {
-        MongoClient dbClient;
         MongoClient client;
         IMongoDatabase database;
 
-        public IndexedLocation()
+        public IndexedLocation(string dbName = "MosaicDatabase")
         {
-            dbClient = new MongoClient("mongodb://127.0.0.1:27017");
             client = new MongoClient();
-            database = client.GetDatabase("MosaicDatabase");
+            database = client.GetDatabase(dbName);
         }
 
         public IndexedLocationResponse ReadIndexedLocation()
