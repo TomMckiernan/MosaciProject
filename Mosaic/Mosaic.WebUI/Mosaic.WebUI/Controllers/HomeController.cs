@@ -18,13 +18,6 @@ namespace Mosaic.WebUI.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            ViewData["Message"] = "Create a Mosaic Photo page";
-
-            return View();
-        }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
