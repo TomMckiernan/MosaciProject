@@ -1,0 +1,24 @@
+Similaar to that of a ScrumBan development process
+
+Use of a KanBan board
+As this project is not being develped in a team, i will adjust this process to removed the association with scrum
+
+The use of the KanBan board will allow to view the current process of ongoing stories
+
+Each featuee that is added to the product will have a story created for it with associated acceptance critreia
+
+Each story will will have to go through a series of stages before it is complete
+
+To do - Each story that is created will be in this section
+
+In progress - once development beings story will be moved into this sectrion after acceptnace criteria has been added to the story
+
+In Review - Once developemtn is considered complete a code review will take place to make sure both code is correct and acceptance criteria have been met
+	Once review is complete a note will be made on the story with suggested changes, and then another comment once rview has been addressed
+
+In Integration - Once reviewed the story branch will be merged into master and will only advance if build is successful and all tests pass
+
+In Quantification - documentaion is written for the story and added to the project
+
+Complete - the story is considered complete.
+

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <Compile Remove="Protobufs\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <EmbeddedResource Remove="Protobufs\**" />
+    <None Remove="Generated\**" />
+    <None Remove="Protobufs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImageFileIndexService\ImageFileIndexService.csproj" />
+    <ProjectReference Include="..\IndexedLocationService\IndexedLocationService.csproj" />
+    <ProjectReference Include="..\ProjectService\ProjectService.csproj" />
+    <ProjectReference Include="..\Utility\Utility.csproj" />
+  </ItemGroup>
+
+
+</Project>

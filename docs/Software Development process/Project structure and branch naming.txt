@@ -1,0 +1,4 @@
+Release branch - master
+
+Story branch - Story60070 
+	When a story is created it will have a number associated with it this will be used in the branch creation

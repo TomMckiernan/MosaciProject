@@ -1,3 +1,0 @@
-Find way to create a jenkins server to build the product and run all of the tests in the project
-
-As well as once the build is complete it produces an executable on a local or host machine so the product can be installed to different systems

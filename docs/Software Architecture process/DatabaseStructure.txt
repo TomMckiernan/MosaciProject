@@ -1,0 +1,27 @@
+Database Structure
+
+MongoDB
+
+(Unsure whether to store file content in this collection or for this just to be pointer)
+ImageFileIndexCollection
+	- ImageFileIndexID
+	- FilePath
+	- FileName
+        - Metadata - to be decided
+
+IndexedLocationCollection
+	- indexedLocation
+
+ProjectCollection
+	- ProjectID
+	- TimeOfCreation
+	- LargeImageID (From ImageFileCollection)
+	- SmallImageIDs[] (Array From ImageFileCollection)
+	- Progress (The stage of the process project is in as an int)
+	
+MosaicImageCollection
+	- ProjectID
+	- ImageData
+	
+	
+This is just a plimerary design may be changes between ProjectCollection and MosaicImageCollection

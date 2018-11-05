@@ -1,0 +1,6 @@
+On implementing this story exploring the option of changing the architecture for the project
+
+Move backend services into the webui project
+Create interface for communication between services and UI
+Create protobufs to represent request and reponses to and from the front and backend
+Removes necessecity to implement complex messaging service between the front end and multiple backend services
