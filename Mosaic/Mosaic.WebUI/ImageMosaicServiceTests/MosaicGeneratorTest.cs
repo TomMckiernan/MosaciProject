@@ -12,7 +12,7 @@ namespace ImageMosaicTest
     public class MosaicGeneratorTest
     {
         ImageProcessing _imageProcessing;
-        string sourceFile = "..\\..\\..\\ImageMosaicTest\\144196672.jpg";
+        string sourceFile = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
 
         [TestInitialize]
         public void Init()
@@ -59,16 +59,18 @@ namespace ImageMosaicTest
             }
         }
 
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
         [TestMethod]
         public void MosaicGenerator_Test_END_TO_END()
         {
             var _mosaicGenerator = new MosaicGenerator();
-var srcImage = "..\\..\\..\\ImageMosaicTest\\144146014.jpg";
-var imageFolder = "..\\..\\..\\ImageMosaicTest\\TestImages\\entertainment";
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\Test7Images";
 
             var _mosaic = _mosaicGenerator.Generate(srcImage,imageFolder );
 
-            _mosaic.Image.Save(string.Format("c:\\Temp\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            _mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             _mosaic.Image.Dispose();
         }
     }
