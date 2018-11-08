@@ -12,31 +12,31 @@ namespace ImageMosaic
     {
         public Mosaic Generate(string imageToMash, string srcImageDirectory)
         {
-            var _imageProcessing = new ImageProcessing();
-            var _imageInfos = new List<ImageInfo>();
-            var _mosaic = new Mosaic();
+            var imageProcessing = new ImageProcessing();
+            var imageInfos = new List<ImageInfo>();
+            var mosaic = new Mosaic();
 
             var di = new DirectoryInfo(srcImageDirectory);
             var files = di.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
 
             Parallel.ForEach(files, f =>
             {
-                using (var inputBmp = _imageProcessing.Resize(f.FullName))
+                using (var inputBmp = imageProcessing.Resize(f.FullName))
                 {
-                    var _info = _imageProcessing.GetAverageColor(inputBmp, f.FullName);
+                    var info = imageProcessing.GetAverageColor(inputBmp, f.FullName);
                     
-                    if(_info != null)
-                        _imageInfos.Add(_info);
+                    if(info != null)
+                        imageInfos.Add(info);
                 }
             });
 
             using (var source = new Bitmap(imageToMash))
             {
-                var _colorMap = _imageProcessing.CreateMap(source);
-                _mosaic = _imageProcessing.Render(source, _colorMap, _imageInfos);
+                var colorMap = imageProcessing.CreateMap(source);
+                mosaic = imageProcessing.Render(source, colorMap, imageInfos);
             }
 
-            return _mosaic;
+            return mosaic;
         }
     }
 }

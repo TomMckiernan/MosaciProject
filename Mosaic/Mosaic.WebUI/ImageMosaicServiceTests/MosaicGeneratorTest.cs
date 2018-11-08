@@ -11,19 +11,19 @@ namespace ImageMosaicTest
     [TestClass]
     public class MosaicGeneratorTest
     {
-        ImageProcessing _imageProcessing;
+        ImageProcessing imageProcessing;
         string sourceFile = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
 
         [TestInitialize]
         public void Init()
         {
-            _imageProcessing = new ImageProcessing();
+            imageProcessing = new ImageProcessing();
         }
 
         [TestMethod]
         public void ResizeTest()
         {
-            using (var resizedBmp = _imageProcessing.Resize(sourceFile))
+            using (var resizedBmp = imageProcessing.Resize(sourceFile))
             {
                 Assert.IsTrue(resizedBmp != null);
                 Assert.IsTrue(resizedBmp.Height == 119);
@@ -37,7 +37,7 @@ namespace ImageMosaicTest
             using (var input = Bitmap.FromFile(sourceFile))
             {
                 var inputBmp = new Bitmap(input);
-                var imageInfo = _imageProcessing.GetAverageColor(inputBmp, sourceFile);
+                var imageInfo = imageProcessing.GetAverageColor(inputBmp, sourceFile);
 
                 Assert.IsTrue(!string.IsNullOrEmpty(imageInfo.Path));
                 Assert.IsTrue(!imageInfo.AverageBL.IsEmpty);
@@ -53,7 +53,7 @@ namespace ImageMosaicTest
             using (var input = Bitmap.FromFile(sourceFile))
             {
                 var inputBmp = new Bitmap(input);
-                var _createMap = _imageProcessing.CreateMap(inputBmp);
+                var _createMap = imageProcessing.CreateMap(inputBmp);
 
                 Assert.IsTrue(_createMap.Length > 0);
             }
@@ -64,14 +64,14 @@ namespace ImageMosaicTest
         [TestMethod]
         public void MosaicGenerator_Test_END_TO_END()
         {
-            var _mosaicGenerator = new MosaicGenerator();
+            var mosaicGenerator = new MosaicGenerator();
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\Test7Images";
 
-            var _mosaic = _mosaicGenerator.Generate(srcImage,imageFolder );
+            var mosaic = mosaicGenerator.Generate(srcImage,imageFolder );
 
-            _mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
-            _mosaic.Image.Dispose();
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
         }
     }
 }

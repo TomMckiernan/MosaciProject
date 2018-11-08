@@ -51,7 +51,7 @@ namespace ImageMosaic
         private Color getAverageColor(Rectangle area, Bitmap bmp, int quality)
         {
             Int64 r = 0, g = 0, b = 0;
-            var c = Color.Empty;
+            var color = Color.Empty;
             int p = 0;
 
             var end = new Point(area.X + area.Width, area.Y + area.Height);
@@ -60,10 +60,10 @@ namespace ImageMosaic
             {
                 for (int y = area.Y; y < end.Y; y += quality)
                 {
-                    c = bmp.GetPixel(x, y);
-                    r += c.R;
-                    g += c.G;
-                    b += c.B;
+                    color = bmp.GetPixel(x, y);
+                    r += color.R;
+                    g += color.G;
+                    b += color.B;
                     p++;
                 }
             }
@@ -83,7 +83,7 @@ namespace ImageMosaic
 
             Int64 r, g, b;
             int pixelCount;
-            Color c;
+            Color color;
 
             int xPos, yPos;
 
@@ -100,8 +100,8 @@ namespace ImageMosaic
                     {
                         for (yPos = tileHeight * y; yPos < y * tileHeight + tileHeight; yPos++)
                         {
-                            c = img.GetPixel(xPos, yPos);
-                            r += c.R; g += c.G; b += c.B;
+                            color = img.GetPixel(xPos, yPos);
+                            r += color.R; g += color.G; b += color.B;
                             pixelCount++;
                         }
                     }
@@ -156,7 +156,7 @@ namespace ImageMosaic
             };
         }
 
-        private int GetBestImageIndex(Color c, int x, int y)
+        private int GetBestImageIndex(Color color, int x, int y)
         {
             double bestPercent = double.MaxValue;
             int bestIndex = 0;
@@ -179,9 +179,9 @@ namespace ImageMosaic
                 g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
                 b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
 
-                r = Math.Abs(c.R - (r / 4));
-                g = Math.Abs(c.G - (g / 4));
-                b = Math.Abs(c.B - (b / 4));
+                r = Math.Abs(color.R - (r / 4));
+                g = Math.Abs(color.G - (g / 4));
+                b = Math.Abs(color.B - (b / 4));
 
                 difference = r + g + b;
                 difference /= 3 * 255;
