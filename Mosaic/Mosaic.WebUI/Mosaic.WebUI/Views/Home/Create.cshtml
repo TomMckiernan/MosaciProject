@@ -120,7 +120,6 @@
                 success: function (response) {
                     // Once implemented this will call the function to update the file list
                     populateTable(response);
-                    indicateInProgress();
                 }
             });
         }
@@ -142,8 +141,19 @@
             });
         }
 
-        var indicateInProgress = function () {
-
+        var importFiles = function (data) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ImportFiles", "Create")',
+                dataType: 'json',
+                cache: false,
+                data: { data: data },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                }
+            });
         }
 
         // Need to block extra request whilst indexing operation ongoing
@@ -154,6 +164,12 @@
 
         var location = $("#IndexedLocation").val()
         updateImageFileIndex(location);
+
+        $("#import_files").click(function () {
+            var data = table.rows('.selected').data();
+            debugger;
+            importFiles(data);
+        });
 
     });
 </script>
