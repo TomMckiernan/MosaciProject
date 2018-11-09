@@ -10,16 +10,15 @@ namespace ProjectService
     {
         public ProjectResponse Create(IMongoDatabase db)
         {
-            var id = ObjectId.GenerateNewId().ToString();
             var request = new ProjectStructure()
             {
-                Id = id
-                // Progress cahnge type to enum
+                Id = ObjectId.GenerateNewId().ToString(),
+                TimeOfCreation = DateTime.Now.ToString(),
+                Progress = ProjectStructure.Types.State.Created
             };
             var collection = db.GetCollection<ProjectStructure>("Project");
             collection.InsertOne(request);
             return new ProjectResponse() { Project = request };
-
         }
 
         public ProjectResponse Read(IMongoDatabase db, ProjectRequest request)
@@ -33,7 +32,7 @@ namespace ProjectService
             var response = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
             if (response == null)
             {
-                return new ProjectResponse() { Error = "Project with Id does not exist" };
+                return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
             return new ProjectResponse() { Project = response };
         }
@@ -49,16 +48,39 @@ namespace ProjectService
             return result;
         }
 
+        // Could change the return type
         public ProjectResponse InsertSmallFiles(IMongoDatabase db, ProjectInsertSmallFilesRequest request)
         {
-            throw new NotImplementedException();
-        }
+            var collection = db.GetCollection<ProjectStructure>("Project");
 
+            if (String.IsNullOrEmpty(request.Id))
+            {
+                return new ProjectResponse() { Error = "Id cannot be null or empty" };
+            }
+
+            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds);
+            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+
+            return new ProjectResponse();
+        }
+        
+        // Could change the return type
         public ProjectResponse InsertLargeFile(IMongoDatabase db, ProjectInsertLargeFileRequest request)
         {
-            throw new NotImplementedException();
+            var collection = db.GetCollection<ProjectStructure>("Project");
+
+            if (String.IsNullOrEmpty(request.Id))
+            {
+                return new ProjectResponse() { Error = "Id cannot be null or empty" };
+            }
+
+            var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId);
+            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+
+            return new ProjectResponse();
         }
 
+        // Could change the return type
         public ProjectResponse Delete(IMongoDatabase db, ProjectRequest request)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
@@ -72,7 +94,7 @@ namespace ProjectService
             {
                 return new ProjectResponse() { Error = "Project with Id cannot be deleted" };
             }
-            return new ProjectResponse() { };
+            return new ProjectResponse();
         }
     }
 }

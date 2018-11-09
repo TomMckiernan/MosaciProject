@@ -26,20 +26,22 @@ public static partial class ProjectReflection {
           "IkIKHlByb2plY3RJbnNlcnRTbWFsbEZpbGVzUmVxdWVzdBIKCgJpZBgBIAEo",
           "CRIUCgxTbWFsbEZpbGVJZHMYAiADKAkiQAodUHJvamVjdEluc2VydExhcmdl",
           "RmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEwoLTGFyZ2VGaWxlSWQYAiABKAki",
-          "cwoQUHJvamVjdFN0cnVjdHVyZRIKCgJpZBgBIAEoCRIWCg5UaW1lT2ZDcmVh",
-          "dGlvbhgCIAEoCRITCgtMYXJnZUZpbGVJZBgDIAEoCRIUCgxTbWFsbEZpbGVJ",
-          "ZHMYBCADKAkSEAoIUHJvZ3Jlc3MYBSABKAQiRAoPUHJvamVjdFJlc3BvbnNl",
-          "EiIKB1Byb2plY3QYASABKAsyES5Qcm9qZWN0U3RydWN0dXJlEg0KBUVycm9y",
-          "GAIgASgJIk0KF1Byb2plY3RNdWx0aXBsZVJlc3BvbnNlEiMKCFByb2plY3Rz",
-          "GAEgAygLMhEuUHJvamVjdFN0cnVjdHVyZRINCgVFcnJvchgCIAEoCWIGcHJv",
-          "dG8z"));
+          "6wEKEFByb2plY3RTdHJ1Y3R1cmUSCgoCaWQYASABKAkSFgoOVGltZU9mQ3Jl",
+          "YXRpb24YAiABKAkSEwoLTGFyZ2VGaWxlSWQYAyABKAkSFAoMU21hbGxGaWxl",
+          "SWRzGAQgAygJEikKCFByb2dyZXNzGAUgASgOMhcuUHJvamVjdFN0cnVjdHVy",
+          "ZS5TdGF0ZSJdCgVTdGF0ZRILCgdDUkVBVEVEEAASDgoKU01BTExBRERFRBAB",
+          "Eg4KCkxBUkdFQURERUQQAhINCglDT01QTEVURUQQAxILCgdERUxFVEVEEAQS",
+          "CwoHVU5LTk9XThAFIkQKD1Byb2plY3RSZXNwb25zZRIiCgdQcm9qZWN0GAEg",
+          "ASgLMhEuUHJvamVjdFN0cnVjdHVyZRINCgVFcnJvchgCIAEoCSJNChdQcm9q",
+          "ZWN0TXVsdGlwbGVSZXNwb25zZRIjCghQcm9qZWN0cxgBIAMoCzIRLlByb2pl",
+          "Y3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAliBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectRequest), global::ProjectRequest.Parser, new[]{ "Id" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertSmallFilesRequest), global::ProjectInsertSmallFilesRequest.Parser, new[]{ "Id", "SmallFileIds" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectResponse), global::ProjectResponse.Parser, new[]{ "Project", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectMultipleResponse), global::ProjectMultipleResponse.Parser, new[]{ "Projects", "Error" }, null, null, null)
         }));
@@ -566,9 +568,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
 
   /// <summary>Field number for the "Progress" field.</summary>
   public const int ProgressFieldNumber = 5;
-  private ulong progress_;
+  private global::ProjectStructure.Types.State progress_ = 0;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public ulong Progress {
+  public global::ProjectStructure.Types.State Progress {
     get { return progress_; }
     set {
       progress_ = value;
@@ -603,7 +605,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (TimeOfCreation.Length != 0) hash ^= TimeOfCreation.GetHashCode();
     if (LargeFileId.Length != 0) hash ^= LargeFileId.GetHashCode();
     hash ^= smallFileIds_.GetHashCode();
-    if (Progress != 0UL) hash ^= Progress.GetHashCode();
+    if (Progress != 0) hash ^= Progress.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -630,9 +632,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       output.WriteString(LargeFileId);
     }
     smallFileIds_.WriteTo(output, _repeated_smallFileIds_codec);
-    if (Progress != 0UL) {
+    if (Progress != 0) {
       output.WriteRawTag(40);
-      output.WriteUInt64(Progress);
+      output.WriteEnum((int) Progress);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -652,8 +654,8 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(LargeFileId);
     }
     size += smallFileIds_.CalculateSize(_repeated_smallFileIds_codec);
-    if (Progress != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Progress);
+    if (Progress != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Progress);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -676,7 +678,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       LargeFileId = other.LargeFileId;
     }
     smallFileIds_.Add(other.smallFileIds_);
-    if (other.Progress != 0UL) {
+    if (other.Progress != 0) {
       Progress = other.Progress;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -707,12 +709,28 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
           break;
         }
         case 40: {
-          Progress = input.ReadUInt64();
+          progress_ = (global::ProjectStructure.Types.State) input.ReadEnum();
           break;
         }
       }
     }
   }
+
+  #region Nested types
+  /// <summary>Container for nested types declared in the ProjectStructure message type.</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static partial class Types {
+    public enum State {
+      [pbr::OriginalName("CREATED")] Created = 0,
+      [pbr::OriginalName("SMALLADDED")] Smalladded = 1,
+      [pbr::OriginalName("LARGEADDED")] Largeadded = 2,
+      [pbr::OriginalName("COMPLETED")] Completed = 3,
+      [pbr::OriginalName("DELETED")] Deleted = 4,
+      [pbr::OriginalName("UNKNOWN")] Unknown = 5,
+    }
+
+  }
+  #endregion
 
 }
 

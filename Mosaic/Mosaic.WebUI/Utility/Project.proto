@@ -19,7 +19,15 @@ message ProjectStructure {
 	string TimeOfCreation         = 2;
 	string LargeFileId            = 3;
 	repeated string SmallFileIds  = 4;
-	uint64 Progress               = 5;
+    enum State {
+      CREATED = 0;
+      SMALLADDED = 1;
+      LARGEADDED = 2;
+      COMPLETED = 3;
+      DELETED = 4;
+	  UNKNOWN = 5;
+    }
+    State Progress                = 5;
 }
 
 message ProjectResponse {
