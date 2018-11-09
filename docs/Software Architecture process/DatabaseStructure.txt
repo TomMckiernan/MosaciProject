@@ -8,6 +8,7 @@ ImageFileIndexCollection
 	- FilePath
 	- FileName
         - Metadata - to be decided
+        - LastWriteTime
 
 IndexedLocationCollection
 	- indexedLocation
@@ -15,13 +16,10 @@ IndexedLocationCollection
 ProjectCollection
 	- ProjectID
 	- TimeOfCreation
-	- LargeImageID (From ImageFileCollection)
-	- SmallImageIDs[] (Array From ImageFileCollection)
+	- LargeImageID (From ImageFileIndexCollection)
+	- SmallImageIDs[] (Array From ImageFileIndexCollection)
 	- Progress (The stage of the process project is in as an int)
-	
-MosaicImageCollection
-	- ProjectID
-	- ImageData
 	
 	
 This is just a plimerary design may be changes between ProjectCollection and MosaicImageCollection
+ImageFileIndexCollection acts as an index for the files curerntly in the directory

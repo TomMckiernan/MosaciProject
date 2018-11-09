@@ -41,6 +41,9 @@ namespace Mosaic.WebUI.Controllers
         {
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
 
+            // Create a new project
+            // Pass newly created id to IndexedLocationModel
+
             var model = new IndexedLocationModel();
             model.RequestIndexedLocation(client);
 
