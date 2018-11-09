@@ -70,7 +70,6 @@ namespace Mosaic.WebUITests.Models
             Assert.IsTrue(!String.IsNullOrEmpty(response.Error));
         }
 
-        // Add more invalid paths
         [TestMethod]
         public void IsPathValidFalseIfIndexedLocationInvalid()
         {
@@ -82,7 +81,6 @@ namespace Mosaic.WebUITests.Models
             }
         }
 
-        // Add more valid paths
         [TestMethod]
         public void IsPathValidTrueIfIndexedLocationValid()
         {
@@ -92,6 +90,15 @@ namespace Mosaic.WebUITests.Models
                 model.IndexedLocation = location;
                 Assert.IsTrue(model.IsIndexedLocationValid);
             }
+        }
+
+        [TestMethod]
+        public void ProjectIdIsSetCorrectlyByConstructor()
+        {
+
+            string projectId = "projectId";
+            var model = new IndexedLocationModel(projectId);
+            Assert.AreEqual(projectId, model.ProjectId);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace ProjectService
             return new MongoProject().InsertSmallFiles(database, request);
         }
 
-        public ProjectResponse InsertSmallFiles(ProjectInsertLargeFileRequest request)
+        public ProjectResponse InsertLargeFile(ProjectInsertLargeFileRequest request)
         {
             return new MongoProject().InsertLargeFile(database, request);
         }

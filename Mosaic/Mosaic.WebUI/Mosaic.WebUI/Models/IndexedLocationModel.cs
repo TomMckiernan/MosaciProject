@@ -16,9 +16,11 @@ namespace Mosaic.WebUI.Models
 
         public bool IsIndexedLocationValid => IsPathValid(IndexedLocation);
 
-        public IndexedLocationModel()
-        {
+        public string ProjectId {get; private set;}
 
+        public IndexedLocationModel(string projectId = "Default")
+        {
+            ProjectId = projectId;
         }
 
         public void RequestIndexedLocation(IMakerClient client)

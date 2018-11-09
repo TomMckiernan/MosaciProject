@@ -61,6 +61,7 @@ namespace ProjectService
             var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds);
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
 
+            // update Progress
             return new ProjectResponse();
         }
         
@@ -76,7 +77,8 @@ namespace ProjectService
 
             var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId);
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
-
+            
+            // update Progress
             return new ProjectResponse();
         }
 
