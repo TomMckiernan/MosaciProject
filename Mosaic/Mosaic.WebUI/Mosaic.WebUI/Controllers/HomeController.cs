@@ -47,12 +47,6 @@ namespace Mosaic.WebUI.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult Create(int id)
-        {
-            return View("Index");
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
