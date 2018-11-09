@@ -59,5 +59,17 @@ namespace Mosaic.WebUI.Controllers
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Result.Error);
         }
+
+        [HttpPost]
+        public ActionResult ImportFiles(string indexedLocation)
+        {
+            // pass list of ids to a model
+            // model waits asynchronously/ synch for request to be sent 
+            // request will add file ids to to the project
+            // once completed either
+              // return view of select small images
+              // call controller action which calls the same page
+            return View();
+        }
     }
 }
