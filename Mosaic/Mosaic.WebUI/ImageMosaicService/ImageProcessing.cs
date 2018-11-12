@@ -127,6 +127,8 @@ namespace ImageMosaic
 
             var imageSq = new List<MosaicTile>();
 
+            // Getting stuck in an extremely large loop here - bottleneck
+            // For dog test example it is a 120 * 160 loop
             for (int x = 0; x < colorMap.GetLength(0); x++)
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
@@ -134,6 +136,7 @@ namespace ImageMosaic
                     info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
                     using (Image source = Image.FromFile(info.Path))
                     {
+                        // Gets current x, y coords of mosaic images, and stores image to be replaced by
                         imageSq.Add(new MosaicTile()
                         {
                             X = x,
@@ -141,6 +144,7 @@ namespace ImageMosaic
                             Image = info.Path
                         });
 
+                        // Draws stored image for coord x, y for given height and width
                         destRect = new Rectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
                         srcRect = new Rectangle(0, 0, source.Width, source.Height);
 

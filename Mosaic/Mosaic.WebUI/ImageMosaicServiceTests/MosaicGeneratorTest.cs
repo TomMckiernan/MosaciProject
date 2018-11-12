@@ -73,6 +73,36 @@ namespace ImageMosaicTest
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
         }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_BlockColourTest()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\BlockColourTests\\rgb-circles.jpg";
+            var imageFolder = "..\\..\\..\\..\\..\\..\\test\\BlockColours";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTest()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\DogImages\\WhatsApp Image 2018-11-01 at 19.02.54.jpeg";
+            var imageFolder = "..\\..\\..\\..\\..\\..\\test\\DogImages";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
     }
 }
 
