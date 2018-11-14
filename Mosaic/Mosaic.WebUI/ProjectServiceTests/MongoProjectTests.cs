@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Moq;
 using ProjectService;
@@ -39,9 +40,25 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
+        public void InsertSmallFilesReturnsErrorIfNullSmallImageIds()
+        {
+            var request = new ProjectInsertSmallFilesRequest() { Id = ObjectId.GenerateNewId().ToString() };
+            var response = new MongoProject().InsertSmallFiles(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
         public void InsertLargeFileReturnsErrorIfIdEmpty()
         {
             var request = new ProjectInsertLargeFileRequest() { Id = String.Empty };
+            var response = new MongoProject().InsertLargeFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void InsertLargeFileReturnsErrorIfNullLargeImageId()
+        {
+            var request = new ProjectInsertLargeFileRequest() { Id = ObjectId.GenerateNewId().ToString() };
             var response = new MongoProject().InsertLargeFile(MockMongoDatabase.Object, request);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }

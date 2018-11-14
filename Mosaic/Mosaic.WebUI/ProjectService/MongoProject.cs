@@ -14,8 +14,9 @@ namespace ProjectService
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 TimeOfCreation = DateTime.Now.ToString(),
-                Progress = ProjectStructure.Types.State.Created
+                Progress = ProjectStructure.Types.State.Created,
             };
+            request.SmallFileIds.Add("1");
             var collection = db.GetCollection<ProjectStructure>("Project");
             collection.InsertOne(request);
             return new ProjectResponse() { Project = request };
@@ -57,12 +58,19 @@ namespace ProjectService
             {
                 return new ProjectResponse() { Error = "Id cannot be null or empty" };
             }
+            if (request.SmallFileIds == null || request.SmallFileIds.Count == 0)
+            {
+                return new ProjectResponse() { Error = "File ids cannot be null or empty" };
+            }
 
-            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds);
-            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+            var project = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
+            project.SmallFileIds.AddRange(request.SmallFileIds);
 
-            // update Progress
-            return new ProjectResponse();
+            // Sees modified and original as the same so doesn't replace
+            var r = collection.FindOneAndReplace(x => x.Id.Equals(request.Id), project);
+            var response = new ProjectStructure() { Id = request.Id };
+            response.SmallFileIds.AddRange(request.SmallFileIds);
+            return new ProjectResponse() { Project = response };
         }
         
         // Could change the return type
@@ -70,16 +78,16 @@ namespace ProjectService
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
 
-            if (String.IsNullOrEmpty(request.Id))
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.LargeFileId))
             {
                 return new ProjectResponse() { Error = "Id cannot be null or empty" };
             }
 
-            var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId);
+            var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId)
+                .Set(x => x.Progress, ProjectStructure.Types.State.Largeadded);
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             
-            // update Progress
-            return new ProjectResponse();
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId } };
         }
 
         // Could change the return type
@@ -96,7 +104,7 @@ namespace ProjectService
             {
                 return new ProjectResponse() { Error = "Project with Id cannot be deleted" };
             }
-            return new ProjectResponse();
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id } };
         }
     }
 }
