@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -41,12 +42,27 @@ namespace Mosaic.WebUI.Controllers
         {
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
 
-            var response = client.CreateProject();
+            var response = new ProjectModel().CreateProject(client);
             
             var model = new IndexedLocationModel(response.Project.Id);
             model.RequestIndexedLocation(client);
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ViewAllProjects()
+        {
+            var model = new ProjectModel();
+            var response = model.ReadAllProjects(client);
+
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("Existing projects successfully fetched");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

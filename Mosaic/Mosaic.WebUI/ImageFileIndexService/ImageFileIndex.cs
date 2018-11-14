@@ -34,7 +34,7 @@ namespace ImageFileIndexService
                     // Store all files in indexed location
                     var indexedDirectory = new DirectoryInfo(request.IndexedLocation);
                     // Returns filenames in all sub directories as well
-                    var directoryFiles = indexedDirectory.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
+                    var directoryFiles = indexedDirectory.GetFiles("*.png", SearchOption.AllDirectories).ToList();
 
                     // Get exisiting files in location
                     var existingFiles = ReadImageFileIndex(request).Files.ToList();
