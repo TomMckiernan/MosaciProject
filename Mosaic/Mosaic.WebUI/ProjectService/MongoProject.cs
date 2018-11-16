@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ namespace ProjectService
                 TimeOfCreation = DateTime.Now.ToString(),
                 Progress = ProjectStructure.Types.State.Created,
             };
-            request.SmallFileIds.Add("1");
             var collection = db.GetCollection<ProjectStructure>("Project");
             collection.InsertOne(request);
             return new ProjectResponse() { Project = request };
@@ -66,9 +66,11 @@ namespace ProjectService
             var project = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
             project.SmallFileIds.AddRange(request.SmallFileIds);
 
-            // Sees modified and original as the same so doesn't replace
-            var r = collection.FindOneAndReplace(x => x.Id.Equals(request.Id), project);
+            //Sees modified and original as the same so doesn't replace
+            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds);
+            var r = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             var response = new ProjectStructure() { Id = request.Id };
+
             response.SmallFileIds.AddRange(request.SmallFileIds);
             return new ProjectResponse() { Project = response };
         }
