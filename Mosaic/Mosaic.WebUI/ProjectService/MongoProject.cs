@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ProjectService
@@ -31,11 +32,34 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Id cannot be null or empty" };
             }
             var response = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
+
+            var smallFileIds = ReadSmallFieldIds(db, request);
+
+            if (smallFileIds != null && smallFileIds.Count() > 0)
+            {
+                response.SmallFileIds.AddRange(smallFileIds);
+            }
+
             if (response == null)
             {
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
             return new ProjectResponse() { Project = response };
+        }
+
+        public IEnumerable<string> ReadSmallFieldIds(IMongoDatabase db, ProjectRequest request)
+        {
+            var collection = db.GetCollection<BsonDocument>("Project");
+
+            var fields = Builders<BsonDocument>.Projection.Include(p => p["SmallFileIds"]);
+            var response = collection.Find(x => x["_id"].Equals(request.Id)).Project(fields).FirstOrDefault();
+            if (response == null)
+            {
+                return new List<string>();
+            }
+            var smallFileIds = response["SmallFileIds"].AsBsonArray.ToList();
+            var stringList = smallFileIds.Select(i => i.ToString());
+            return stringList;
         }
 
         public ProjectMultipleResponse ReadAll(IMongoDatabase db)
@@ -65,10 +89,12 @@ namespace ProjectService
 
             var project = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
             project.SmallFileIds.AddRange(request.SmallFileIds);
+            project.Progress = ProjectStructure.Types.State.Smalladded;
 
             //Sees modified and original as the same so doesn't replace
-            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds);
-            var r = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds)
+                .Set(x => x.Progress, project.Progress);
+            var updateResponse = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             var response = new ProjectStructure() { Id = request.Id };
 
             response.SmallFileIds.AddRange(request.SmallFileIds);

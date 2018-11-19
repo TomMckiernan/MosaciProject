@@ -1,8 +1,10 @@
 ﻿using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Utility;
 
 namespace ProjectService
 {
@@ -13,11 +15,23 @@ namespace ProjectService
 
         public Project(string dbName = "MosaicDatabase")
         {
-            BsonClassMap.RegisterClassMap<ProjectStructure>(m =>
+            if (!BsonClassMap.IsClassMapRegistered(typeof(ProjectStructure)))
             {
-                m.AutoMap();
-                m.MapProperty(cm => cm.SmallFileIds);
-            });
+                BsonClassMap.RegisterClassMap<ProjectStructure>(cm =>
+                {
+                    // deals with it being a read only property
+                    cm.AutoMap();
+                    cm.MapProperty(m => m.SmallFileIds);
+                });
+
+                //var conventionPack = new ConventionPack
+                //{
+                //    new MapReadOnlyPropertiesConvention()
+                //};
+
+                //ConventionRegistry.Register("Conventions", conventionPack, _ => true);
+            }
+
             client = new MongoClient();
             database = client.GetDatabase(dbName);
         }

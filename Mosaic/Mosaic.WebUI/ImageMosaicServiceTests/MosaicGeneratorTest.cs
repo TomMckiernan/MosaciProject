@@ -107,10 +107,40 @@ namespace ImageMosaicTest
         //This seemed to crash when no jpg were found in the image folder
         // Also generic error when saving to c:temp 
         [TestMethod]
+        public void MosaicGenerator_DogTestSmall()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage1Small2.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
         public void MosaicGenerator_DogTest_2()
         {
             var mosaicGenerator = new MosaicGenerator();
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTestSmall_2()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2Small2.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
             var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
