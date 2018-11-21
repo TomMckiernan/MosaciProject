@@ -32,44 +32,25 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Id cannot be null or empty" };
             }
             var response = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
-
-            var smallFileIds = ReadSmallFieldIds(db, request);
-
-            if (smallFileIds != null && smallFileIds.Count() > 0)
-            {
-                response.SmallFileIds.AddRange(smallFileIds);
-            }
-
             if (response == null)
             {
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
+
+            response = UpdateSmallImageIds(db, response);
             return new ProjectResponse() { Project = response };
-        }
-
-        public IEnumerable<string> ReadSmallFieldIds(IMongoDatabase db, ProjectRequest request)
-        {
-            var collection = db.GetCollection<BsonDocument>("Project");
-
-            var fields = Builders<BsonDocument>.Projection.Include(p => p["SmallFileIds"]);
-            var response = collection.Find(x => x["_id"].Equals(request.Id)).Project(fields).FirstOrDefault();
-            if (response == null)
-            {
-                return new List<string>();
-            }
-            var smallFileIds = response["SmallFileIds"].AsBsonArray.ToList();
-            var stringList = smallFileIds.Select(i => i.ToString());
-            return stringList;
         }
 
         public ProjectMultipleResponse ReadAll(IMongoDatabase db)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
-       
+    
             var response = collection.Find(x => true).ToList();
 
+            var responseUpdated = response.Select(x => UpdateSmallImageIds(db, x));
+
             var result = new ProjectMultipleResponse();
-            result.Projects.AddRange(response);
+            result.Projects.AddRange(responseUpdated);
             return result;
         }
 
@@ -133,6 +114,31 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Project with Id cannot be deleted" };
             }
             return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id } };
+        }
+
+        private IEnumerable<string> ReadSmallFieldIds(IMongoDatabase db, string id)
+        {
+            var collection = db.GetCollection<BsonDocument>("Project");
+
+            var fields = Builders<BsonDocument>.Projection.Include(p => p["SmallFileIds"]);
+            var response = collection.Find(x => x["_id"].Equals(id)).Project(fields).FirstOrDefault();
+            if (response == null)
+            {
+                return new List<string>();
+            }
+            var smallFileIds = response["SmallFileIds"].AsBsonArray.ToList();
+            var stringList = smallFileIds.Select(i => i.ToString());
+            return stringList;
+        }
+
+        private ProjectStructure UpdateSmallImageIds(IMongoDatabase db, ProjectStructure response)
+        {
+            var smallFileIds = ReadSmallFieldIds(db, response.Id);
+            if (smallFileIds != null && smallFileIds.Count() > 0)
+            {
+                response.SmallFileIds.AddRange(smallFileIds);
+            }
+            return response;
         }
     }
 }
