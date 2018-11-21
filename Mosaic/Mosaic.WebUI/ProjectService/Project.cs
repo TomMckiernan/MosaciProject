@@ -23,13 +23,6 @@ namespace ProjectService
                     cm.AutoMap();
                     cm.MapProperty(m => m.SmallFileIds);
                 });
-
-                //var conventionPack = new ConventionPack
-                //{
-                //    new MapReadOnlyPropertiesConvention()
-                //};
-
-                //ConventionRegistry.Register("Conventions", conventionPack, _ => true);
             }
 
             client = new MongoClient();
