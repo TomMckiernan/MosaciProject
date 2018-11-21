@@ -40,7 +40,7 @@
 </table>
 
 <form class="form-inline">
-    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="submit">Import</button>
+    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="button">Import</button>
 </form>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
@@ -141,13 +141,15 @@
             });
         }
 
-        var importFiles = function (data) {
+        var importFiles = function (id, fileIds) {
+            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFiles", "Create")',
                 dataType: 'json',
+                traditional: true,
                 cache: false,
-                data: { data: data },
+                data: { id: id, fileIds: fileIds },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -167,7 +169,10 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            importFiles(data);
+            var fileIds = $.map(data, function (n) {
+                return n.id;
+            });
+            importFiles("@Model.ProjectId", fileIds);
         });
 
     });

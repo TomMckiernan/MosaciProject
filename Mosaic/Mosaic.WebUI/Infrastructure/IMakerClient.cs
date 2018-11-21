@@ -21,7 +21,7 @@ namespace Infrastructure
 
         ProjectMultipleResponse ReadAllProjects();
 
-        ProjectResponse InsertSamllFiles(string id, IList<string> fileIds);
+        ProjectResponse InsertSmallFiles(string id, IList<string> fileIds);
 
         ProjectResponse InsertLargeFile(string id, string fileId);
 

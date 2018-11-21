@@ -54,7 +54,7 @@ namespace Infrastructure
             return response;
         }
 
-        public ProjectResponse InsertSamllFiles(string id, IList<string> fileIds)
+        public ProjectResponse InsertSmallFiles(string id, IList<string> fileIds)
         {
             var request = new ProjectInsertSmallFilesRequest() { Id = id };
             request.SmallFileIds.AddRange(fileIds);

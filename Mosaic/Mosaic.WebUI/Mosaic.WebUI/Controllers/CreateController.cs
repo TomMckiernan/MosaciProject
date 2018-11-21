@@ -61,15 +61,23 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportFiles(string indexedLocation)
+        public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
         {
-            // pass list of ids to a model
             // model waits asynchronously/ synch for request to be sent 
             // request will add file ids to to the project
             // once completed either
-              // return view of select small images
-              // call controller action which calls the same page
-            return View();
+            // return view of select small images
+            // call controller action which calls the same page
+            var model = new SmallFilesModel();
+
+            var response = model.InsertSmallFiles(client, id, fileIds.ToList());
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("The update small file ids request was valid");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
         }
     }
 }
