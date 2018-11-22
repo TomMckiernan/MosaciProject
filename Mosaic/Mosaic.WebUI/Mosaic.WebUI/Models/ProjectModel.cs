@@ -8,16 +8,21 @@ namespace Mosaic.WebUI.Models
 {
     public class ProjectModel
     {
+        public IList<ProjectStructure> Projects{ get; set; }
+
+        public string Error { get; set; }
+
         public ProjectResponse CreateProject(IMakerClient client)
         {
             var response = client.CreateProject();
             return response;
         }
 
-        public ProjectMultipleResponse ReadAllProjects(IMakerClient client)
+        public void ReadAllProjects(IMakerClient client)
         {
             var response = client.ReadAllProjects();
-            return response;
+            Projects = response.Projects.ToList();
+            Error = response.Error;
         }
     }
 }

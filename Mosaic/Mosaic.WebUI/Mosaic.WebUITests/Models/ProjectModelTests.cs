@@ -1,9 +1,11 @@
 ﻿using Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson;
 using Moq;
 using Mosaic.WebUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Mosaic.WebUITests.Models
@@ -18,7 +20,6 @@ namespace Mosaic.WebUITests.Models
         {
             MockMakerClient = new Mock<IMakerClient>();
             MockMakerClient.Setup(x => x.CreateProject()).Returns(new ProjectResponse { });
-            MockMakerClient.Setup(x => x.ReadAllProjects()).Returns(new ProjectMultipleResponse { });
         }
 
         [TestMethod]
@@ -31,8 +32,22 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void ReadAllProjectsReturnsProjectMultipleResponse()
         {
-            var response = new ProjectModel().ReadAllProjects(MockMakerClient.Object);
-            Assert.IsTrue(response.GetType().Equals(typeof(ProjectMultipleResponse)));
+            var response = new ProjectMultipleResponse() { };
+            var expected = new List<ProjectStructure>()
+            {
+                new ProjectStructure { Id = ObjectId.GenerateNewId().ToString() },
+                new ProjectStructure { Id = ObjectId.GenerateNewId().ToString() }
+            };
+
+            var returnObject = new ProjectMultipleResponse();
+            returnObject.Projects.AddRange(expected);
+            MockMakerClient.Setup(x => x.ReadAllProjects()).Returns(returnObject);
+
+            var model = new ProjectModel();
+            model.ReadAllProjects(MockMakerClient.Object);
+            Assert.IsTrue(string.IsNullOrEmpty(model.Error));
+            Assert.AreEqual(expected.Count, model.Projects.Count);
+            Assert.IsTrue(expected.SequenceEqual(model.Projects));
         }
     }
 }

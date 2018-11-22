@@ -16,7 +16,9 @@ namespace Mosaic.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new ProjectModel();
+            model.ReadAllProjects(client);
+            return View(model);
         }
 
         public IActionResult About()
@@ -48,21 +50,6 @@ namespace Mosaic.WebUI.Controllers
             model.RequestIndexedLocation(client);
 
             return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult ViewAllProjects()
-        {
-            var model = new ProjectModel();
-            var response = model.ReadAllProjects(client);
-
-            if (String.IsNullOrEmpty(response.Error))
-            {
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json("Existing projects successfully fetched");
-            }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(response.Error);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
