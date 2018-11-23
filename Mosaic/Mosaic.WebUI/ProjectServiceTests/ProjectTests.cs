@@ -67,6 +67,18 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
+        public void InsertSmallFilesInsertsImageIdsAndKeepsExisitingIds()
+        {
+            var createResponse = service.CreateProject();
+            var insertResponse = InsertSmallFilesHelper(service, createResponse.Project.Id);
+            var insertResponse2 = InsertSmallFilesHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            // Since InsertSmallFilesHelper inserts two files each
+            Assert.AreEqual(4, readResponse.Project.SmallFileIds.Count);
+        }
+
+        [TestMethod]
         public void InsertLargeFileInsertsImageIdIntoProjectAndUpdatesState()
         {
             var createResponse = service.CreateProject();

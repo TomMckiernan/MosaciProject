@@ -57,23 +57,20 @@ namespace ProjectService
         // Could change the return type
         public ProjectResponse InsertSmallFiles(IMongoDatabase db, ProjectInsertSmallFilesRequest request)
         {
-            var collection = db.GetCollection<ProjectStructure>("Project");
-
-            if (String.IsNullOrEmpty(request.Id))
-            {
-                return new ProjectResponse() { Error = "Id cannot be null or empty" };
-            }
             if (request.SmallFileIds == null || request.SmallFileIds.Count == 0)
             {
                 return new ProjectResponse() { Error = "File ids cannot be null or empty" };
             }
 
-            var project = collection.Find(x => x.Id.Equals(request.Id)).FirstOrDefault();
-            project.SmallFileIds.AddRange(request.SmallFileIds);
+            var readRequest = new ProjectRequest() { Id = request.Id };
+            var project = Read(db, readRequest).Project;
+
+            var collection = db.GetCollection<ProjectStructure>("Project");
+
+            project.SmallFileIds.AddRange(request.SmallFileIds.Where(x => !project.SmallFileIds.Contains(x)));
             project.Progress = ProjectStructure.Types.State.Smalladded;
 
-            //Sees modified and original as the same so doesn't replace
-            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, request.SmallFileIds)
+            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, project.SmallFileIds)
                 .Set(x => x.Progress, project.Progress);
             var updateResponse = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             var response = new ProjectStructure() { Id = request.Id };
