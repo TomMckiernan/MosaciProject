@@ -26,18 +26,22 @@ namespace Mosaic.WebUITests.Models
         public void ReadImageFileIndexReturnsNoFilesIfNoneInCollection()
         {
             var indexedLocation = "indexedLocation";
+            var id = "1";
+            var moqProjectResponse = new ProjectResponse() { Project = new ProjectStructure() };
+
             MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(new ImageFileIndexResponse { });
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(moqProjectResponse);
 
             var model = new ImageFileIndexModel();
-            var response = model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation);
-            Assert.AreEqual(0, response.Files.Count);
+            model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation, id);
+            Assert.AreEqual(0, model.Files.Count);
         }
-
 
         [TestMethod]
         public void ReadImageFileIndexReturnsOneFilesIfOneInCollection()
         {
             var indexedLocation = "indexedLocation";
+            var id = "1";
             var moqResponse = new ImageFileIndexResponse();
             moqResponse.Files.Add(new ImageFileIndexStructure() {
                 Id = ObjectId.GenerateNewId().ToString(),
@@ -47,23 +51,35 @@ namespace Mosaic.WebUITests.Models
                 Metadata = ""
 
             });
+            var moqProjectResponse = new ProjectResponse() { Project = new ProjectStructure() };
 
             MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(moqResponse);
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(moqProjectResponse);
 
             var model = new ImageFileIndexModel();
-            var response = model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation);
-            Assert.AreEqual(1, response.Files.Count);
+            model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation, id);
+            Assert.AreEqual(1, model.Files.Count);
         }
 
-        //[TestMethod]
-        //public void UpdateImageFileIndexReteurnsIndexedLocation()
-        //{
-        //    var indexedLocation = "indexedLocation";
-        //    MockMakerClient.Setup(x => x.UpdateImageFileIndex(It.IsAny<string>())).Returns(new ImageFileIndexUpdateResponse { });
+        [TestMethod]
+        public void ReadImageFileIndexReturnsErrorIfProjectDoesNotExist()
+        {
+            var indexedLocation = "indexedLocation";
+            var id = "1";
+            var moqProjectResponse = new ProjectResponse() { };
 
-        //    var model = new ImageFileIndexModel();
-        //    var response = model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation);
-        //    Assert.AreEqual(0, response.Files.Count);
-        //}
+            MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(new ImageFileIndexResponse { });
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(moqProjectResponse);
+
+            var model = new ImageFileIndexModel();
+            model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation, id);
+            Assert.IsFalse(String.IsNullOrEmpty(model.Error));
+        }
+
+        [TestMethod]
+        public void ReadImageFileIndexReturnsOnlyFilesNotAlreadyImported()
+        {
+
+        }
     }
 }

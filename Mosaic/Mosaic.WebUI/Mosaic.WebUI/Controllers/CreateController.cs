@@ -29,20 +29,20 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReadImageFileIndex(string indexedLocation)
+        public ActionResult ReadImageFileIndex(string indexedLocation, string id)
         {
             var model = new ImageFileIndexModel();
 
-            var response = model.ReadImageFileIndex(client, indexedLocation);
+            model.ReadImageFileIndex(client, indexedLocation, id);
 
-            if (String.IsNullOrEmpty(response.Error))
+            if (String.IsNullOrEmpty(model.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(response.Files);
+                return Json(model.Files);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(response.Error);
+            return Json(model.Error);
         }
 
         [HttpPost]
@@ -63,11 +63,6 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
         {
-            // model waits asynchronously/ synch for request to be sent 
-            // request will add file ids to to the project
-            // once completed either
-            // return view of select small images
-            // call controller action which calls the same page
             var model = new SmallFilesModel();
 
             var response = model.InsertSmallFiles(client, id, fileIds.ToList());
