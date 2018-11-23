@@ -9,18 +9,20 @@
     <div class="container">
         @for (int i = 0; i < Model.Projects.Count; i++)
         {
-            <a href="blog-ici.html">
-                <div class="col-lg-4">
+            <div class="col-lg-4">
+                <a href="@Url.Action("SelectProject", "Home", new { Id = Model.Projects[i].Id})">
                     <div class="card" id="@Model.Projects[i].Id">
                         <img src="http://cevirdikce.com/proje/hasem-2/images/finance-1.jpg">
                         <h4>Project Title</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         <p class="card-text text-muted">Created @Html.DisplayFor(model => model.Projects[i].TimeOfCreation, new { @class = "text-muted" })</p>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         }
     </div>
 </div>
+
+
 
 

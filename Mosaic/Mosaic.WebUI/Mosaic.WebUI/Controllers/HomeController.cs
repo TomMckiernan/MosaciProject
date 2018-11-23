@@ -52,6 +52,19 @@ namespace Mosaic.WebUI.Controllers
             return View(model);
         }
 
+        public IActionResult SelectProject(string Id)
+        {
+            if (String.IsNullOrEmpty(Id))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("The select project request was invalid");
+            }
+            var model = new IndexedLocationModel(Id);
+            model.RequestIndexedLocation(client);
+
+            return View("Create", model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
