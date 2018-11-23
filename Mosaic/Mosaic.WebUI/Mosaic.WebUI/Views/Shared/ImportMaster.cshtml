@@ -1,12 +1,13 @@
 ﻿@model Mosaic.WebUI.Models.IndexedLocationModel
 
 @{
-    ViewData["Title"] = "Indexed Files";
+    ViewData["Title"] = "ImportMaster";
 }
+
 <div class="jumbotron">
-    <h1 class="display-4">Import Files</h1>
+    <h1 class="display-4">Import Master</h1>
     <hr class="my-4">
-    <p>Import files from local system directory to use in the creation of the mosaic image.</p>
+    <p>Import master file from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
@@ -56,7 +57,13 @@
         });
 
         $('#example tbody').on('click', 'tr', function () {
-            $(this).toggleClass('selected');
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
         });
 
         // To Do
@@ -149,7 +156,6 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    window.location.href = '@Url.Action("ImportMaster","Create", new { Id = Model.ProjectId })';
                 }
             });
         }
@@ -173,3 +179,4 @@
 
     });
 </script>
+
