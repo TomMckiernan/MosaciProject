@@ -31,8 +31,12 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult ReadImageFileIndex(string indexedLocation, string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Project id cannot be null or empty");
+            }
             var model = new ImageFileIndexModel();
-
             model.ReadImageFileIndex(client, indexedLocation, id);
 
             if (String.IsNullOrEmpty(model.Error))
