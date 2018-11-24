@@ -42,18 +42,13 @@ namespace Mosaic.WebUITests.Models
         {
             var indexedLocation = "indexedLocation";
             var id = "1";
-            var moqResponse = new ImageFileIndexResponse();
-            moqResponse.Files.Add(new ImageFileIndexStructure() {
-                Id = ObjectId.GenerateNewId().ToString(),
-                FileName = "",
-                FilePath = "",
-                LastWriteTime = DateTime.Now.ToString(),
-                Metadata = ""
+            var importedFile = new ImageFileIndexStructure() { Id = "1" };
 
-            });
+            var moqImageResponse = new ImageFileIndexResponse();
             var moqProjectResponse = new ProjectResponse() { Project = new ProjectStructure() };
+            moqImageResponse.Files.Add(importedFile);
 
-            MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(moqResponse);
+            MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(moqImageResponse);
             MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(moqProjectResponse);
 
             var model = new ImageFileIndexModel();
@@ -79,7 +74,21 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void ReadImageFileIndexReturnsOnlyFilesNotAlreadyImported()
         {
+            var indexedLocation = "indexedLocation";
+            var id = "1";
+            var importedFile = new ImageFileIndexStructure() { Id = "1" };
 
+            var moqImageResponse = new ImageFileIndexResponse() {};
+            moqImageResponse.Files.Add(importedFile);
+            var moqProjectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = ObjectId.GenerateNewId().ToString() } };
+            moqProjectResponse.Project.SmallFileIds.Add(importedFile.Id);
+
+            MockMakerClient.Setup(x => x.ReadImageFileIndex(It.IsAny<string>())).Returns(moqImageResponse);
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(moqProjectResponse);
+
+            var model = new ImageFileIndexModel();
+            model.ReadImageFileIndex(MockMakerClient.Object, indexedLocation, id);
+            Assert.AreEqual(0, model.Files.Count);
         }
     }
 }
