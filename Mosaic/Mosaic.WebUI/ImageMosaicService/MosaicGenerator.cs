@@ -17,7 +17,7 @@ namespace ImageMosaic
             var mosaic = new Mosaic();
 
             var di = new DirectoryInfo(srcImageDirectory);
-            var files = di.GetFiles("*.jpg", SearchOption.AllDirectories).ToList();
+            var files = di.GetFiles("*.png", SearchOption.AllDirectories).ToList();
 
             Parallel.ForEach(files, f =>
             {

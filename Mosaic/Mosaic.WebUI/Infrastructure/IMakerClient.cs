@@ -15,5 +15,16 @@ namespace Infrastructure
         
         Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(string indexedLocation);
 
+        ProjectResponse CreateProject();
+
+        ProjectResponse ReadProject(string id);
+
+        ProjectMultipleResponse ReadAllProjects();
+
+        ProjectResponse InsertSmallFiles(string id, IList<string> fileIds);
+
+        ProjectResponse InsertLargeFile(string id, string fileId);
+
+        ProjectResponse DeleteProject(string id);
     }
 }

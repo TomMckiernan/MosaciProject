@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,9 @@ namespace Mosaic.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new ProjectModel();
+            model.ReadAllProjects(client);
+            return View(model);
         }
 
         public IActionResult About()
@@ -41,10 +44,20 @@ namespace Mosaic.WebUI.Controllers
         {
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
 
-            var model = new IndexedLocationModel();
+            var response = new ProjectModel().CreateProject(client);
+            
+            var model = new IndexedLocationModel(response.Project.Id);
             model.RequestIndexedLocation(client);
 
             return View(model);
+        }
+
+        public IActionResult SelectProject(string Id)
+        {
+            var model = new IndexedLocationModel(Id);
+            model.RequestIndexedLocation(client);
+
+            return View("Create", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -29,20 +29,24 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReadImageFileIndex(string indexedLocation)
+        public ActionResult ReadImageFileIndex(string indexedLocation, string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Project id cannot be null or empty");
+            }
             var model = new ImageFileIndexModel();
+            model.ReadImageFileIndex(client, indexedLocation, id);
 
-            var response = model.ReadImageFileIndex(client, indexedLocation);
-
-            if (String.IsNullOrEmpty(response.Error))
+            if (String.IsNullOrEmpty(model.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(response.Files);
+                return Json(model.Files);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(response.Error);
+            return Json(model.Error);
         }
 
         [HttpPost]
@@ -61,15 +65,26 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportFiles(string indexedLocation)
+        public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
         {
-            // pass list of ids to a model
-            // model waits asynchronously/ synch for request to be sent 
-            // request will add file ids to to the project
-            // once completed either
-              // return view of select small images
-              // call controller action which calls the same page
-            return View();
+            var model = new SmallFilesModel();
+
+            var response = model.InsertSmallFiles(client, id, fileIds.ToList());
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("The update small file ids request was valid");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
+        }
+
+        public ActionResult ImportMaster(string Id)
+        {
+            var model = new IndexedLocationModel(Id);
+            model.RequestIndexedLocation(client);
+
+            return View("ImportMaster", model);
         }
     }
 }

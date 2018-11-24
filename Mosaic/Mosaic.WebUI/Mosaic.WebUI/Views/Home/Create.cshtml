@@ -40,7 +40,7 @@
 </table>
 
 <form class="form-inline">
-    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="submit">Import</button>
+    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="button">Import</button>
 </form>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
@@ -57,10 +57,6 @@
 
         $('#example tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
-        });
-
-        $('#button').click(function () {
-            alert(table.rows('.selected').data().length + ' row(s) selected');
         });
 
         // To Do
@@ -112,7 +108,7 @@
                 url: '@Url.Action("ReadImageFileIndex", "Create")',
                 dataType: 'json',
                 cache: false,
-                data: { IndexedLocation: IndexedLocation },
+                data: { IndexedLocation: IndexedLocation, Id : "@Model.ProjectId" },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                     // Display a toastr message to indicate failure
@@ -141,17 +137,19 @@
             });
         }
 
-        var importFiles = function (data) {
+        var importFiles = function (id, fileIds) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFiles", "Create")',
                 dataType: 'json',
+                traditional: true,
                 cache: false,
-                data: { data: data },
+                data: { id: id, fileIds: fileIds },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
                 success: function (response) {
+                    window.location.href = '@Url.Action("ImportMaster","Create", new { Id = Model.ProjectId })';
                 }
             });
         }
@@ -167,7 +165,10 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            importFiles(data);
+            var fileIds = $.map(data, function (n) {
+                return n.id;
+            });
+            importFiles("@Model.ProjectId", fileIds);
         });
 
     });

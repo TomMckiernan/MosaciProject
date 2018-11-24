@@ -73,6 +73,96 @@ namespace ImageMosaicTest
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
         }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_BlockColourTest()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\BlockColourTests\\rgb-circles.jpg";
+            var imageFolder = "..\\..\\..\\..\\..\\..\\test\\BlockColours";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTest()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage1.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+              var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTestSmall()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage1Small2.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTest_2()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_DogTestSmall_2()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2Small2.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
+
+        //This seemed to crash when no jpg were found in the image folder
+        // Also generic error when saving to c:temp 
+        [TestMethod]
+        public void MosaicGenerator_PngTest()
+        {
+            var mosaicGenerator = new MosaicGenerator();
+            var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\144196672.png";
+            var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
+
+              var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+
+            mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
+            mosaic.Image.Dispose();
+        }
     }
 }
 

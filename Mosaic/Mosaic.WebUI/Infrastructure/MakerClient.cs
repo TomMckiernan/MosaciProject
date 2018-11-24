@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Infrastructure
@@ -31,6 +32,47 @@ namespace Infrastructure
         {
             var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
             var response = await new ImageFileIndexService.ImageFileIndex().AnalyseImageFileIndex(request);
+            return response;
+        }
+
+        public ProjectResponse CreateProject()
+        {
+            var response = new ProjectService.Project().CreateProject();
+            return response;
+        }
+
+        public ProjectResponse ReadProject(string id)
+        {
+            var request = new ProjectRequest() { Id = id };
+            var response = new ProjectService.Project().ReadProject(request);
+            return response;
+        }
+
+        public ProjectMultipleResponse ReadAllProjects()
+        {
+            var response = new ProjectService.Project().ReadAllProjects();
+            return response;
+        }
+
+        public ProjectResponse InsertSmallFiles(string id, IList<string> fileIds)
+        {
+            var request = new ProjectInsertSmallFilesRequest() { Id = id };
+            request.SmallFileIds.AddRange(fileIds);
+            var response = new ProjectService.Project().InsertSmallFiles(request);
+            return response;
+        }
+
+        public ProjectResponse InsertLargeFile(string id, string fileId)
+        {
+            var request = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = fileId };
+            var response = new ProjectService.Project().InsertLargeFile(request);
+            return response;
+        }
+
+        public ProjectResponse DeleteProject(string id)
+        {
+            var request = new ProjectRequest() { Id = id };
+            var response = new ProjectService.Project().DeleteProject(request);
             return response;
         }
     }

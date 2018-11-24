@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf.Tools" Version="3.6.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 
 </Project>

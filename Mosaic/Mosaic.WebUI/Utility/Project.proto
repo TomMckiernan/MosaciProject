@@ -1,0 +1,42 @@
+﻿syntax = "proto3";
+
+message ProjectRequest {
+    string id                     = 1;
+}
+
+message ProjectInsertSmallFilesRequest {
+    string id                     = 1;
+	repeated string SmallFileIds  = 2;
+}
+
+message ProjectInsertLargeFileRequest {
+    string id                     = 1;
+	string LargeFileId            = 2;
+}
+
+message ProjectStructure {
+    string id                     = 1;
+	string TimeOfCreation         = 2;
+	string LargeFileId            = 3;
+	repeated string SmallFileIds  = 4;
+    enum State {
+      CREATED = 0;
+      SMALLADDED = 1;
+      LARGEADDED = 2;
+      COMPLETED = 3;
+      DELETED = 4;
+	  UNKNOWN = 5;
+    }
+    State Progress                = 5;
+}
+
+message ProjectResponse {
+    ProjectStructure Project      = 1;
+	string Error                  = 2;
+}
+
+message ProjectMultipleResponse {
+    repeated ProjectStructure Projects = 1;
+	string Error                       = 2;
+}
+
