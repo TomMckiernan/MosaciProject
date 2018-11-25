@@ -49,5 +49,13 @@ namespace Mosaic.WebUI.Controllers
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);
         }
+
+        public ActionResult Generate(string Id)
+        {
+            var model = new IndexedLocationModel(Id);
+            model.RequestIndexedLocation(client);
+
+            return View("Generate", model);
+        }
     }
 }
