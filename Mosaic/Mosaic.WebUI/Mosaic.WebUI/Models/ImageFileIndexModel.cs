@@ -33,6 +33,13 @@ namespace Mosaic.WebUI.Models
             }
         }
 
+        public void ReadImageFileIndexMaster(IMakerClient client, string indexedLocation)
+        {
+            var indexedFiles = client.ReadImageFileIndex(indexedLocation);
+            Files = indexedFiles.Files.ToList();
+            Error = indexedFiles.Error;
+        }
+
         public async Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(IMakerClient client, string indexedLocation)
         {
             var response = await client.UpdateImageFileIndex(indexedLocation);

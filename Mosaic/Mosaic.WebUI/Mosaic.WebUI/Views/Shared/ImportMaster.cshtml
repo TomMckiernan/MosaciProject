@@ -112,7 +112,7 @@
         var readImageFileIndex = function (IndexedLocation) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ReadImageFileIndex", "Create")',
+                url: '@Url.Action("ReadImageFileIndex", "Master")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation, Id : "@Model.ProjectId" },
@@ -145,14 +145,14 @@
             });
         }
 
-        var importFiles = function (id, fileIds) {
+        var importFile = function (id, fileId) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ImportFiles", "Create")',
+                url: '@Url.Action("ImportFile", "Master")',
                 dataType: 'json',
                 traditional: true,
                 cache: false,
-                data: { id: id, fileIds: fileIds },
+                data: { id: id, fileId: fileId },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -172,10 +172,10 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            var fileIds = $.map(data, function (n) {
+            var fileId = $.map(data, function (n) {
                 return n.id;
             });
-            importFiles("@Model.ProjectId", fileIds);
+            importFile("@Model.ProjectId", fileId[0]);
         });
 
     });
