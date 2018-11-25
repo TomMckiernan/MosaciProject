@@ -52,7 +52,10 @@
     $(function () {
         $.noConflict();
         var table = $('#example').DataTable({
-            select : true
+            select: true,
+            "columnDefs": [
+                { "visible": false, "targets": 0 }
+            ]
         });
 
         $('#example tbody').on('click', 'tr', function () {
@@ -133,7 +136,11 @@
                     { "data": "filePath" },
                     { "data": "metadata" },
                     { "data": "lastWriteTime" }
+                ],
+                "columnDefs": [
+                    { "visible": false, "targets": 0 }
                 ]
+
             });
         }
 
