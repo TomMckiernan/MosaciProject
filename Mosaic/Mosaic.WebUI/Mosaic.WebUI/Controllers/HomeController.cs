@@ -57,7 +57,19 @@ namespace Mosaic.WebUI.Controllers
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 
-            return View("Create", model);
+            var progress = client.ReadProject(Id).Project.Progress;
+            if (progress == ProjectStructure.Types.State.Smalladded)
+            {
+                return new CreateController().ImportMaster(Id);
+            }
+            else if (progress == ProjectStructure.Types.State.Largeadded)
+            {
+                return new MasterController().Generate(Id);
+            }
+            else
+            {
+                return View("Create", model);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Infrastructure\Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Create\" />
+    <Folder Include="Views\Master\" />
+  </ItemGroup>
+
 </Project>
