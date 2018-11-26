@@ -40,7 +40,7 @@
 </table>
 
 <form class="form-inline">
-    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="button">Import</button>
+    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" disabled type="button">Import</button>
 </form>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
@@ -58,15 +58,18 @@
             ]
         });
 
+        var importBtn = document.getElementById('import_files');
+
         $('#example tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
+            if (table.rows('.selected').data().length == 0) {
+                $(importBtn).attr("disabled", true);
+            }
+            else {
+                $(importBtn).attr("disabled", false);
+            }
         });
 
-        // To Do
-        // On change index location, pass the following three ajax calls
-        // in a method which will perform all three in turn
-        // In this method will also perform the javascript to indicate the
-        // indexing is occuring
         var updateIndexedLocation = function (IndexedLocation) {
 
             $.ajax({

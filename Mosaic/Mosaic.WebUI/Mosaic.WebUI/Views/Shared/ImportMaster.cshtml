@@ -41,7 +41,7 @@
 </table>
 
 <form class="form-inline">
-    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" type="button">Import</button>
+    <button id="import_files" class="btn btn-outline-success my-2 my-sm-0 pull-right" disabled type="button">Import</button>
 </form>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
@@ -59,13 +59,17 @@
             ]
         });
 
+        var importBtn = document.getElementById('import_files');
+
         $('#example tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
+                $(importBtn).attr("disabled", true);
             }
             else {
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
+                $(importBtn).attr("disabled", false);
             }
         });
 
