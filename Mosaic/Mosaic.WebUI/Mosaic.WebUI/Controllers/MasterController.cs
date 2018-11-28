@@ -50,6 +50,14 @@ namespace Mosaic.WebUI.Controllers
             return Json(response.Error);
         }
 
+        [HttpPost]
+        public ActionResult ViewImage(string filepath)
+        {
+            var model = new ViewImageModel();
+
+            return Json("The view image request was request");
+        }
+
         public ActionResult Generate(string Id)
         {
             var model = new IndexedLocationModel(Id);
