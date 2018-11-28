@@ -48,13 +48,17 @@
 <script src="~/lib/DataTables/datatables.js" type="text/javascript" charset="utf8"></script>
 
 <script>
-
     $(function () {
         $.noConflict();
         var table = $('#example').DataTable({
             select: true,
+            dom: 'Blfrtip',
             "columnDefs": [
                 { "visible": false, "targets": 0 }
+            ],
+            buttons: [
+                'selectAll',
+                'selectNone'
             ]
         });
 
@@ -62,6 +66,15 @@
 
         $('#example tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
+            if (table.rows('.selected').data().length == 0) {
+                $(importBtn).attr("disabled", true);
+            }
+            else {
+                $(importBtn).attr("disabled", false);
+            }
+        });
+
+        table.on('buttons-action', function() {
             if (table.rows('.selected').data().length == 0) {
                 $(importBtn).attr("disabled", true);
             }
@@ -132,7 +145,8 @@
             table.destroy();
 
             table = $('#example').DataTable({
-                "data" : data,
+                "data": data,
+                dom: 'Blfrtip',
                 "columns": [
                     { "data": "id" },
                     { "data": "fileName" },
@@ -142,12 +156,16 @@
                 ],
                 "columnDefs": [
                     { "visible": false, "targets": 0 }
+                ],
+                buttons: [
+                    'selectAll',
+                    'selectNone'
                 ]
-
             });
         }
 
         var importFiles = function (id, fileIds) {
+            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFiles", "Create")',
@@ -157,6 +175,7 @@
                 data: { id: id, fileIds: fileIds },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
+                    debugger;
                 },
                 success: function (response) {
                     window.location.href = '@Url.Action("ImportMaster","Create", new { Id = Model.ProjectId })';
@@ -178,6 +197,7 @@
             var fileIds = $.map(data, function (n) {
                 return n.id;
             });
+            debugger;
             importFiles("@Model.ProjectId", fileIds);
         });
     });

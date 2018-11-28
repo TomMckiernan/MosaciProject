@@ -65,6 +65,7 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
+        [RequestFormSizeLimit(valueCountLimit: 2000)]
         public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
         {
             var model = new SmallFilesModel();
