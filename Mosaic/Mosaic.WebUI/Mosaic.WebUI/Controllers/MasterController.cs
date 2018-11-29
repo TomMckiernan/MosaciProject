@@ -54,8 +54,15 @@ namespace Mosaic.WebUI.Controllers
         public ActionResult ViewImage(string filepath)
         {
             var model = new ViewImageModel();
-
-            return Json("The view image request was request");
+            model.DeleteImage();
+            model.CopyImage(filepath);
+            if (String.IsNullOrEmpty(model.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(model.FilePath);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(model.Error);
         }
 
         public ActionResult Generate(string Id)

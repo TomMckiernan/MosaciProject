@@ -20,7 +20,8 @@
   <ItemGroup>
     <Folder Include="Views\Create\" />
     <Folder Include="Views\Master\" />
-    <Folder Include="wwwroot\images\temp\" />
+    <Folder Include="wwwroot\images\tiles\" />
+    <Folder Include="wwwroot\images\project\" />
   </ItemGroup>
 
 </Project>

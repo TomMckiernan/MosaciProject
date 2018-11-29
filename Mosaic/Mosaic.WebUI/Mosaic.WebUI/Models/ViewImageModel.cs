@@ -12,7 +12,7 @@ namespace Mosaic.WebUI.Models
         public string FilePath { get; set; }
         public string Error { get; set; }
 
-        public ViewImageModel(string copyPath = "~\\images\\temp\\")
+        public ViewImageModel(string copyPath = "~\\images\\tiles\\")
         {
             CopyPath = copyPath;
         }

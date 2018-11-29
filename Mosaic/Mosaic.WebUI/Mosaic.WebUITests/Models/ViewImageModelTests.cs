@@ -10,7 +10,7 @@ namespace Mosaic.WebUITests.Models
     [TestClass]
     public class ViewImageModelTests
     {
-        public string copyLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\temp\\";
+        public string copyLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\tiles\\";
 
         [TestMethod]
         public void IfCopyDirectoryDoesNotExistReturnsError()
