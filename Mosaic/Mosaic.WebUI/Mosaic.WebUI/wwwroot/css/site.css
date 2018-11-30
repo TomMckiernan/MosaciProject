@@ -129,6 +129,12 @@ body {
     max-width: 1140px;
 }
 
-.dataTables_wrapper {
-    width: 500px !important;
+/*.dataTables_wrapper {
+    width: 50% !important;
+    margin-right:0px;
+}*/
+
+.master-image {
+    width:50%;
+    float:right;
 }

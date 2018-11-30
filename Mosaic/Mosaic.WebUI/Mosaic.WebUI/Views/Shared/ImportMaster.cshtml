@@ -19,7 +19,9 @@
     </form>
 </nav>
 
-<table id="example" class="table table-striped table-bordered" style="width:50%">
+@*<img src="~/images/face_image.jpg" class="rounded mx-auto d-block master-image" alt="~/images/face_image.jpg">*@
+
+<table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <th>ID</th>
@@ -55,7 +57,8 @@
         var table = $('#example').DataTable({
             select: true,
             "columnDefs": [
-                { "visible": false, "targets": 0 }
+                { "visible": false, "targets": 0 },
+                { "visible": false, "targets": 3 }
             ]
         });
 
@@ -96,7 +99,6 @@
                 }
             });
         }
-
 
         var updateImageFileIndex = function (IndexedLocation) {
             $.ajax({
@@ -149,7 +151,8 @@
                     { "data": "lastWriteTime" }
                 ],
                 "columnDefs": [
-                    { "visible": false, "targets": 0 }
+                    { "visible": false, "targets": 0 },
+                    { "visible": false, "targets": 3 }
                 ]
             });
         }
