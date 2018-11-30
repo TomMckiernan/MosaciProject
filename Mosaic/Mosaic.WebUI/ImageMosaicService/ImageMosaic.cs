@@ -17,7 +17,7 @@ namespace ImageMosaicService
             var tilesPath = request.Tiles.Select(x => x.FilePath).ToList();
             var mosaicGenerator = new MosaicGenerator();
             var mosaic = mosaicGenerator.Generate(request.Master.FilePath, tilesPath);
-            var location = string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", request.Master.Id);
+            var location = string.Format("C:\\Users\\Tom_m\\OneDrive\\Pictures\\MosaicImageTests\\{0}.jpg", request.Master.Id);
             mosaic.Image.Save(location);
             return new ImageMosaicResponse() { Location = location };
         }

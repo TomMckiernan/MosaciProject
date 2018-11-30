@@ -8,21 +8,27 @@ namespace Mosaic.WebUI.Models
 {
     public class GenerateMosaicModel
     {
-        public string Generate(IMakerClient client, string id)
+        public string ProjectId { get; set; }
+
+        public GenerateMosaicModel(string id)
+        {
+            ProjectId = id;
+        }
+
+        public ImageMosaicResponse Generate(IMakerClient client, string id)
         {
             // Get project
             var project = client.ReadProject(id);
 
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
-            client.ReadAllImageFiles(tileFilesId);
+            var tileFiles = client.ReadAllImageFiles(tileFilesId);
 
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
-            client.ReadImageFile(masterFileId);
+            var masterFile = client.ReadImageFile(masterFileId);
 
-
-            return "";
+            return client.Generate(tileFiles.Files, masterFile.File);
         }
 
         //Structure for mosaic generator model
