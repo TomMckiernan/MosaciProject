@@ -6,16 +6,27 @@
 @Html.Partial("_ImageCarousel")
 
 <div class="index-content">
-    <div class="container">
+    <div id="project-container" class="container">
         @for (int i = 0; i < Model.Projects.Count; i++)
         {
             <div class="col-lg-4">
                 <a href="@Url.Action("SelectProject", "Home", new { Id = Model.Projects[i].Id})">
                     <div class="card" id="@Model.Projects[i].Id">
-                        <img src="http://cevirdikce.com/proje/hasem-2/images/finance-1.jpg">
-                        <h4>Project Title</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <p class="card-text text-muted">Created @Html.DisplayFor(model => model.Projects[i].TimeOfCreation, new { @class = "text-muted" })</p>
+                        <img src="~/images/face_image.jpg">
+                        <table class="project-table">
+                            <tr>
+                                <th class=" text-muted glyphicon glyphicon-picture" title="Mosaic Location" aria-hidden="true"></th>
+                                <td class="card-text">@Html.DisplayFor(model => model.Projects[i].Id, new { @class = "text-muted" })</td>
+                            </tr>
+                            <tr>
+                                <th class=" text-muted glyphicon glyphicon-open-file" title="Files in Library" aria-hidden="true"></th>
+                                <td class="card-text">@Html.DisplayFor(model => model.Projects[i].SmallFileIds.Count, new { @class = "text-muted" })</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted glyphicon glyphicon-calendar" title="Created" aria-hidden="true"></th>
+                                <td class="card-text">@Html.DisplayFor(model => model.Projects[i].TimeOfCreation, new { @class = "text-muted" })</td>
+                            </tr>
+                        </table>
                     </div>
                 </a>
             </div>
