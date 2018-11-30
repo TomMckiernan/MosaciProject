@@ -1,0 +1,30 @@
+Image Mosaic Service Design
+
+ImageMosaic Request
+- Needs at least to pass the SmallImageIds and LargeImageIds
+- Would then needs to access ImageFileIndex collection to get the file path for all of the ids passed
+- In the future will be extended to pass the metadata therefore seems likely to pass imagefileindex structure
+
+- If don't want to do this could get all the image paths client side and pass those to the image mosaic service
+
+ImageMosaic Response
+ - Needs to at least run a location for where the mosaic image is stored locally
+ 
+ProjectService update mosaic image path and status
+- Want to store the path that stores the created mosaic image
+- Or could create a new collection which stores mosaic images
+
+Generating metadata for tile files
+- Use the technique in the image mosaic service
+
+Structure for mosaic generator model
+- properties needed
+- Master image
+- Tile image count
+- Average colour for the tile files
+- Master image average colour analysis
+  - i.e the average colour for each tile in the image
+  
+  Get all imagefileindexstructure files for the id
+  Get the image file index structure for the master image
+  Therefore need request to get the current project structure 

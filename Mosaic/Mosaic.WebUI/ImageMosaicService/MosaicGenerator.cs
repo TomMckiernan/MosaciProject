@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace ImageMosaic
+namespace ImageMosaicService
 {
     public class MosaicGenerator
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Drawing;
 
-namespace ImageMosaic
+namespace ImageMosaicService
 {
     public class ImageInfo
     {

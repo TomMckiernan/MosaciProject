@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 
-namespace ImageMosaic
+namespace ImageMosaicService
 {
     public class ImageProcessing
     {

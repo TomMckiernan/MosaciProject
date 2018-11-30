@@ -82,8 +82,7 @@ namespace Mosaic.WebUI.Controllers
 
         public ActionResult Generate(string Id)
         {
-            var model = new IndexedLocationModel(Id);
-            model.RequestIndexedLocation(client);
+            var model = new GenerateMosaicModel();
 
             return View("Generate", model);
         }
