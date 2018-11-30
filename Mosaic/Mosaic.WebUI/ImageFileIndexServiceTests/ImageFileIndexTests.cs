@@ -33,7 +33,7 @@ namespace ImageFileIndexServiceTests
                 var service = new ImageFileIndex("TestMosaicDatabase");
                 await service.AnalyseImageFileIndex(request);
             });
-            var result = new MongoImageFileIndex().Read(database, indexedLocation);
+            var result = new MongoImageFileIndex().ReadAll(database, indexedLocation);
             Assert.AreEqual(7, result.Files.Count);
 
         }

@@ -19,9 +19,19 @@ namespace ImageFileIndexService
             database = client.GetDatabase(dbName);
         }
 
-        public ImageFileIndexResponse ReadImageFileIndex(ImageFileIndexRequest request)
+        public ImageFileIndexResponse ReadAllImageFileIndex(ImageFileIndexRequest request)
         {
-            return new MongoImageFileIndex().Read(database, request.IndexedLocation);
+            return new MongoImageFileIndex().ReadAll(database, request.IndexedLocation);
+        }
+
+        public ImageFileResponse ReadImageFile(ImageFileRequest request)
+        {
+            return new MongoImageFileIndex().ReadImageFile(database, request.Id);
+        }
+
+        public ImageFileIndexResponse ReadAllImageFiles(ImageFilesAllRequest request)
+        {
+            return new MongoImageFileIndex().ReadAllImageFiles(database, request.Ids.ToList());
         }
 
         // Analyse all files in current directory and update collection to reflect directory
@@ -37,7 +47,7 @@ namespace ImageFileIndexService
                     var directoryFiles = indexedDirectory.GetFiles("*.png", SearchOption.AllDirectories).ToList();
 
                     // Get exisiting files in location
-                    var existingFiles = ReadImageFileIndex(request).Files.ToList();
+                    var existingFiles = ReadAllImageFileIndex(request).Files.ToList();
 
                     // Get new files
                     var newFiles = directoryFiles.Where(f => !existingFiles.Any(f2 => f2.FilePath == f.FullName));

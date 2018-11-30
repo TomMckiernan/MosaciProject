@@ -24,7 +24,7 @@ namespace Infrastructure
         public ImageFileIndexResponse ReadImageFileIndex(string indexedLocation)
         {
             var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
-            var response = new ImageFileIndexService.ImageFileIndex().ReadImageFileIndex(request);
+            var response = new ImageFileIndexService.ImageFileIndex().ReadAllImageFileIndex(request);
             return response;
         }
 
@@ -32,6 +32,21 @@ namespace Infrastructure
         {
             var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
             var response = await new ImageFileIndexService.ImageFileIndex().AnalyseImageFileIndex(request);
+            return response;
+        }
+
+        public ImageFileResponse ReadImageFile(string id)
+        {
+            var request = new ImageFileRequest() { Id = id };
+            var response = new ImageFileIndexService.ImageFileIndex().ReadImageFile(request);
+            return response;
+        }
+
+        public ImageFileIndexResponse ReadAllImageFiles(IList<string> ids)
+        {
+            var request = new ImageFilesAllRequest();
+            request.Ids.AddRange(ids);
+            var response = new ImageFileIndexService.ImageFileIndex().ReadAllImageFiles(request);
             return response;
         }
 

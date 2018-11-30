@@ -15,9 +15,13 @@ namespace Mosaic.WebUI.Models
 
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
+            client.ReadAllImageFiles(tileFilesId);
 
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
+            client.ReadImageFile(masterFileId);
+
+
             return "";
         }
 

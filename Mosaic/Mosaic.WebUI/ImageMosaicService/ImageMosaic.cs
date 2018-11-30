@@ -10,9 +10,9 @@ namespace ImageMosaicService
         MongoClient client;
         IMongoDatabase database;
 
-        public ImageMosaicResponse Generate()
-        {
-            var generator = new MosaicGenerator();
-        }
+        //public ImageMosaicResponse Generate()
+        //{
+        //    var generator = new MosaicGenerator();
+        //}
     }
 }

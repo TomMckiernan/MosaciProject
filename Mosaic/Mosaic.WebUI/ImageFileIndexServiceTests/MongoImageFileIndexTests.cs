@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace ImageFileIndexServiceTests
 {
@@ -38,7 +39,7 @@ namespace ImageFileIndexServiceTests
             var collection = new MongoImageFileIndex();
 
             var indexedLocation = "Pictures";
-            var responseRead = collection.Read(database, indexedLocation);
+            var responseRead = collection.ReadAll(database, indexedLocation);
             Assert.AreEqual(0, responseRead.Files.Count);
         }
 
@@ -50,7 +51,7 @@ namespace ImageFileIndexServiceTests
             var responseInsert = collection.Insert(database, request);
 
             var indexedLocation = "Pictures";
-            var responseRead = collection.Read(database, indexedLocation);
+            var responseRead = collection.ReadAll(database, indexedLocation);
             Assert.AreEqual(1, responseRead.Files.Count);
             Assert.IsTrue(responseRead.Files.Contains(request));
         }
@@ -65,7 +66,7 @@ namespace ImageFileIndexServiceTests
             var responseInsert2 = collection.Insert(database, request2);
 
             var indexedLocation = "Pictures";
-            var responseRead = collection.Read(database, indexedLocation);
+            var responseRead = collection.ReadAll(database, indexedLocation);
 
             Assert.AreEqual(1, responseRead.Files.Count);
             Assert.IsTrue(responseRead.Files.Contains(request));
@@ -81,7 +82,7 @@ namespace ImageFileIndexServiceTests
             var responseInsert2 = collection.Insert(database, request2);
 
             var indexedLocation = "Pictures";
-            var responseRead = collection.Read(database, indexedLocation);
+            var responseRead = collection.ReadAll(database, indexedLocation);
 
             Assert.AreEqual(2, responseRead.Files.Count);
             Assert.IsTrue(responseRead.Files.Contains(request));
@@ -91,7 +92,7 @@ namespace ImageFileIndexServiceTests
         [TestMethod]
         public void ImageFileIndexReadReturnsErrorIfIndexedLocationNull()
         {
-            var response = new MongoImageFileIndex().Read(database, null);
+            var response = new MongoImageFileIndex().ReadAll(database, null);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
 
@@ -99,8 +100,60 @@ namespace ImageFileIndexServiceTests
         public void ImageFileIndexReadReturnsErrorIfIndexedLocationEmpty()
         {
             var indexedLocation = String.Empty;
-            var response = new MongoImageFileIndex().Read(database, indexedLocation);
+            var response = new MongoImageFileIndex().ReadAll(database, indexedLocation);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void ReadImageFileReturnsFileWithCorrectId()
+        {
+            var collection = new MongoImageFileIndex();
+            var request = CreateImageFileIndexStructure();
+            var responseInsert = collection.Insert(database, request);
+            var responseRead = collection.ReadImageFile(database, request.Id);
+
+            Assert.IsTrue(responseRead.File.Equals(request));
+        }
+
+        [TestMethod]
+        public void ReadImageFileReturnsErrorIfIdIsNullOrEmpty()
+        {
+            var collection = new MongoImageFileIndex();
+            var responseRead = collection.ReadImageFile(database, string.Empty);
+            Assert.IsFalse(String.IsNullOrEmpty(responseRead.Error));
+        }
+
+        [TestMethod]
+        public void ReadImageFileReturnsErrorFileWithIdDoesNotExist()
+        {
+            var collection = new MongoImageFileIndex();
+            var responseRead = collection.ReadImageFile(database, "1");
+            Assert.IsFalse(String.IsNullOrEmpty(responseRead.Error));
+        }
+
+        [TestMethod]
+        public void ReadAllImageFilesReturnsErrorIfIdsIsNull()
+        {
+            var collection = new MongoImageFileIndex();
+            var responseRead = collection.ReadAllImageFiles(database, null);
+            Assert.IsFalse(String.IsNullOrEmpty(responseRead.Error));
+        }
+
+        [TestMethod]
+        public void ReadAllImageFilesReturnsAllFilesWhichMatchIds()
+        {
+            var collection = new MongoImageFileIndex();
+            var request = CreateImageFileIndexStructure();
+            var responseInsert = collection.Insert(database, request);
+            var request2 = CreateImageFileIndexStructure(filePath: "Pictures\\SubPictures\\Image.jpg");
+            var responseInsert2 = collection.Insert(database, request2);
+
+            var ids = new List<string>() { responseInsert.File.Id, responseInsert2.File.Id };
+            var responseRead = collection.ReadAllImageFiles(database, ids);
+
+            Assert.AreEqual(2, responseRead.Files.Count);
+            Assert.IsTrue(responseRead.Files.Contains(request));
+            Assert.IsTrue(responseRead.Files.Contains(request2));
         }
 
         [TestCleanup]

@@ -6,6 +6,6 @@ message ImageMosaicRequest {
 }
 
 message ImageMosaicResponse {
-    string ImageMosaicLocation Files = 1;
+    string Files = 1;
 	string Error                     = 2;
 }

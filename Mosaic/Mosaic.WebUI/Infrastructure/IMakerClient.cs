@@ -15,6 +15,10 @@ namespace Infrastructure
         
         Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(string indexedLocation);
 
+        ImageFileResponse ReadImageFile(string id);
+
+        ImageFileIndexResponse ReadAllImageFiles(IList<string> ids);
+
         ProjectResponse CreateProject();
 
         ProjectResponse ReadProject(string id);

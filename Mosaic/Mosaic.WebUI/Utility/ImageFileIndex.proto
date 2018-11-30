@@ -9,6 +9,19 @@ message ImageFileIndexResponse {
 	string Error                           = 2;
 }
 
+message ImageFileRequest {
+    string id    = 1;
+}
+
+message ImageFilesAllRequest {
+    repeated string ids    = 1;
+}
+
+message ImageFileResponse {
+    ImageFileIndexStructure File           = 1;
+	string Error                           = 2;
+}
+
 message ImageFileIndexStructure {
     string id              = 1;
 	string FilePath        = 2;
