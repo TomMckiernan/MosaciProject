@@ -30,5 +30,7 @@ namespace Infrastructure
         ProjectResponse InsertLargeFile(string id, string fileId);
 
         ProjectResponse DeleteProject(string id);
+
+        ImageMosaicResponse Generate(IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master);
     }
 }

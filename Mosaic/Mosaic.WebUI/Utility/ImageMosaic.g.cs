@@ -22,15 +22,16 @@ public static partial class ImageMosaicReflection {
   static ImageMosaicReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChFJbWFnZU1vc2FpYy5wcm90byI3ChJJbWFnZU1vc2FpY1JlcXVlc3QSEAoI",
-          "TWFzdGVySWQYASABKAkSDwoHVGlsZUlkcxgCIAMoCSIzChNJbWFnZU1vc2Fp",
-          "Y1Jlc3BvbnNlEg0KBUZpbGVzGAEgASgJEg0KBUVycm9yGAIgASgJYgZwcm90",
-          "bzM="));
+          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8iZwoS",
+          "SW1hZ2VNb3NhaWNSZXF1ZXN0EicKBVRpbGVzGAEgAygLMhguSW1hZ2VGaWxl",
+          "SW5kZXhTdHJ1Y3R1cmUSKAoGTWFzdGVyGAIgASgLMhguSW1hZ2VGaWxlSW5k",
+          "ZXhTdHJ1Y3R1cmUiNgoTSW1hZ2VNb3NhaWNSZXNwb25zZRIQCghsb2NhdGlv",
+          "bhgBIAEoCRINCgVFcnJvchgCIAEoCWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { },
+        new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "MasterId", "TileIds" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Files", "Error" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Tiles", "Master" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null)
         }));
   }
   #endregion
@@ -62,8 +63,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public ImageMosaicRequest(ImageMosaicRequest other) : this() {
-    masterId_ = other.masterId_;
-    tileIds_ = other.tileIds_.Clone();
+    tiles_ = other.tiles_.Clone();
+    master_ = other.master_ != null ? other.master_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -72,25 +73,25 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     return new ImageMosaicRequest(this);
   }
 
-  /// <summary>Field number for the "MasterId" field.</summary>
-  public const int MasterIdFieldNumber = 1;
-  private string masterId_ = "";
+  /// <summary>Field number for the "Tiles" field.</summary>
+  public const int TilesFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::ImageFileIndexStructure> _repeated_tiles_codec
+      = pb::FieldCodec.ForMessage(10, global::ImageFileIndexStructure.Parser);
+  private readonly pbc::RepeatedField<global::ImageFileIndexStructure> tiles_ = new pbc::RepeatedField<global::ImageFileIndexStructure>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string MasterId {
-    get { return masterId_; }
-    set {
-      masterId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
+  public pbc::RepeatedField<global::ImageFileIndexStructure> Tiles {
+    get { return tiles_; }
   }
 
-  /// <summary>Field number for the "TileIds" field.</summary>
-  public const int TileIdsFieldNumber = 2;
-  private static readonly pb::FieldCodec<string> _repeated_tileIds_codec
-      = pb::FieldCodec.ForString(18);
-  private readonly pbc::RepeatedField<string> tileIds_ = new pbc::RepeatedField<string>();
+  /// <summary>Field number for the "Master" field.</summary>
+  public const int MasterFieldNumber = 2;
+  private global::ImageFileIndexStructure master_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<string> TileIds {
-    get { return tileIds_; }
+  public global::ImageFileIndexStructure Master {
+    get { return master_; }
+    set {
+      master_ = value;
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -106,16 +107,16 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (MasterId != other.MasterId) return false;
-    if(!tileIds_.Equals(other.tileIds_)) return false;
+    if(!tiles_.Equals(other.tiles_)) return false;
+    if (!object.Equals(Master, other.Master)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (MasterId.Length != 0) hash ^= MasterId.GetHashCode();
-    hash ^= tileIds_.GetHashCode();
+    hash ^= tiles_.GetHashCode();
+    if (master_ != null) hash ^= Master.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -129,11 +130,11 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (MasterId.Length != 0) {
-      output.WriteRawTag(10);
-      output.WriteString(MasterId);
+    tiles_.WriteTo(output, _repeated_tiles_codec);
+    if (master_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Master);
     }
-    tileIds_.WriteTo(output, _repeated_tileIds_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -142,10 +143,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (MasterId.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(MasterId);
+    size += tiles_.CalculateSize(_repeated_tiles_codec);
+    if (master_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Master);
     }
-    size += tileIds_.CalculateSize(_repeated_tileIds_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -157,10 +158,13 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (other == null) {
       return;
     }
-    if (other.MasterId.Length != 0) {
-      MasterId = other.MasterId;
+    tiles_.Add(other.tiles_);
+    if (other.master_ != null) {
+      if (master_ == null) {
+        master_ = new global::ImageFileIndexStructure();
+      }
+      Master.MergeFrom(other.Master);
     }
-    tileIds_.Add(other.tileIds_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -173,11 +177,14 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          MasterId = input.ReadString();
+          tiles_.AddEntriesFrom(input, _repeated_tiles_codec);
           break;
         }
         case 18: {
-          tileIds_.AddEntriesFrom(input, _repeated_tileIds_codec);
+          if (master_ == null) {
+            master_ = new global::ImageFileIndexStructure();
+          }
+          input.ReadMessage(master_);
           break;
         }
       }
@@ -211,7 +218,7 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public ImageMosaicResponse(ImageMosaicResponse other) : this() {
-    files_ = other.files_;
+    location_ = other.location_;
     error_ = other.error_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -221,14 +228,14 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
     return new ImageMosaicResponse(this);
   }
 
-  /// <summary>Field number for the "Files" field.</summary>
-  public const int FilesFieldNumber = 1;
-  private string files_ = "";
+  /// <summary>Field number for the "location" field.</summary>
+  public const int LocationFieldNumber = 1;
+  private string location_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Files {
-    get { return files_; }
+  public string Location {
+    get { return location_; }
     set {
-      files_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      location_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -256,7 +263,7 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Files != other.Files) return false;
+    if (Location != other.Location) return false;
     if (Error != other.Error) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -264,7 +271,7 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (Files.Length != 0) hash ^= Files.GetHashCode();
+    if (Location.Length != 0) hash ^= Location.GetHashCode();
     if (Error.Length != 0) hash ^= Error.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -279,9 +286,9 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (Files.Length != 0) {
+    if (Location.Length != 0) {
       output.WriteRawTag(10);
-      output.WriteString(Files);
+      output.WriteString(Location);
     }
     if (Error.Length != 0) {
       output.WriteRawTag(18);
@@ -295,8 +302,8 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (Files.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Files);
+    if (Location.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Location);
     }
     if (Error.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Error);
@@ -312,8 +319,8 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
     if (other == null) {
       return;
     }
-    if (other.Files.Length != 0) {
-      Files = other.Files;
+    if (other.Location.Length != 0) {
+      Location = other.Location;
     }
     if (other.Error.Length != 0) {
       Error = other.Error;
@@ -330,7 +337,7 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          Files = input.ReadString();
+          Location = input.ReadString();
           break;
         }
         case 18: {

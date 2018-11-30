@@ -10,14 +10,13 @@ namespace ImageMosaicService
 {
     public class MosaicGenerator
     {
-        public Mosaic Generate(string imageToMash, string srcImageDirectory)
+        public Mosaic Generate(string masterImage, List<string> tileImages = null)
         {
             var imageProcessing = new ImageProcessing();
             var imageInfos = new List<ImageInfo>();
             var mosaic = new Mosaic();
 
-            var di = new DirectoryInfo(srcImageDirectory);
-            var files = di.GetFiles("*.png", SearchOption.AllDirectories).ToList();
+            var files = tileImages.Select(x => new FileInfo(x)).ToList();
 
             Parallel.ForEach(files, f =>
             {
@@ -30,7 +29,7 @@ namespace ImageMosaicService
                 }
             });
 
-            using (var source = new Bitmap(imageToMash))
+            using (var source = new Bitmap(masterImage))
             {
                 var colorMap = imageProcessing.CreateMap(source);
                 mosaic = imageProcessing.Render(source, colorMap, imageInfos);

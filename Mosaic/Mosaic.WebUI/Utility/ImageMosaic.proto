@@ -1,11 +1,12 @@
 ﻿syntax = "proto3";
+import "ImageFileIndex.proto";
 
 message ImageMosaicRequest {
-    string MasterId                   = 1;
-	repeated string TileIds           = 2;
+    repeated ImageFileIndexStructure Tiles = 1;
+	ImageFileIndexStructure Master         = 2;
 }
 
 message ImageMosaicResponse {
-    string Files = 1;
-	string Error                     = 2;
+    string location                     = 1;
+	string Error                        = 2;
 }

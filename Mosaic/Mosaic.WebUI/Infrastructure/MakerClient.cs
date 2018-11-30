@@ -90,5 +90,13 @@ namespace Infrastructure
             var response = new ProjectService.Project().DeleteProject(request);
             return response;
         }
+
+        public ImageMosaicResponse Generate(IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master)
+        {
+            var request = new ImageMosaicRequest() { Master = master};
+            request.Tiles.AddRange(tiles);
+            var response = new ImageMosaicService.ImageMosaic().Generate(request);
+            return response;
+        }
     }
 }
