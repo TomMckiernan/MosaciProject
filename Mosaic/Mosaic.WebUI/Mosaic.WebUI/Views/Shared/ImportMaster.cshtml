@@ -5,9 +5,9 @@
 }
 
 <div class="jumbotron">
-    <h1 class="display-4">Import Master</h1>
+    <h1 class="display-4">Select Master File</h1>
     <hr class="my-4">
-    <p>Import master file from local system directory to use in the creation of the mosaic image.</p>
+    <p>Select master file from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
@@ -85,7 +85,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateIndexedLocation", "Create")',
+                url: '@Url.Action("UpdateIndexedLocation", "Tile")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation },
@@ -103,7 +103,7 @@
         var updateImageFileIndex = function (IndexedLocation) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateImageFileIndex", "Create")',
+                url: '@Url.Action("UpdateImageFileIndex", "Tile")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation },
@@ -169,7 +169,7 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    window.location.href = '@Url.Action("Generate","Master", new { Id = Model.ProjectId })';
+                    window.location.href = '@Url.Action("ImportTiles", "Master", new { Id = Model.ProjectId })';
                 }
             });
         }

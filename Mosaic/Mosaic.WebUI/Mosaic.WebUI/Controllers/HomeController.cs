@@ -45,11 +45,8 @@ namespace Mosaic.WebUI.Controllers
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
 
             var response = new ProjectModel().CreateProject(client);
-            
-            var model = new IndexedLocationModel(response.Project.Id);
-            model.RequestIndexedLocation(client);
 
-            return View(model);
+            return ImportMaster(response.Project.Id);
         }
 
         public IActionResult SelectProject(string Id)
@@ -60,16 +57,24 @@ namespace Mosaic.WebUI.Controllers
             var progress = client.ReadProject(Id).Project.Progress;
             if (progress == ProjectStructure.Types.State.Smalladded)
             {
-                return new CreateController().ImportMaster(Id);
+                return new TileController().Generate(Id);
             }
             else if (progress == ProjectStructure.Types.State.Largeadded)
             {
-                return new MasterController().Generate(Id);
+                return new MasterController().ImportTiles(Id);
             }
             else
             {
-                return View("Create", model);
+                return ImportMaster(Id);
             }
+        }
+
+        public IActionResult ImportMaster(string Id)
+        {
+            var model = new IndexedLocationModel(Id);
+            model.RequestIndexedLocation(client);
+
+            return View("ImportMaster", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

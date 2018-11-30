@@ -65,12 +65,12 @@ namespace Mosaic.WebUI.Controllers
             return Json(model.Error);
         }
 
-        public ActionResult Generate(string Id)
+        public ActionResult ImportTiles(string Id)
         {
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 
-            return View("Generate", model);
+            return View("ImportTiles", model);
         }
     }
 }

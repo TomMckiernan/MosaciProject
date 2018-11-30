@@ -9,7 +9,7 @@ using Mosaic.WebUI.Models;
 
 namespace Mosaic.WebUI.Controllers
 {
-    public class CreateController : Controller
+    public class TileController : Controller
     {
         IMakerClient client = new MakerClient();
 
@@ -80,12 +80,12 @@ namespace Mosaic.WebUI.Controllers
             return Json(response.Error);
         }
 
-        public ActionResult ImportMaster(string Id)
+        public ActionResult Generate(string Id)
         {
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 
-            return View("ImportMaster", model);
+            return View("Generate", model);
         }
     }
 }

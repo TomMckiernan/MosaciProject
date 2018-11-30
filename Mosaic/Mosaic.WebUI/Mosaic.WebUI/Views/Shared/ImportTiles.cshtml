@@ -1,12 +1,12 @@
 ﻿@model Mosaic.WebUI.Models.IndexedLocationModel
 
 @{
-    ViewData["Title"] = "Indexed Files";
+    ViewData["Title"] = "Indexed Tile Files";
 }
 <div class="jumbotron">
-    <h1 class="display-4">Import Files</h1>
+    <h1 class="display-4">Select Tile Files</h1>
     <hr class="my-4">
-    <p>Import files from local system directory to use in the creation of the mosaic image.</p>
+    <p>Select files from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
@@ -87,7 +87,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateIndexedLocation", "Create")',
+                url: '@Url.Action("UpdateIndexedLocation", "Tile")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation },
@@ -106,7 +106,7 @@
         var updateImageFileIndex = function (IndexedLocation) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("UpdateImageFileIndex", "Create")',
+                url: '@Url.Action("UpdateImageFileIndex", "Tile")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation },
@@ -124,7 +124,7 @@
         var readImageFileIndex = function (IndexedLocation) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ReadImageFileIndex", "Create")',
+                url: '@Url.Action("ReadImageFileIndex", "Tile")',
                 dataType: 'json',
                 cache: false,
                 data: { IndexedLocation: IndexedLocation, Id : "@Model.ProjectId" },
@@ -168,7 +168,7 @@
             debugger;
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ImportFiles", "Create")',
+                url: '@Url.Action("ImportFiles", "Tile")',
                 dataType: 'json',
                 traditional: true,
                 cache: false,
@@ -178,7 +178,7 @@
                     debugger;
                 },
                 success: function (response) {
-                    window.location.href = '@Url.Action("ImportMaster","Create", new { Id = Model.ProjectId })';
+                    window.location.href = '@Url.Action("Generate","Tile", new { Id = Model.ProjectId })';
                 }
             });
         }
