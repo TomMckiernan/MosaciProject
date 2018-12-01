@@ -10,7 +10,7 @@ namespace ImageMosaicService
 {
     public class MosaicGenerator
     {
-        public Mosaic Generate(string masterImage, List<string> tileImages = null)
+        public Mosaic Generate(string masterImage, List<string> tileImages)
         {
             var imageProcessing = new ImageProcessing();
             var imageInfos = new List<ImageInfo>();

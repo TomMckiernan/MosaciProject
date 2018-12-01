@@ -18,7 +18,15 @@ namespace Mosaic.WebUI.Models
         public ImageMosaicResponse Generate(IMakerClient client, string id)
         {
             // Get project
+            if (String.IsNullOrEmpty(id))
+            {
+                return new ImageMosaicResponse() { Error = "Project Id cannot be null or empty" };
+            }
             var project = client.ReadProject(id);
+            if (!String.IsNullOrEmpty(project.Error))
+            {
+                return new ImageMosaicResponse() { Error = project.Error };
+            }
 
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
