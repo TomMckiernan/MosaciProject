@@ -1,6 +1,8 @@
-﻿using MongoDB.Bson;
+﻿using ImageMosaicService;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,15 +83,25 @@ namespace ImageFileIndexService
                 FileName = x.Name,
                 FilePath = x.FullName,
                 LastWriteTime = x.LastWriteTime.ToString(),
-                Metadata = GenerateMetaData()
+                Metadata = GenerateMetaData(x)
             };
             var response = new MongoImageFileIndex().Insert(database, request);
      
         }
 
-        private string GenerateMetaData()
+        private string GenerateMetaData(FileInfo file)
         {
-            return String.Empty;
+            //var imageProcessing = new ImageProcessing();
+            //var imageInfos = new List<ImageInfo>();
+
+            //using (var inputBmp = imageProcessing.Resize(file.FullName))
+            //{
+            //    var info = imageProcessing.GetAverageColor(inputBmp, file.FullName);
+
+            //    if (info != null)
+            //        imageInfos.Add(info);
+            //}
+            return string.Empty;
         }
 
         public async Task AnalyseUpdatedFiles(FileInfo x)
