@@ -91,9 +91,9 @@ namespace Infrastructure
             return response;
         }
 
-        public ImageMosaicResponse Generate(IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master)
+        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master)
         {
-            var request = new ImageMosaicRequest() { Master = master};
+            var request = new ImageMosaicRequest() { Id = id, Master = master};
             request.Tiles.AddRange(tiles);
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;

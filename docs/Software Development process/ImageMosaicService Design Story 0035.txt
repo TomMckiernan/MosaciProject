@@ -28,3 +28,9 @@ Structure for mosaic generator model
   Get all imagefileindexstructure files for the id
   Get the image file index structure for the master image
   Therefore need request to get the current project structure 
+
+
+Once generation pressed update status in project collection, and store the location the mosaic has been saved to.
+Then perform the copy function and copy image to mosiac to image project folder.
+Delete the image in this location when you delete the project
+Save the mosiac image name as the project id

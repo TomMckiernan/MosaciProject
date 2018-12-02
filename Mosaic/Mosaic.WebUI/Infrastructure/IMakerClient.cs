@@ -31,6 +31,6 @@ namespace Infrastructure
 
         ProjectResponse DeleteProject(string id);
 
-        ImageMosaicResponse Generate(IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master);
+        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master);
     }
 }

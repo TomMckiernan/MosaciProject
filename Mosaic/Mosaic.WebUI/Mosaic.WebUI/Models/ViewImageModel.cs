@@ -10,26 +10,31 @@ namespace Mosaic.WebUI.Models
     {
         public string CopyPath { get; set; }
         public string FilePath { get; set; }
+        public string ImagePath { get; set; }
         public string Error { get; set; }
 
-        public ViewImageModel(string id, string copyPath = "~\\images\\tiles\\")
+        public ViewImageModel(string copyPath = "wwwroot\\images\\project\\")
         {            
-            CopyPath = copyPath + id + "\\";
+            CopyPath = Path.GetFullPath(copyPath);
+            ImagePath = "\\images\\project\\";
         }
 
         public void CopyImage(string fileToCopy)
         {
             if (File.Exists(fileToCopy))
             {
-                if (!Directory.Exists(CopyPath))
+                if (Directory.Exists(CopyPath))
                 {
-                    Directory.CreateDirectory(CopyPath);
+                    var newfile = CopyPath + Path.GetFileName(fileToCopy);
+                    File.Copy(fileToCopy, newfile);
+                    FilePath = newfile;
+                    ImagePath = ImagePath + Path.GetFileName(fileToCopy);
                 }
-                var newfile = CopyPath + Path.GetFileName(fileToCopy);
-                // Check if file with that id exist
-                // else create one
-                File.Copy(fileToCopy, newfile);
-                FilePath = newfile;
+                else
+                {
+                    Error = "Directory to copy to does not exist";
+                }
+
             }
             else
             {

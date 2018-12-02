@@ -60,15 +60,12 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    alert("Valid request");
-                    debugger;
                     $('#mosaic-image').attr("src", response);
                 }
             });
         }
 
         $("#generate_mosaic").click(function () {
-            debugger;
             generateMosaic("@Model.ProjectId");
         });
     });

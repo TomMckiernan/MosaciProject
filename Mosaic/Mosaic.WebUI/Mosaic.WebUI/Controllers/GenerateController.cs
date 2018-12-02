@@ -21,14 +21,18 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult GenerateMosaic(string id)
         {
+            // Generate the mosaic passing the master, tiles and project id
             var model = new GenerateMosaicModel(id);
             var response = model.Generate(client, id);
             if (String.IsNullOrEmpty(response.Error))
             {
-                var image = new ViewImageModel(id);
+                var image = new ViewImageModel();
+                // copy image to root of project to display it
                 image.CopyImage(response.Location);
+                // Update project status and store location
+                //model.InsertMosaicLocation(client, id, response.Location);
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(image.FilePath);
+                return Json(image.ImagePath);
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);

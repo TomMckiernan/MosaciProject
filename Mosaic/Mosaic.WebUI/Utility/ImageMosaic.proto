@@ -2,8 +2,9 @@
 import "ImageFileIndex.proto";
 
 message ImageMosaicRequest {
-    repeated ImageFileIndexStructure Tiles = 1;
-	ImageFileIndexStructure Master         = 2;
+    string Id                              = 1;
+    repeated ImageFileIndexStructure Tiles = 2;
+	ImageFileIndexStructure Master         = 3;
 }
 
 message ImageMosaicResponse {
