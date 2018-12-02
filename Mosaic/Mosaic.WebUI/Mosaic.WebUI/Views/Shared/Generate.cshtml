@@ -14,37 +14,32 @@
     <div class="row">
         <div class="col-md-6">
             <div class="media">
-                <img class="mr-3" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
-                <div class="media-body">
-                    <h5 class="mt-0">
-                        Nested media heading
-                    </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                    <div class="media mt-3">
-                        <a class="pr-3" href="#"><img alt="Bootstrap Media Another Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-2.jpg" /></a>
-                        <div class="media-body">
-                            <h5 class="mt-0">
-                                Nested media heading
-                            </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                        </div>
-                    </div>
-                </div>
+                <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="~/images/face_image.jpg" width="100%"/>
             </div>
         </div>
         <div class="col-md-6">
+            <h3>
+                <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
+                Tile images added
+            </h3>
+            <h3>
+                <span style="color:#d34615; font-size:2em;">10.4%</span>
+                match between colours found in master image and the colours found in tile images
+            </h3>
 
-            <button id="generate_mosaic" type="button" class="btn btn-success">
-                Generate
-            </button>
-            <p>
-                Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-            </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <p>
-                Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-            </p>
+            <button id="generate_mosaic" type="button" class="btn btn-success" style="background-color:#d34615">
+                Generate
+            </button>
+            <ul>
+                <li>Watch how to get the best result</li>
+                <li>Add pictures with colors similar to the colors found in your big picture. All photos will be used at least once, and the ones that match the colors best will be used more often.</li>
+                <li>Don't add the same photos multiple times. They will end up right next to each other.</li>
+                <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
+            </ul>            
         </div>
     </div>
 </div>
@@ -66,6 +61,8 @@
                 },
                 success: function (response) {
                     alert("Valid request");
+                    debugger;
+                    $('#mosaic-image').attr("src", response);
                 }
             });
         }

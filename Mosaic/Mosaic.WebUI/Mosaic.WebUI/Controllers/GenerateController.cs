@@ -25,8 +25,10 @@ namespace Mosaic.WebUI.Controllers
             var response = model.Generate(client, id);
             if (String.IsNullOrEmpty(response.Error))
             {
+                var image = new ViewImageModel(id);
+                image.CopyImage(response.Location);
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(response.Location);
+                return Json(image.FilePath);
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);

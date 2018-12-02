@@ -53,7 +53,7 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult ViewImage(string filepath)
         {
-            var model = new ViewImageModel();
+            var model = new ViewImageModel("");
             model.DeleteImage();
             model.CopyImage(filepath);
             if (String.IsNullOrEmpty(model.Error))

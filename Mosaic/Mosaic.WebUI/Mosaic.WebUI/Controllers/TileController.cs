@@ -83,6 +83,8 @@ namespace Mosaic.WebUI.Controllers
         public ActionResult Generate(string Id)
         {
             var model = new GenerateMosaicModel(Id);
+            model.ReadProjectData(client, Id);
+
             return View("Generate", model);
         }
     }
