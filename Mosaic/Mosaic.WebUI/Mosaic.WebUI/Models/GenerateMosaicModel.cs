@@ -27,7 +27,10 @@ namespace Mosaic.WebUI.Models
             {
                 return new ImageMosaicResponse() { Error = project.Error };
             }
-
+            else if (project.Project.SmallFileIds.Count == 0 || String.IsNullOrEmpty(project.Project.LargeFileId))
+            {
+                return new ImageMosaicResponse() { Error = "Master or tile images not specified" };
+            }
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
             var tileFiles = client.ReadAllImageFiles(tileFilesId);
@@ -35,6 +38,10 @@ namespace Mosaic.WebUI.Models
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
             var masterFile = client.ReadImageFile(masterFileId);
+            if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error) )
+            {
+                return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
+            }
 
             return client.Generate(tileFiles.Files, masterFile.File);
         }
