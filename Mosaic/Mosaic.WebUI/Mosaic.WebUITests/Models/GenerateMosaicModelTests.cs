@@ -107,5 +107,21 @@ namespace Mosaic.WebUITests.Models
             var response = model.Generate(MockMakerClient.Object, id);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
+
+        [TestMethod]
+        public void ReadProjectDataSetsAllProjectPropertiesCorrectly()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel(id);
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            model.ReadProjectData(MockMakerClient.Object, id);
+
+            Assert.AreEqual(id, model.ProjectId);
+            Assert.AreEqual(1, model.TileImageCount);
+        }
     }
 }

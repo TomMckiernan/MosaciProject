@@ -9,28 +9,33 @@ namespace Mosaic.WebUI.Models
     public class GenerateMosaicModel
     {
         public string ProjectId { get; set; }
+        public int TileImageCount { get; set; }
+        public List<string> TileImageColours { get; set; }
+        public List<string> MasterImageColours { get; set; }
 
         public GenerateMosaicModel(string id)
         {
-            ProjectId = id;
         }
+
+        public void ReadProjectData(IMakerClient client, string projectId)
+        {
+            var project = ProjectErrorCheck(client, projectId);
+            if (String.IsNullOrEmpty(project.Error))
+            {
+                ProjectId = project.Project.Id;
+                TileImageCount = project.Project.SmallFileIds.Count;
+            }
+        } 
 
         public ImageMosaicResponse Generate(IMakerClient client, string id)
         {
             // Get project
-            if (String.IsNullOrEmpty(id))
-            {
-                return new ImageMosaicResponse() { Error = "Project Id cannot be null or empty" };
-            }
-            var project = client.ReadProject(id);
+            var project = ProjectErrorCheck(client, id);
             if (!String.IsNullOrEmpty(project.Error))
             {
                 return new ImageMosaicResponse() { Error = project.Error };
             }
-            else if (project.Project.SmallFileIds.Count == 0 || String.IsNullOrEmpty(project.Project.LargeFileId))
-            {
-                return new ImageMosaicResponse() { Error = "Master or tile images not specified" };
-            }
+       
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
             var tileFiles = client.ReadAllImageFiles(tileFilesId);
@@ -44,6 +49,27 @@ namespace Mosaic.WebUI.Models
             }
 
             return client.Generate(tileFiles.Files, masterFile.File);
+        }
+
+        //Return project response
+        private ProjectResponse ProjectErrorCheck(IMakerClient client, string id)
+        {
+            // Get project
+            if (String.IsNullOrEmpty(id))
+            {
+                return new ProjectResponse() { Error = "Project Id cannot be null or empty" };
+            }
+            var project = client.ReadProject(id);
+            if (!String.IsNullOrEmpty(project.Error))
+            {
+                return project;
+            }
+            else if (project.Project.SmallFileIds.Count == 0 || String.IsNullOrEmpty(project.Project.LargeFileId))
+            {
+                project.Error = "Master or tile images not specified";
+            }
+            return project;
+
         }
 
         //Structure for mosaic generator model
