@@ -36,7 +36,6 @@ namespace Mosaic.WebUI.Models
                 {
                     Error = "Directory to copy to does not exist";
                 }
-
             }
             else
             {

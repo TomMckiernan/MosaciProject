@@ -7,7 +7,7 @@
 <div class="jumbotron">
     <h1 class="display-4">Generate Mosaic Image</h1>
     <hr class="my-4">
-    <p>Select master file from local system directory to use in the creation of the mosaic image.</p>
+    <p>Generate the mosaic image from your master and tile images</p>
 </div>
 
 <div class="container-fluid">
@@ -31,27 +31,27 @@
                 <span style="color:#d34615; font-size:2em;">10.4%</span>
                 match between colours found in master image and the colours found in tile images
             </h3>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button id="generate_mosaic" type="button" class="btn btn-success" style="background-color:#d34615">
+            <button id="generate_mosaic" type="button" class="btn btn-primary">
                 Generate
             </button>
             <ul>
                 <li>Watch how to get the best result</li>
-                <li>Add pictures with colors similar to the colors found in your big picture. All photos will be used at least once, and the ones that match the colors best will be used more often.</li>
-                <li>Don't add the same photos multiple times. They will end up right next to each other.</li>
+                <li>Add pictures with colors similar to the colors found in your master image. 
+                <li>Tile Images which match the colours will be displayed, future feature will include randomness</li>
+                <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
-            </ul>            
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+           
         </div>
     </div>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
-
     $(function () {
 
         var generateMosaic = function (id) {
