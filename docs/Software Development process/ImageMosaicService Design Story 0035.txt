@@ -34,3 +34,7 @@ Once generation pressed update status in project collection, and store the locat
 Then perform the copy function and copy image to mosiac to image project folder.
 Delete the image in this location when you delete the project
 Save the mosiac image name as the project id
+
+As of 03/12/2018
+
+On generate view load need to check if project is in created stage if so find the image in mosaic image location

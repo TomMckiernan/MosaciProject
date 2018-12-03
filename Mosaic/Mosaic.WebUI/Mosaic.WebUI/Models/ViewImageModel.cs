@@ -16,11 +16,11 @@ namespace Mosaic.WebUI.Models
         public ViewImageModel(string copyPath = "wwwroot\\images\\project\\")
         {            
             CopyPath = Path.GetFullPath(copyPath);
-            ImagePath = "\\images\\project\\";
         }
 
         public void CopyImage(string fileToCopy)
         {
+            //Need to check if already exists i.e if want to generate again
             if (File.Exists(fileToCopy))
             {
                 if (Directory.Exists(CopyPath))
@@ -28,6 +28,7 @@ namespace Mosaic.WebUI.Models
                     var newfile = CopyPath + Path.GetFileName(fileToCopy);
                     File.Copy(fileToCopy, newfile);
                     FilePath = newfile;
+                    ImagePath = CopyPath.Substring(CopyPath.IndexOf("\\images\\"));
                     ImagePath = ImagePath + Path.GetFileName(fileToCopy);
                 }
                 else
@@ -43,14 +44,11 @@ namespace Mosaic.WebUI.Models
             
         }
 
-        // Deletes the current image that has been copied previous
-        public void DeleteImage()
+        // Deletes file by passing the relative path of a image
+        public void DeleteImage(string fileToDelete)
         {
-            var di = new DirectoryInfo(CopyPath);
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
+            var location = Path.GetFullPath(fileToDelete);
+            File.Delete(location);
         }
     }
 }
