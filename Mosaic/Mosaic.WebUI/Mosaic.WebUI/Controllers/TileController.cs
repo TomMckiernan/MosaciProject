@@ -68,7 +68,7 @@ namespace Mosaic.WebUI.Controllers
         [RequestFormSizeLimit(valueCountLimit: 2000)]
         public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
         {
-            var model = new SmallFilesModel();
+            var model = new TileFilesModel();
 
             var response = model.InsertSmallFiles(client, id, fileIds.ToList());
             if (String.IsNullOrEmpty(response.Error))

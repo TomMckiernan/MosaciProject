@@ -26,7 +26,8 @@ namespace Mosaic.WebUI.Models
                 if (Directory.Exists(CopyPath))
                 {
                     var newfile = CopyPath + Path.GetFileName(fileToCopy);
-                    File.Copy(fileToCopy, newfile);
+                    // Copies files to location and will override if already exists
+                    File.Copy(fileToCopy, newfile, true);
                     FilePath = newfile;
                     ImagePath = CopyPath.Substring(CopyPath.IndexOf("\\images\\"));
                     ImagePath = ImagePath + Path.GetFileName(fileToCopy);

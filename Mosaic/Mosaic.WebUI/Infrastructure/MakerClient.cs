@@ -84,6 +84,13 @@ namespace Infrastructure
             return response;
         }
 
+        public ProjectResponse InsertMosaicFile(string id, string mosaicLocation)
+        {
+            var request = new ProjectInsertMosaicFileRequest() { Id = id, Location = mosaicLocation };
+            var response = new ProjectService.Project().InsertMosaicFile(request);
+            return response;
+        }
+
         public ProjectResponse DeleteProject(string id)
         {
             var request = new ProjectRequest() { Id = id };

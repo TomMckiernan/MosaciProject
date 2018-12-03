@@ -30,7 +30,7 @@ namespace Mosaic.WebUI.Controllers
                 // copy image to root of project to display it
                 image.CopyImage(response.Location);
                 // Update project status and store location
-                //model.InsertMosaicLocation(client, id, response.Location);
+                new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
                 Response.StatusCode = (int)HttpStatusCode.OK;
                 return Json(image.ImagePath);
             }

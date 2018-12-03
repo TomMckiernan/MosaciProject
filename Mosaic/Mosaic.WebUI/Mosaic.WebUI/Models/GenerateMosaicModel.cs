@@ -10,6 +10,8 @@ namespace Mosaic.WebUI.Models
     {
         public string ProjectId { get; set; }
         public int TileImageCount { get; set; }
+        public string MosaicLocation { get; set; }
+        public ProjectStructure.Types.State State { get; set; } 
         public List<string> TileImageColours { get; set; }
         public List<string> MasterImageColours { get; set; }
 
@@ -24,6 +26,8 @@ namespace Mosaic.WebUI.Models
             {
                 ProjectId = project.Project.Id;
                 TileImageCount = project.Project.SmallFileIds.Count;
+                State = project.Project.Progress;
+                MosaicLocation = project.Project.MosaicLocation;
             }
         } 
 

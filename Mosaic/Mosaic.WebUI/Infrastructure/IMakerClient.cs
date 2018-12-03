@@ -12,7 +12,7 @@ namespace Infrastructure
         IndexedLocationResponse ReadIndexedLocation();
 
         ImageFileIndexResponse ReadImageFileIndex(string indexedLocation);
-        
+
         Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(string indexedLocation);
 
         ImageFileResponse ReadImageFile(string id);
@@ -28,6 +28,8 @@ namespace Infrastructure
         ProjectResponse InsertSmallFiles(string id, IList<string> fileIds);
 
         ProjectResponse InsertLargeFile(string id, string fileId);
+
+        ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
 
         ProjectResponse DeleteProject(string id);
 

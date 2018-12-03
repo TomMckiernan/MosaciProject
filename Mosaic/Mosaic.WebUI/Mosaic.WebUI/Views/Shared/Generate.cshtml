@@ -14,7 +14,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="media">
-                <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="~/images/face_image.jpg" width="100%"/>
+                @if (Model.State == ProjectStructure.Types.State.Completed){
+                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MosaicLocation" width="100%" />
+                }
+                else {
+                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="~/images/face_image.jpg" width="100%" />
+                }
             </div>
         </div>
         <div class="col-md-6">

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mosaic.WebUI.Models
 {
-    public class SmallFilesModel
+    public class TileFilesModel
     {
         public ProjectResponse InsertSmallFiles(IMakerClient client, string id, IList<string> fileIds)
         {
