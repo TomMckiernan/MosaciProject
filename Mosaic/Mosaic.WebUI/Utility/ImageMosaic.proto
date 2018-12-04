@@ -5,6 +5,7 @@ message ImageMosaicRequest {
     string Id                              = 1;
     repeated ImageFileIndexStructure Tiles = 2;
 	ImageFileIndexStructure Master         = 3;
+	bool Random                            = 4;
 }
 
 message ImageMosaicResponse {

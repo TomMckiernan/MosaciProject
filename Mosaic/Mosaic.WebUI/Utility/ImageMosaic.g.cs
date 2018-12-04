@@ -22,15 +22,16 @@ public static partial class ImageMosaicReflection {
   static ImageMosaicReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8icwoS",
-          "SW1hZ2VNb3NhaWNSZXF1ZXN0EgoKAklkGAEgASgJEicKBVRpbGVzGAIgAygL",
-          "MhguSW1hZ2VGaWxlSW5kZXhTdHJ1Y3R1cmUSKAoGTWFzdGVyGAMgASgLMhgu",
-          "SW1hZ2VGaWxlSW5kZXhTdHJ1Y3R1cmUiNgoTSW1hZ2VNb3NhaWNSZXNwb25z",
-          "ZRIQCghsb2NhdGlvbhgBIAEoCRINCgVFcnJvchgCIAEoCWIGcHJvdG8z"));
+          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8igwEK",
+          "EkltYWdlTW9zYWljUmVxdWVzdBIKCgJJZBgBIAEoCRInCgVUaWxlcxgCIAMo",
+          "CzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJlEigKBk1hc3RlchgDIAEoCzIY",
+          "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCCI2ChNJ",
+          "bWFnZU1vc2FpY1Jlc3BvbnNlEhAKCGxvY2F0aW9uGAEgASgJEg0KBUVycm9y",
+          "GAIgASgJYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null)
         }));
   }
@@ -66,6 +67,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     id_ = other.id_;
     tiles_ = other.tiles_.Clone();
     master_ = other.master_ != null ? other.master_.Clone() : null;
+    random_ = other.random_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -106,6 +108,17 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
   }
 
+  /// <summary>Field number for the "Random" field.</summary>
+  public const int RandomFieldNumber = 4;
+  private bool random_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Random {
+    get { return random_; }
+    set {
+      random_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ImageMosaicRequest);
@@ -122,6 +135,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (Id != other.Id) return false;
     if(!tiles_.Equals(other.tiles_)) return false;
     if (!object.Equals(Master, other.Master)) return false;
+    if (Random != other.Random) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -131,6 +145,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (Id.Length != 0) hash ^= Id.GetHashCode();
     hash ^= tiles_.GetHashCode();
     if (master_ != null) hash ^= Master.GetHashCode();
+    if (Random != false) hash ^= Random.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -153,6 +168,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
       output.WriteRawTag(26);
       output.WriteMessage(Master);
     }
+    if (Random != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(Random);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -167,6 +186,9 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     size += tiles_.CalculateSize(_repeated_tiles_codec);
     if (master_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Master);
+    }
+    if (Random != false) {
+      size += 1 + 1;
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -188,6 +210,9 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
         master_ = new global::ImageFileIndexStructure();
       }
       Master.MergeFrom(other.Master);
+    }
+    if (other.Random != false) {
+      Random = other.Random;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -213,6 +238,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
             master_ = new global::ImageFileIndexStructure();
           }
           input.ReadMessage(master_);
+          break;
+        }
+        case 32: {
+          Random = input.ReadBool();
           break;
         }
       }

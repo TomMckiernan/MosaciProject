@@ -31,7 +31,7 @@ namespace Mosaic.WebUI.Models
             }
         } 
 
-        public ImageMosaicResponse Generate(IMakerClient client, string id)
+        public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
@@ -52,7 +52,7 @@ namespace Mosaic.WebUI.Models
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
 
-            return client.Generate(id, tileFiles.Files, masterFile.File);
+            return client.Generate(id, tileFiles.Files, masterFile.File, random);
         }
 
         //Return project response

@@ -112,7 +112,7 @@ namespace ImageMosaicService
             return colorMap;
         }
 
-        public Mosaic Render(Bitmap img, Color[,] colorMap, List<ImageInfo> imageInfos)
+        public Mosaic Render(Bitmap img, Color[,] colorMap, List<ImageInfo> imageInfos, bool random = false)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
@@ -133,7 +133,14 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
+                    if (random)
+                    {
+                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
+                    }
+                    else
+                    {
+                        info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
+                    }
                     using (Image source = Image.FromFile(info.Path))
                     {
                         // Gets current x, y coords of mosaic images, and stores image to be replaced by
