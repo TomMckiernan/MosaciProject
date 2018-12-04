@@ -77,31 +77,36 @@ namespace ImageFileIndexService
 
         public async Task AnalyseNewFiles(FileInfo x)
         {
+            var data = GenerateMetaData(x);
             var request = new ImageFileIndexStructure()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 FileName = x.Name,
                 FilePath = x.FullName,
                 LastWriteTime = x.LastWriteTime.ToString(),
-                Metadata = GenerateMetaData(x)
+                Data = new Metadata()
+                {
+                    AverageBL = data.AverageBL.ToArgb(),
+                    AverageBR = data.AverageBR.ToArgb(),
+                    AverageTL = data.AverageTL.ToArgb(),
+                    AverageTR = data.AverageTR.ToArgb()
+                }
             };
             var response = new MongoImageFileIndex().Insert(database, request);
      
         }
 
-        private string GenerateMetaData(FileInfo file)
+        private ImageInfo GenerateMetaData(FileInfo file)
         {
-            //var imageProcessing = new ImageProcessing();
-            //var imageInfos = new List<ImageInfo>();
+            var imageProcessing = new ImageProcessing();
+            var imageInfos = new List<ImageInfo>();
+            ImageInfo info;
 
-            //using (var inputBmp = imageProcessing.Resize(file.FullName))
-            //{
-            //    var info = imageProcessing.GetAverageColor(inputBmp, file.FullName);
-
-            //    if (info != null)
-            //        imageInfos.Add(info);
-            //}
-            return string.Empty;
+            using (var inputBmp = imageProcessing.Resize(file.FullName))
+            {
+                info = imageProcessing.GetAverageColor(inputBmp, file.FullName);
+            }
+            return info;
         }
 
         public async Task AnalyseUpdatedFiles(FileInfo x)

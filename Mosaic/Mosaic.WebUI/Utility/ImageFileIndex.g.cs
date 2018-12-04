@@ -28,13 +28,15 @@ public static partial class ImageFileIndexReflection {
           "dHVyZRINCgVFcnJvchgCIAEoCSIeChBJbWFnZUZpbGVSZXF1ZXN0EgoKAmlk",
           "GAEgASgJIiMKFEltYWdlRmlsZXNBbGxSZXF1ZXN0EgsKA2lkcxgBIAMoCSJK",
           "ChFJbWFnZUZpbGVSZXNwb25zZRImCgRGaWxlGAEgASgLMhguSW1hZ2VGaWxl",
-          "SW5kZXhTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkicgoXSW1hZ2VGaWxlSW5k",
+          "SW5kZXhTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkieQoXSW1hZ2VGaWxlSW5k",
           "ZXhTdHJ1Y3R1cmUSCgoCaWQYASABKAkSEAoIRmlsZVBhdGgYAiABKAkSEAoI",
-          "RmlsZU5hbWUYAyABKAkSEAoITWV0YWRhdGEYBCABKAkSFQoNTGFzdFdyaXRl",
-          "VGltZRgFIAEoCSJCCh9JbWFnZUZpbGVJbmRleFN0cnVjdHVyZVJlc3BvbnNl",
-          "EhAKCEZpbGVQYXRoGAEgASgJEg0KBUVycm9yGAIgASgJIj8KHEltYWdlRmls",
-          "ZUluZGV4VXBkYXRlUmVzcG9uc2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJy",
-          "b3IYAiABKAliBnByb3RvMw=="));
+          "RmlsZU5hbWUYAyABKAkSFwoERGF0YRgEIAEoCzIJLk1ldGFkYXRhEhUKDUxh",
+          "c3RXcml0ZVRpbWUYBSABKAkiVgoITWV0YWRhdGESEQoJQXZlcmFnZUJMGAEg",
+          "ASgDEhEKCUF2ZXJhZ2VCUhgCIAEoAxIRCglBdmVyYWdlVEwYAyABKAMSEQoJ",
+          "QXZlcmFnZVRSGAQgASgDIkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVz",
+          "cG9uc2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJyb3IYAiABKAkiPwocSW1h",
+          "Z2VGaWxlSW5kZXhVcGRhdGVSZXNwb25zZRIQCghGaWxlUGF0aBgBIAEoCRIN",
+          "CgVFcnJvchgCIAEoCWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -43,7 +45,8 @@ public static partial class ImageFileIndexReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileRequest), global::ImageFileRequest.Parser, new[]{ "Id" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFilesAllRequest), global::ImageFilesAllRequest.Parser, new[]{ "Ids" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileResponse), global::ImageFileResponse.Parser, new[]{ "File", "Error" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Metadata", "LastWriteTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Data", "LastWriteTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Metadata), global::Metadata.Parser, new[]{ "AverageBL", "AverageBR", "AverageTL", "AverageTR" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructureResponse), global::ImageFileIndexStructureResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexUpdateResponse), global::ImageFileIndexUpdateResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null)
         }));
@@ -771,7 +774,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     id_ = other.id_;
     filePath_ = other.filePath_;
     fileName_ = other.fileName_;
-    metadata_ = other.metadata_;
+    data_ = other.data_ != null ? other.data_.Clone() : null;
     lastWriteTime_ = other.lastWriteTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -814,14 +817,14 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     }
   }
 
-  /// <summary>Field number for the "Metadata" field.</summary>
-  public const int MetadataFieldNumber = 4;
-  private string metadata_ = "";
+  /// <summary>Field number for the "Data" field.</summary>
+  public const int DataFieldNumber = 4;
+  private global::Metadata data_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Metadata {
-    get { return metadata_; }
+  public global::Metadata Data {
+    get { return data_; }
     set {
-      metadata_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      data_ = value;
     }
   }
 
@@ -852,7 +855,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (Id != other.Id) return false;
     if (FilePath != other.FilePath) return false;
     if (FileName != other.FileName) return false;
-    if (Metadata != other.Metadata) return false;
+    if (!object.Equals(Data, other.Data)) return false;
     if (LastWriteTime != other.LastWriteTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -863,7 +866,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (Id.Length != 0) hash ^= Id.GetHashCode();
     if (FilePath.Length != 0) hash ^= FilePath.GetHashCode();
     if (FileName.Length != 0) hash ^= FileName.GetHashCode();
-    if (Metadata.Length != 0) hash ^= Metadata.GetHashCode();
+    if (data_ != null) hash ^= Data.GetHashCode();
     if (LastWriteTime.Length != 0) hash ^= LastWriteTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -890,9 +893,9 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
       output.WriteRawTag(26);
       output.WriteString(FileName);
     }
-    if (Metadata.Length != 0) {
+    if (data_ != null) {
       output.WriteRawTag(34);
-      output.WriteString(Metadata);
+      output.WriteMessage(Data);
     }
     if (LastWriteTime.Length != 0) {
       output.WriteRawTag(42);
@@ -915,8 +918,8 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (FileName.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(FileName);
     }
-    if (Metadata.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Metadata);
+    if (data_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Data);
     }
     if (LastWriteTime.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(LastWriteTime);
@@ -941,8 +944,11 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (other.FileName.Length != 0) {
       FileName = other.FileName;
     }
-    if (other.Metadata.Length != 0) {
-      Metadata = other.Metadata;
+    if (other.data_ != null) {
+      if (data_ == null) {
+        data_ = new global::Metadata();
+      }
+      Data.MergeFrom(other.Data);
     }
     if (other.LastWriteTime.Length != 0) {
       LastWriteTime = other.LastWriteTime;
@@ -971,11 +977,227 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
           break;
         }
         case 34: {
-          Metadata = input.ReadString();
+          if (data_ == null) {
+            data_ = new global::Metadata();
+          }
+          input.ReadMessage(data_);
           break;
         }
         case 42: {
           LastWriteTime = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class Metadata : pb::IMessage<Metadata> {
+  private static readonly pb::MessageParser<Metadata> _parser = new pb::MessageParser<Metadata>(() => new Metadata());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<Metadata> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[6]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata(Metadata other) : this() {
+    averageBL_ = other.averageBL_;
+    averageBR_ = other.averageBR_;
+    averageTL_ = other.averageTL_;
+    averageTR_ = other.averageTR_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata Clone() {
+    return new Metadata(this);
+  }
+
+  /// <summary>Field number for the "AverageBL" field.</summary>
+  public const int AverageBLFieldNumber = 1;
+  private long averageBL_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long AverageBL {
+    get { return averageBL_; }
+    set {
+      averageBL_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageBR" field.</summary>
+  public const int AverageBRFieldNumber = 2;
+  private long averageBR_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long AverageBR {
+    get { return averageBR_; }
+    set {
+      averageBR_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageTL" field.</summary>
+  public const int AverageTLFieldNumber = 3;
+  private long averageTL_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long AverageTL {
+    get { return averageTL_; }
+    set {
+      averageTL_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageTR" field.</summary>
+  public const int AverageTRFieldNumber = 4;
+  private long averageTR_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long AverageTR {
+    get { return averageTR_; }
+    set {
+      averageTR_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as Metadata);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(Metadata other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (AverageBL != other.AverageBL) return false;
+    if (AverageBR != other.AverageBR) return false;
+    if (AverageTL != other.AverageTL) return false;
+    if (AverageTR != other.AverageTR) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (AverageBL != 0L) hash ^= AverageBL.GetHashCode();
+    if (AverageBR != 0L) hash ^= AverageBR.GetHashCode();
+    if (AverageTL != 0L) hash ^= AverageTL.GetHashCode();
+    if (AverageTR != 0L) hash ^= AverageTR.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (AverageBL != 0L) {
+      output.WriteRawTag(8);
+      output.WriteInt64(AverageBL);
+    }
+    if (AverageBR != 0L) {
+      output.WriteRawTag(16);
+      output.WriteInt64(AverageBR);
+    }
+    if (AverageTL != 0L) {
+      output.WriteRawTag(24);
+      output.WriteInt64(AverageTL);
+    }
+    if (AverageTR != 0L) {
+      output.WriteRawTag(32);
+      output.WriteInt64(AverageTR);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (AverageBL != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageBL);
+    }
+    if (AverageBR != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageBR);
+    }
+    if (AverageTL != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageTL);
+    }
+    if (AverageTR != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageTR);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(Metadata other) {
+    if (other == null) {
+      return;
+    }
+    if (other.AverageBL != 0L) {
+      AverageBL = other.AverageBL;
+    }
+    if (other.AverageBR != 0L) {
+      AverageBR = other.AverageBR;
+    }
+    if (other.AverageTL != 0L) {
+      AverageTL = other.AverageTL;
+    }
+    if (other.AverageTR != 0L) {
+      AverageTR = other.AverageTR;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          AverageBL = input.ReadInt64();
+          break;
+        }
+        case 16: {
+          AverageBR = input.ReadInt64();
+          break;
+        }
+        case 24: {
+          AverageTL = input.ReadInt64();
+          break;
+        }
+        case 32: {
+          AverageTR = input.ReadInt64();
           break;
         }
       }
@@ -992,7 +1214,7 @@ public sealed partial class ImageFileIndexStructureResponse : pb::IMessage<Image
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[6]; }
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1149,7 +1371,7 @@ public sealed partial class ImageFileIndexUpdateResponse : pb::IMessage<ImageFil
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[7]; }
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

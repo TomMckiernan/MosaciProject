@@ -26,8 +26,15 @@ message ImageFileIndexStructure {
     string id              = 1;
 	string FilePath        = 2;
 	string FileName        = 3;
-	string Metadata        = 4;
+	Metadata Data          = 4;
 	string LastWriteTime   = 5;
+}
+
+message Metadata {
+    int64 AverageBL          = 1;
+	int64 AverageBR          = 2;
+	int64 AverageTL          = 3;
+	int64 AverageTR          = 4;
 }
 
 message ImageFileIndexStructureResponse {
