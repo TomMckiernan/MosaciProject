@@ -133,7 +133,7 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
+                    info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
                     using (Image source = Image.FromFile(info.Path))
                     {
                         // Gets current x, y coords of mosaic images, and stores image to be replaced by
@@ -160,6 +160,81 @@ namespace ImageMosaicService
             };
         }
 
+        private int GetBestImageIndexRandom(Color color, int x, int y)
+        {
+            double bestPercent = double.MaxValue;
+            int bestIndex = 0;
+            var bestIndexes = new Dictionary<int, double>();
+            bestIndexes.Add(-1, bestPercent);
+            double bestThreshold = double.MaxValue;
+            const byte offset = 7;
+
+            double difference;
+            Color[] passColor;
+
+            int r, g, b;
+
+            for (int index = 0; index < library.Count(); index++)
+            {
+                passColor = new Color[4];
+                passColor[0] = library[index].AverageTL;
+                passColor[1] = library[index].AverageTR;
+                passColor[2] = library[index].AverageBL;
+                passColor[3] = library[index].AverageBR;
+
+                r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
+                g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
+                b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
+
+                r = Math.Abs(color.R - (r / 4));
+                g = Math.Abs(color.G - (g / 4));
+                b = Math.Abs(color.B - (b / 4));
+
+                difference = r + g + b;
+                difference /= 3 * 255;
+
+                // as well as best diff store the 10th best diff and replace that item when necessary
+                if (difference < bestPercent)
+                {
+                    Point point = new Point();
+
+                    if (library[index].Data.Count > 0 && library[index].Data[0] != null)
+                    {
+                        point = (Point)library[index].Data[0];
+                    }
+                    if (point.IsEmpty)
+                    {
+                        bestIndexes.Add(index, difference);
+                    }
+                    else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
+                    {
+                        bestIndexes.Add(index, difference);
+                    }
+
+                    // if length of dictionary is > 10 remove the largest value entry
+                    if (bestIndexes.Count() > 10)
+                    {
+                        var maxValue = bestIndexes.Values.Max();
+                        var maxKey = bestIndexes.FirstOrDefault(v => v.Value == maxValue).Key;
+                        bestIndexes.Remove(maxKey);
+                    }
+
+                    // update best percent to largest value in dictionary
+                    bestPercent = bestIndexes.Values.Max();
+                }
+            }
+
+            var rand = new Random();
+            // Select the random index here
+            var randomIndex = bestIndexes.ElementAt(rand.Next(0, bestIndexes.Count -1)).Key;
+
+            library[randomIndex].Data.Add(new Point(x, y));
+            return randomIndex;
+        }
+    
+
+        // Passes the colour value for the current tile being analysed
+        // Uses library which contains the average colour for all of the tile images
         private int GetBestImageIndex(Color color, int x, int y)
         {
             double bestPercent = double.MaxValue;
@@ -190,25 +265,25 @@ namespace ImageMosaicService
                 difference = r + g + b;
                 difference /= 3 * 255;
 
+                // as well as best diff store the 10th best diff and replace that item when necessary
                 if (difference < bestPercent)
                 {
-
-                    Point p = new Point();
+                    Point point = new Point();
 
                     if (library[i].Data.Count > 0 && library[i].Data[0] != null)
-                        p = (Point)library[i].Data[0];
-
-                    if (p.IsEmpty)
+                    {
+                        point = (Point)library[i].Data[0];
+                    }
+                    if (point.IsEmpty)
                     {
                         bestPercent = difference;
                         bestIndex = i;
                     }
-                    else if (p.X + offset <= x && p.Y + offset > y && p.Y - offset < y)
+                    else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
                     {
                         bestPercent = difference;
                         bestIndex = i;
                     }
-
                 }
             }
 

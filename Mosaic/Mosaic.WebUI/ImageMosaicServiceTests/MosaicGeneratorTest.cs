@@ -49,6 +49,12 @@ namespace ImageMosaicTest
         }
 
         [TestMethod]
+        public void GetBestImageIndexRandom()
+        {
+
+        }
+
+        [TestMethod]
         public void CreateMapTest()
         {
             using (var input = Bitmap.FromFile(sourceFile))
