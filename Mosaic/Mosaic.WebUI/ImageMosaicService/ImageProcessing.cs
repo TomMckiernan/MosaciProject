@@ -163,52 +163,31 @@ namespace ImageMosaicService
         private int GetBestImageIndexRandom(Color color, int x, int y)
         {
             double bestPercent = double.MaxValue;
-            int bestIndex = 0;
             var bestIndexes = new Dictionary<int, double>();
             bestIndexes.Add(-1, bestPercent);
-            double bestThreshold = double.MaxValue;
             const byte offset = 7;
-
             double difference;
-            Color[] passColor;
 
-            int r, g, b;
-
-            for (int index = 0; index < library.Count(); index++)
+            for (int i = 0; i < library.Count(); i++)
             {
-                passColor = new Color[4];
-                passColor[0] = library[index].AverageTL;
-                passColor[1] = library[index].AverageTR;
-                passColor[2] = library[index].AverageBL;
-                passColor[3] = library[index].AverageBR;
-
-                r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
-                g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
-                b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
-
-                r = Math.Abs(color.R - (r / 4));
-                g = Math.Abs(color.G - (g / 4));
-                b = Math.Abs(color.B - (b / 4));
-
-                difference = r + g + b;
-                difference /= 3 * 255;
+                difference = GetLibraryTileDifference(color, i);
 
                 // as well as best diff store the 10th best diff and replace that item when necessary
                 if (difference < bestPercent)
                 {
                     Point point = new Point();
 
-                    if (library[index].Data.Count > 0 && library[index].Data[0] != null)
+                    if (library[i].Data.Count > 0 && library[i].Data[0] != null)
                     {
-                        point = (Point)library[index].Data[0];
+                        point = (Point)library[i].Data[0];
                     }
                     if (point.IsEmpty)
                     {
-                        bestIndexes.Add(index, difference);
+                        bestIndexes.Add(i, difference);
                     }
                     else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
                     {
-                        bestIndexes.Add(index, difference);
+                        bestIndexes.Add(i, difference);
                     }
 
                     // if length of dictionary is > 10 remove the largest value entry
@@ -224,9 +203,8 @@ namespace ImageMosaicService
                 }
             }
 
-            var rand = new Random();
-            // Select the random index here
-            var randomIndex = bestIndexes.ElementAt(rand.Next(0, bestIndexes.Count -1)).Key;
+            // Randomly select one of the best fit indexes
+            var randomIndex = bestIndexes.ElementAt(new Random().Next(0, bestIndexes.Count -1)).Key;
 
             library[randomIndex].Data.Add(new Point(x, y));
             return randomIndex;
@@ -240,32 +218,12 @@ namespace ImageMosaicService
             double bestPercent = double.MaxValue;
             int bestIndex = 0;
             const byte offset = 7;
-
             double difference;
-            Color[] passColor;
-
-            int r, g, b;
 
             for (int i = 0; i < library.Count(); i++)
             {
-                passColor = new Color[4];
-                passColor[0] = library[i].AverageTL;
-                passColor[1] = library[i].AverageTR;
-                passColor[2] = library[i].AverageBL;
-                passColor[3] = library[i].AverageBR;
+                difference = GetLibraryTileDifference(color, i);
 
-                r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
-                g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
-                b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
-
-                r = Math.Abs(color.R - (r / 4));
-                g = Math.Abs(color.G - (g / 4));
-                b = Math.Abs(color.B - (b / 4));
-
-                difference = r + g + b;
-                difference /= 3 * 255;
-
-                // as well as best diff store the 10th best diff and replace that item when necessary
                 if (difference < bestPercent)
                 {
                     Point point = new Point();
@@ -289,6 +247,32 @@ namespace ImageMosaicService
 
             library[bestIndex].Data.Add(new Point(x, y));
             return bestIndex;
+        }
+
+        private double GetLibraryTileDifference(Color color, int i)
+        {
+            int r, g, b;
+            Color[] passColor;
+            double difference;
+
+            passColor = new Color[4];
+            passColor[0] = library[i].AverageTL;
+            passColor[1] = library[i].AverageTR;
+            passColor[2] = library[i].AverageBL;
+            passColor[3] = library[i].AverageBR;
+
+            r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
+            g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
+            b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
+
+            r = Math.Abs(color.R - (r / 4));
+            g = Math.Abs(color.G - (g / 4));
+            b = Math.Abs(color.B - (b / 4));
+
+            difference = r + g + b;
+            difference /= 3 * 255;
+            return difference;
+
         }
     }
 }
