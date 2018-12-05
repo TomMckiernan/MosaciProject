@@ -10,22 +10,23 @@ namespace ImageMosaicService
 {
     public class MosaicGenerator
     {
-        public Mosaic Generate(string masterImage, List<string> tileImages, bool random = false)
+        public Mosaic Generate(string masterImage, List<ImageFileIndexStructure> tileImages, bool random = false)
         {
             var imageProcessing = new ImageProcessing();
             var imageInfos = new List<ImageInfo>();
             var mosaic = new Mosaic();
 
-            var files = tileImages.Select(x => new FileInfo(x)).ToList();
-
-            Parallel.ForEach(files, f =>
+            Parallel.ForEach(tileImages, f =>
             {
-                using (var inputBmp = imageProcessing.Resize(f.FullName))
+                var info = new ImageInfo(f.FilePath);
+                info.AverageBL = Color.FromArgb(f.Data.AverageBL);
+                info.AverageBR = Color.FromArgb(f.Data.AverageBR);
+                info.AverageTL = Color.FromArgb(f.Data.AverageTL);
+                info.AverageTR = Color.FromArgb(f.Data.AverageTR);
+                   
+                if(info != null)
                 {
-                    var info = imageProcessing.GetAverageColor(inputBmp, f.FullName);
-                    
-                    if(info != null)
-                        imageInfos.Add(info);
+                    imageInfos.Add(info);
                 }
             });
 

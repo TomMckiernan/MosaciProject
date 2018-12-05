@@ -44,8 +44,7 @@ namespace ImageMosaicService
             imageInfo.AverageTR = getAverageColor(new Rectangle(halfX, 0, bmp.Width - halfX, halfY), bmp, quality);
             imageInfo.AverageBL = getAverageColor(new Rectangle(0, halfY, halfX, bmp.Height - halfY), bmp, quality);
             imageInfo.AverageBR = getAverageColor(new Rectangle(halfX, halfY, bmp.Width - halfX, bmp.Height - halfY), bmp, quality);
-            //var tl = imageInfo.AverageTL.ToArgb();
-            //var fromtl = Color.FromArgb(tl);
+
             return imageInfo;
         }
 
