@@ -32,8 +32,8 @@ public static partial class ImageFileIndexReflection {
           "ZXhTdHJ1Y3R1cmUSCgoCaWQYASABKAkSEAoIRmlsZVBhdGgYAiABKAkSEAoI",
           "RmlsZU5hbWUYAyABKAkSFwoERGF0YRgEIAEoCzIJLk1ldGFkYXRhEhUKDUxh",
           "c3RXcml0ZVRpbWUYBSABKAkiVgoITWV0YWRhdGESEQoJQXZlcmFnZUJMGAEg",
-          "ASgDEhEKCUF2ZXJhZ2VCUhgCIAEoAxIRCglBdmVyYWdlVEwYAyABKAMSEQoJ",
-          "QXZlcmFnZVRSGAQgASgDIkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVz",
+          "ASgFEhEKCUF2ZXJhZ2VCUhgCIAEoBRIRCglBdmVyYWdlVEwYAyABKAUSEQoJ",
+          "QXZlcmFnZVRSGAQgASgFIkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVz",
           "cG9uc2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJyb3IYAiABKAkiPwocSW1h",
           "Z2VGaWxlSW5kZXhVcGRhdGVSZXNwb25zZRIQCghGaWxlUGF0aBgBIAEoCRIN",
           "CgVFcnJvchgCIAEoCWIGcHJvdG8z"));
@@ -1032,9 +1032,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
 
   /// <summary>Field number for the "AverageBL" field.</summary>
   public const int AverageBLFieldNumber = 1;
-  private long averageBL_;
+  private int averageBL_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public long AverageBL {
+  public int AverageBL {
     get { return averageBL_; }
     set {
       averageBL_ = value;
@@ -1043,9 +1043,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
 
   /// <summary>Field number for the "AverageBR" field.</summary>
   public const int AverageBRFieldNumber = 2;
-  private long averageBR_;
+  private int averageBR_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public long AverageBR {
+  public int AverageBR {
     get { return averageBR_; }
     set {
       averageBR_ = value;
@@ -1054,9 +1054,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
 
   /// <summary>Field number for the "AverageTL" field.</summary>
   public const int AverageTLFieldNumber = 3;
-  private long averageTL_;
+  private int averageTL_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public long AverageTL {
+  public int AverageTL {
     get { return averageTL_; }
     set {
       averageTL_ = value;
@@ -1065,9 +1065,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
 
   /// <summary>Field number for the "AverageTR" field.</summary>
   public const int AverageTRFieldNumber = 4;
-  private long averageTR_;
+  private int averageTR_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public long AverageTR {
+  public int AverageTR {
     get { return averageTR_; }
     set {
       averageTR_ = value;
@@ -1097,10 +1097,10 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (AverageBL != 0L) hash ^= AverageBL.GetHashCode();
-    if (AverageBR != 0L) hash ^= AverageBR.GetHashCode();
-    if (AverageTL != 0L) hash ^= AverageTL.GetHashCode();
-    if (AverageTR != 0L) hash ^= AverageTR.GetHashCode();
+    if (AverageBL != 0) hash ^= AverageBL.GetHashCode();
+    if (AverageBR != 0) hash ^= AverageBR.GetHashCode();
+    if (AverageTL != 0) hash ^= AverageTL.GetHashCode();
+    if (AverageTR != 0) hash ^= AverageTR.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1114,21 +1114,21 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (AverageBL != 0L) {
+    if (AverageBL != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(AverageBL);
+      output.WriteInt32(AverageBL);
     }
-    if (AverageBR != 0L) {
+    if (AverageBR != 0) {
       output.WriteRawTag(16);
-      output.WriteInt64(AverageBR);
+      output.WriteInt32(AverageBR);
     }
-    if (AverageTL != 0L) {
+    if (AverageTL != 0) {
       output.WriteRawTag(24);
-      output.WriteInt64(AverageTL);
+      output.WriteInt32(AverageTL);
     }
-    if (AverageTR != 0L) {
+    if (AverageTR != 0) {
       output.WriteRawTag(32);
-      output.WriteInt64(AverageTR);
+      output.WriteInt32(AverageTR);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1138,17 +1138,17 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (AverageBL != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageBL);
+    if (AverageBL != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageBL);
     }
-    if (AverageBR != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageBR);
+    if (AverageBR != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageBR);
     }
-    if (AverageTL != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageTL);
+    if (AverageTL != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageTL);
     }
-    if (AverageTR != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(AverageTR);
+    if (AverageTR != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageTR);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1161,16 +1161,16 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     if (other == null) {
       return;
     }
-    if (other.AverageBL != 0L) {
+    if (other.AverageBL != 0) {
       AverageBL = other.AverageBL;
     }
-    if (other.AverageBR != 0L) {
+    if (other.AverageBR != 0) {
       AverageBR = other.AverageBR;
     }
-    if (other.AverageTL != 0L) {
+    if (other.AverageTL != 0) {
       AverageTL = other.AverageTL;
     }
-    if (other.AverageTR != 0L) {
+    if (other.AverageTR != 0) {
       AverageTR = other.AverageTR;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1185,19 +1185,19 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          AverageBL = input.ReadInt64();
+          AverageBL = input.ReadInt32();
           break;
         }
         case 16: {
-          AverageBR = input.ReadInt64();
+          AverageBR = input.ReadInt32();
           break;
         }
         case 24: {
-          AverageTL = input.ReadInt64();
+          AverageTL = input.ReadInt32();
           break;
         }
         case 32: {
-          AverageTR = input.ReadInt64();
+          AverageTR = input.ReadInt32();
           break;
         }
       }
