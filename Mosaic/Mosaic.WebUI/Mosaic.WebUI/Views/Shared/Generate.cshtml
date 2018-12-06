@@ -68,16 +68,25 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    $('#mosaic-image').attr("src", response);
+                    $('#mosaic-image').attr("src", response + "?rnd=" + Math.random());
+                },
+                complete: function () {
+                    $('#generate_mosaic').attr("disabled", false);
+                    $('#generate_random_mosaic').attr("disabled", false)
                 }
             });
         }
 
         $("#generate_mosaic").click(function () {
+            $(this).attr("disabled", true);
+            $('#generate_random_mosaic').attr("disabled", true)
             generateMosaic("@Model.ProjectId", false);
+
         });
 
         $("#generate_random_mosaic").click(function () {
+            $(this).attr("disabled", true);
+            $('#generate_mosaic').attr("disabled", true)
             generateMosaic("@Model.ProjectId", true);
         });
     });
