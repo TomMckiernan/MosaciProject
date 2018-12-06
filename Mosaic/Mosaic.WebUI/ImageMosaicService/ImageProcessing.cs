@@ -210,14 +210,19 @@ namespace ImageMosaicService
                 }
             }
 
-            // Randomly select one of the best fit indexes
+            // Will remove the inital entry if still present
+            if (bestIndexes.ContainsKey(-1))
+            {
+                bestIndexes.Remove(-1);
+            }
+
+            // Randomly select one of the best fit indexes 
             var randomIndex = bestIndexes.ElementAt(new Random().Next(0, bestIndexes.Count -1)).Key;
 
             library[randomIndex].Data.Add(new Point(x, y));
             return randomIndex;
         }
     
-
         // Passes the colour value for the current tile being analysed
         // Uses library which contains the average colour for all of the tile images
         private int GetBestImageIndex(Color color, int x, int y)
@@ -279,7 +284,6 @@ namespace ImageMosaicService
             difference = r + g + b;
             difference /= 3 * 255;
             return difference;
-
         }
     }
 }

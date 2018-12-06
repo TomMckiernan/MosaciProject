@@ -98,7 +98,6 @@ namespace ImageFileIndexService
         private ImageInfo GenerateMetaData(FileInfo file)
         {
             var imageProcessing = new ImageProcessing();
-            var imageInfos = new List<ImageInfo>();
             ImageInfo info;
 
             using (var inputBmp = imageProcessing.Resize(file.FullName))

@@ -84,7 +84,6 @@ namespace Mosaic.WebUI.Models
         //- Master image average colour analysis
         //  - i.e the average colour for each tile in the image
 
-
         //  Get all imagefileindexstructure files for the id
         //  Get the image file index structure for the master image
         //  Therefore need request to get the current project structure

@@ -49,7 +49,7 @@ namespace ImageMosaicTest
         }
 
         [TestMethod]
-        public void GetBestImageIndexRandom()
+        public void GetBestImageIndexReturnsBestIndexAnd()
         {
 
         }
@@ -65,6 +65,10 @@ namespace ImageMosaicTest
                 Assert.IsTrue(_createMap.Length > 0);
             }
         }
+
+        // Move these into a separate file, to act as end to end tests
+        // Will need to call implementation in ImageFileIndex service
+        //############################################################
 
         //This seemed to crash when no jpg were found in the image folder
         // Also generic error when saving to c:temp 

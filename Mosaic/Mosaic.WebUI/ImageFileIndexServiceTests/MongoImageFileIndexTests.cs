@@ -29,7 +29,7 @@ namespace ImageFileIndexServiceTests
                 FileName = fileName,
                 FilePath = filePath,
                 LastWriteTime = DateTime.Now.ToString(),
-                Metadata = metaData
+                Data = new Metadata() { }
             };
         }
 
