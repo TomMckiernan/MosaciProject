@@ -25,19 +25,28 @@ public static partial class ImageFileIndexReflection {
           "ChRJbWFnZUZpbGVJbmRleC5wcm90byIwChVJbWFnZUZpbGVJbmRleFJlcXVl",
           "c3QSFwoPSW5kZXhlZExvY2F0aW9uGAEgASgJIlAKFkltYWdlRmlsZUluZGV4",
           "UmVzcG9uc2USJwoFRmlsZXMYASADKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVj",
-          "dHVyZRINCgVFcnJvchgCIAEoCSJyChdJbWFnZUZpbGVJbmRleFN0cnVjdHVy",
-          "ZRIKCgJpZBgBIAEoCRIQCghGaWxlUGF0aBgCIAEoCRIQCghGaWxlTmFtZRgD",
-          "IAEoCRIQCghNZXRhZGF0YRgEIAEoCRIVCg1MYXN0V3JpdGVUaW1lGAUgASgJ",
-          "IkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVzcG9uc2USEAoIRmlsZVBh",
-          "dGgYASABKAkSDQoFRXJyb3IYAiABKAkiPwocSW1hZ2VGaWxlSW5kZXhVcGRh",
-          "dGVSZXNwb25zZRIQCghGaWxlUGF0aBgBIAEoCRINCgVFcnJvchgCIAEoCWIG",
-          "cHJvdG8z"));
+          "dHVyZRINCgVFcnJvchgCIAEoCSIeChBJbWFnZUZpbGVSZXF1ZXN0EgoKAmlk",
+          "GAEgASgJIiMKFEltYWdlRmlsZXNBbGxSZXF1ZXN0EgsKA2lkcxgBIAMoCSJK",
+          "ChFJbWFnZUZpbGVSZXNwb25zZRImCgRGaWxlGAEgASgLMhguSW1hZ2VGaWxl",
+          "SW5kZXhTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkieQoXSW1hZ2VGaWxlSW5k",
+          "ZXhTdHJ1Y3R1cmUSCgoCaWQYASABKAkSEAoIRmlsZVBhdGgYAiABKAkSEAoI",
+          "RmlsZU5hbWUYAyABKAkSFwoERGF0YRgEIAEoCzIJLk1ldGFkYXRhEhUKDUxh",
+          "c3RXcml0ZVRpbWUYBSABKAkiVgoITWV0YWRhdGESEQoJQXZlcmFnZUJMGAEg",
+          "ASgFEhEKCUF2ZXJhZ2VCUhgCIAEoBRIRCglBdmVyYWdlVEwYAyABKAUSEQoJ",
+          "QXZlcmFnZVRSGAQgASgFIkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVz",
+          "cG9uc2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJyb3IYAiABKAkiPwocSW1h",
+          "Z2VGaWxlSW5kZXhVcGRhdGVSZXNwb25zZRIQCghGaWxlUGF0aBgBIAEoCRIN",
+          "CgVFcnJvchgCIAEoCWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexRequest), global::ImageFileIndexRequest.Parser, new[]{ "IndexedLocation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexResponse), global::ImageFileIndexResponse.Parser, new[]{ "Files", "Error" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Metadata", "LastWriteTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileRequest), global::ImageFileRequest.Parser, new[]{ "Id" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFilesAllRequest), global::ImageFilesAllRequest.Parser, new[]{ "Ids" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileResponse), global::ImageFileResponse.Parser, new[]{ "File", "Error" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Data", "LastWriteTime" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Metadata), global::Metadata.Parser, new[]{ "AverageBL", "AverageBR", "AverageTL", "AverageTR" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructureResponse), global::ImageFileIndexStructureResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexUpdateResponse), global::ImageFileIndexUpdateResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null)
         }));
@@ -324,6 +333,419 @@ public sealed partial class ImageFileIndexResponse : pb::IMessage<ImageFileIndex
 
 }
 
+public sealed partial class ImageFileRequest : pb::IMessage<ImageFileRequest> {
+  private static readonly pb::MessageParser<ImageFileRequest> _parser = new pb::MessageParser<ImageFileRequest>(() => new ImageFileRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<ImageFileRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileRequest(ImageFileRequest other) : this() {
+    id_ = other.id_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileRequest Clone() {
+    return new ImageFileRequest(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private string id_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Id {
+    get { return id_; }
+    set {
+      id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as ImageFileRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(ImageFileRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id.Length != 0) hash ^= Id.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(ImageFileRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id.Length != 0) {
+      Id = other.Id;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Id = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class ImageFilesAllRequest : pb::IMessage<ImageFilesAllRequest> {
+  private static readonly pb::MessageParser<ImageFilesAllRequest> _parser = new pb::MessageParser<ImageFilesAllRequest>(() => new ImageFilesAllRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<ImageFilesAllRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFilesAllRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFilesAllRequest(ImageFilesAllRequest other) : this() {
+    ids_ = other.ids_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFilesAllRequest Clone() {
+    return new ImageFilesAllRequest(this);
+  }
+
+  /// <summary>Field number for the "ids" field.</summary>
+  public const int IdsFieldNumber = 1;
+  private static readonly pb::FieldCodec<string> _repeated_ids_codec
+      = pb::FieldCodec.ForString(10);
+  private readonly pbc::RepeatedField<string> ids_ = new pbc::RepeatedField<string>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<string> Ids {
+    get { return ids_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as ImageFilesAllRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(ImageFilesAllRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!ids_.Equals(other.ids_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= ids_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    ids_.WriteTo(output, _repeated_ids_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += ids_.CalculateSize(_repeated_ids_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(ImageFilesAllRequest other) {
+    if (other == null) {
+      return;
+    }
+    ids_.Add(other.ids_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          ids_.AddEntriesFrom(input, _repeated_ids_codec);
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class ImageFileResponse : pb::IMessage<ImageFileResponse> {
+  private static readonly pb::MessageParser<ImageFileResponse> _parser = new pb::MessageParser<ImageFileResponse>(() => new ImageFileResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<ImageFileResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[4]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileResponse(ImageFileResponse other) : this() {
+    file_ = other.file_ != null ? other.file_.Clone() : null;
+    error_ = other.error_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ImageFileResponse Clone() {
+    return new ImageFileResponse(this);
+  }
+
+  /// <summary>Field number for the "File" field.</summary>
+  public const int FileFieldNumber = 1;
+  private global::ImageFileIndexStructure file_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::ImageFileIndexStructure File {
+    get { return file_; }
+    set {
+      file_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "Error" field.</summary>
+  public const int ErrorFieldNumber = 2;
+  private string error_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Error {
+    get { return error_; }
+    set {
+      error_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as ImageFileResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(ImageFileResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(File, other.File)) return false;
+    if (Error != other.Error) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (file_ != null) hash ^= File.GetHashCode();
+    if (Error.Length != 0) hash ^= Error.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (file_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(File);
+    }
+    if (Error.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Error);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (file_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(File);
+    }
+    if (Error.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Error);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(ImageFileResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.file_ != null) {
+      if (file_ == null) {
+        file_ = new global::ImageFileIndexStructure();
+      }
+      File.MergeFrom(other.File);
+    }
+    if (other.Error.Length != 0) {
+      Error = other.Error;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (file_ == null) {
+            file_ = new global::ImageFileIndexStructure();
+          }
+          input.ReadMessage(file_);
+          break;
+        }
+        case 18: {
+          Error = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileIndexStructure> {
   private static readonly pb::MessageParser<ImageFileIndexStructure> _parser = new pb::MessageParser<ImageFileIndexStructure>(() => new ImageFileIndexStructure());
   private pb::UnknownFieldSet _unknownFields;
@@ -332,7 +754,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[2]; }
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -352,7 +774,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     id_ = other.id_;
     filePath_ = other.filePath_;
     fileName_ = other.fileName_;
-    metadata_ = other.metadata_;
+    data_ = other.data_ != null ? other.data_.Clone() : null;
     lastWriteTime_ = other.lastWriteTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -395,14 +817,14 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     }
   }
 
-  /// <summary>Field number for the "Metadata" field.</summary>
-  public const int MetadataFieldNumber = 4;
-  private string metadata_ = "";
+  /// <summary>Field number for the "Data" field.</summary>
+  public const int DataFieldNumber = 4;
+  private global::Metadata data_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Metadata {
-    get { return metadata_; }
+  public global::Metadata Data {
+    get { return data_; }
     set {
-      metadata_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      data_ = value;
     }
   }
 
@@ -433,7 +855,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (Id != other.Id) return false;
     if (FilePath != other.FilePath) return false;
     if (FileName != other.FileName) return false;
-    if (Metadata != other.Metadata) return false;
+    if (!object.Equals(Data, other.Data)) return false;
     if (LastWriteTime != other.LastWriteTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -444,7 +866,7 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (Id.Length != 0) hash ^= Id.GetHashCode();
     if (FilePath.Length != 0) hash ^= FilePath.GetHashCode();
     if (FileName.Length != 0) hash ^= FileName.GetHashCode();
-    if (Metadata.Length != 0) hash ^= Metadata.GetHashCode();
+    if (data_ != null) hash ^= Data.GetHashCode();
     if (LastWriteTime.Length != 0) hash ^= LastWriteTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -471,9 +893,9 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
       output.WriteRawTag(26);
       output.WriteString(FileName);
     }
-    if (Metadata.Length != 0) {
+    if (data_ != null) {
       output.WriteRawTag(34);
-      output.WriteString(Metadata);
+      output.WriteMessage(Data);
     }
     if (LastWriteTime.Length != 0) {
       output.WriteRawTag(42);
@@ -496,8 +918,8 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (FileName.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(FileName);
     }
-    if (Metadata.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Metadata);
+    if (data_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Data);
     }
     if (LastWriteTime.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(LastWriteTime);
@@ -522,8 +944,11 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
     if (other.FileName.Length != 0) {
       FileName = other.FileName;
     }
-    if (other.Metadata.Length != 0) {
-      Metadata = other.Metadata;
+    if (other.data_ != null) {
+      if (data_ == null) {
+        data_ = new global::Metadata();
+      }
+      Data.MergeFrom(other.Data);
     }
     if (other.LastWriteTime.Length != 0) {
       LastWriteTime = other.LastWriteTime;
@@ -552,11 +977,227 @@ public sealed partial class ImageFileIndexStructure : pb::IMessage<ImageFileInde
           break;
         }
         case 34: {
-          Metadata = input.ReadString();
+          if (data_ == null) {
+            data_ = new global::Metadata();
+          }
+          input.ReadMessage(data_);
           break;
         }
         case 42: {
           LastWriteTime = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class Metadata : pb::IMessage<Metadata> {
+  private static readonly pb::MessageParser<Metadata> _parser = new pb::MessageParser<Metadata>(() => new Metadata());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<Metadata> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[6]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata(Metadata other) : this() {
+    averageBL_ = other.averageBL_;
+    averageBR_ = other.averageBR_;
+    averageTL_ = other.averageTL_;
+    averageTR_ = other.averageTR_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Metadata Clone() {
+    return new Metadata(this);
+  }
+
+  /// <summary>Field number for the "AverageBL" field.</summary>
+  public const int AverageBLFieldNumber = 1;
+  private int averageBL_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AverageBL {
+    get { return averageBL_; }
+    set {
+      averageBL_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageBR" field.</summary>
+  public const int AverageBRFieldNumber = 2;
+  private int averageBR_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AverageBR {
+    get { return averageBR_; }
+    set {
+      averageBR_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageTL" field.</summary>
+  public const int AverageTLFieldNumber = 3;
+  private int averageTL_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AverageTL {
+    get { return averageTL_; }
+    set {
+      averageTL_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "AverageTR" field.</summary>
+  public const int AverageTRFieldNumber = 4;
+  private int averageTR_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AverageTR {
+    get { return averageTR_; }
+    set {
+      averageTR_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as Metadata);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(Metadata other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (AverageBL != other.AverageBL) return false;
+    if (AverageBR != other.AverageBR) return false;
+    if (AverageTL != other.AverageTL) return false;
+    if (AverageTR != other.AverageTR) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (AverageBL != 0) hash ^= AverageBL.GetHashCode();
+    if (AverageBR != 0) hash ^= AverageBR.GetHashCode();
+    if (AverageTL != 0) hash ^= AverageTL.GetHashCode();
+    if (AverageTR != 0) hash ^= AverageTR.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (AverageBL != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(AverageBL);
+    }
+    if (AverageBR != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(AverageBR);
+    }
+    if (AverageTL != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(AverageTL);
+    }
+    if (AverageTR != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(AverageTR);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (AverageBL != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageBL);
+    }
+    if (AverageBR != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageBR);
+    }
+    if (AverageTL != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageTL);
+    }
+    if (AverageTR != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageTR);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(Metadata other) {
+    if (other == null) {
+      return;
+    }
+    if (other.AverageBL != 0) {
+      AverageBL = other.AverageBL;
+    }
+    if (other.AverageBR != 0) {
+      AverageBR = other.AverageBR;
+    }
+    if (other.AverageTL != 0) {
+      AverageTL = other.AverageTL;
+    }
+    if (other.AverageTR != 0) {
+      AverageTR = other.AverageTR;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          AverageBL = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          AverageBR = input.ReadInt32();
+          break;
+        }
+        case 24: {
+          AverageTL = input.ReadInt32();
+          break;
+        }
+        case 32: {
+          AverageTR = input.ReadInt32();
           break;
         }
       }
@@ -573,7 +1214,7 @@ public sealed partial class ImageFileIndexStructureResponse : pb::IMessage<Image
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[3]; }
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -730,7 +1371,7 @@ public sealed partial class ImageFileIndexUpdateResponse : pb::IMessage<ImageFil
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[4]; }
+    get { return global::ImageFileIndexReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

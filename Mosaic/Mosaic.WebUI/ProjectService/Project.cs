@@ -54,6 +54,11 @@ namespace ProjectService
             return new MongoProject().InsertLargeFile(database, request);
         }
 
+        public ProjectResponse InsertMosaicFile(ProjectInsertMosaicFileRequest request)
+        {
+            return new MongoProject().InsertMosaicFile(database, request);
+        }
+
         public ProjectResponse DeleteProject(ProjectRequest request)
         {
             return new MongoProject().Delete(database, request);

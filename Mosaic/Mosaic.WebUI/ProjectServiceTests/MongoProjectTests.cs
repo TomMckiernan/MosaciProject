@@ -64,6 +64,22 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
+        public void InsertMosaicFileReturnsErrorIfIdEmpty()
+        {
+            var request = new ProjectInsertMosaicFileRequest() { Id = String.Empty };
+            var response = new MongoProject().InsertMosaicFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void InsertMosaicFileReturnsErrorIfNullMosaicLocation()
+        {
+            var request = new ProjectInsertMosaicFileRequest() { Id = ObjectId.GenerateNewId().ToString() };
+            var response = new MongoProject().InsertMosaicFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
         public void DeleteProjectReturnsErrorIfIdEmpty()
         {
             var request = new ProjectRequest() { Id = String.Empty };

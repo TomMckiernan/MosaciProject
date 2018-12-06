@@ -14,6 +14,11 @@ message ProjectInsertLargeFileRequest {
 	string LargeFileId            = 2;
 }
 
+message ProjectInsertMosaicFileRequest {
+    string id                     = 1;
+	string Location               = 2;
+}
+
 message ProjectStructure {
     string id                     = 1;
 	string TimeOfCreation         = 2;
@@ -28,6 +33,7 @@ message ProjectStructure {
 	  UNKNOWN = 5;
     }
     State Progress                = 5;
+	string MosaicLocation         = 6;
 }
 
 message ProjectResponse {

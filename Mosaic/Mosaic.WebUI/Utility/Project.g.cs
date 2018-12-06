@@ -26,22 +26,25 @@ public static partial class ProjectReflection {
           "IkIKHlByb2plY3RJbnNlcnRTbWFsbEZpbGVzUmVxdWVzdBIKCgJpZBgBIAEo",
           "CRIUCgxTbWFsbEZpbGVJZHMYAiADKAkiQAodUHJvamVjdEluc2VydExhcmdl",
           "RmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEwoLTGFyZ2VGaWxlSWQYAiABKAki",
-          "6wEKEFByb2plY3RTdHJ1Y3R1cmUSCgoCaWQYASABKAkSFgoOVGltZU9mQ3Jl",
-          "YXRpb24YAiABKAkSEwoLTGFyZ2VGaWxlSWQYAyABKAkSFAoMU21hbGxGaWxl",
-          "SWRzGAQgAygJEikKCFByb2dyZXNzGAUgASgOMhcuUHJvamVjdFN0cnVjdHVy",
-          "ZS5TdGF0ZSJdCgVTdGF0ZRILCgdDUkVBVEVEEAASDgoKU01BTExBRERFRBAB",
-          "Eg4KCkxBUkdFQURERUQQAhINCglDT01QTEVURUQQAxILCgdERUxFVEVEEAQS",
-          "CwoHVU5LTk9XThAFIkQKD1Byb2plY3RSZXNwb25zZRIiCgdQcm9qZWN0GAEg",
-          "ASgLMhEuUHJvamVjdFN0cnVjdHVyZRINCgVFcnJvchgCIAEoCSJNChdQcm9q",
-          "ZWN0TXVsdGlwbGVSZXNwb25zZRIjCghQcm9qZWN0cxgBIAMoCzIRLlByb2pl",
-          "Y3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAliBnByb3RvMw=="));
+          "PgoeUHJvamVjdEluc2VydE1vc2FpY0ZpbGVSZXF1ZXN0EgoKAmlkGAEgASgJ",
+          "EhAKCExvY2F0aW9uGAIgASgJIoMCChBQcm9qZWN0U3RydWN0dXJlEgoKAmlk",
+          "GAEgASgJEhYKDlRpbWVPZkNyZWF0aW9uGAIgASgJEhMKC0xhcmdlRmlsZUlk",
+          "GAMgASgJEhQKDFNtYWxsRmlsZUlkcxgEIAMoCRIpCghQcm9ncmVzcxgFIAEo",
+          "DjIXLlByb2plY3RTdHJ1Y3R1cmUuU3RhdGUSFgoOTW9zYWljTG9jYXRpb24Y",
+          "BiABKAkiXQoFU3RhdGUSCwoHQ1JFQVRFRBAAEg4KClNNQUxMQURERUQQARIO",
+          "CgpMQVJHRUFEREVEEAISDQoJQ09NUExFVEVEEAMSCwoHREVMRVRFRBAEEgsK",
+          "B1VOS05PV04QBSJECg9Qcm9qZWN0UmVzcG9uc2USIgoHUHJvamVjdBgBIAEo",
+          "CzIRLlByb2plY3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkiTQoXUHJvamVj",
+          "dE11bHRpcGxlUmVzcG9uc2USIwoIUHJvamVjdHMYASADKAsyES5Qcm9qZWN0",
+          "U3RydWN0dXJlEg0KBUVycm9yGAIgASgJYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectRequest), global::ProjectRequest.Parser, new[]{ "Id" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertSmallFilesRequest), global::ProjectInsertSmallFilesRequest.Parser, new[]{ "Id", "SmallFileIds" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertMosaicFileRequest), global::ProjectInsertMosaicFileRequest.Parser, new[]{ "Id", "Location" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MosaicLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectResponse), global::ProjectResponse.Parser, new[]{ "Project", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectMultipleResponse), global::ProjectMultipleResponse.Parser, new[]{ "Projects", "Error" }, null, null, null)
         }));
@@ -485,6 +488,163 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
 
 }
 
+public sealed partial class ProjectInsertMosaicFileRequest : pb::IMessage<ProjectInsertMosaicFileRequest> {
+  private static readonly pb::MessageParser<ProjectInsertMosaicFileRequest> _parser = new pb::MessageParser<ProjectInsertMosaicFileRequest>(() => new ProjectInsertMosaicFileRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<ProjectInsertMosaicFileRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProjectReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertMosaicFileRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertMosaicFileRequest(ProjectInsertMosaicFileRequest other) : this() {
+    id_ = other.id_;
+    location_ = other.location_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertMosaicFileRequest Clone() {
+    return new ProjectInsertMosaicFileRequest(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private string id_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Id {
+    get { return id_; }
+    set {
+      id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "Location" field.</summary>
+  public const int LocationFieldNumber = 2;
+  private string location_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Location {
+    get { return location_; }
+    set {
+      location_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as ProjectInsertMosaicFileRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(ProjectInsertMosaicFileRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (Location != other.Location) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id.Length != 0) hash ^= Id.GetHashCode();
+    if (Location.Length != 0) hash ^= Location.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Id);
+    }
+    if (Location.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Location);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+    }
+    if (Location.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Location);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(ProjectInsertMosaicFileRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id.Length != 0) {
+      Id = other.Id;
+    }
+    if (other.Location.Length != 0) {
+      Location = other.Location;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Id = input.ReadString();
+          break;
+        }
+        case 18: {
+          Location = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
   private static readonly pb::MessageParser<ProjectStructure> _parser = new pb::MessageParser<ProjectStructure>(() => new ProjectStructure());
   private pb::UnknownFieldSet _unknownFields;
@@ -493,7 +653,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[3]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -515,6 +675,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     largeFileId_ = other.largeFileId_;
     smallFileIds_ = other.smallFileIds_.Clone();
     progress_ = other.progress_;
+    mosaicLocation_ = other.mosaicLocation_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -577,6 +738,17 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
   }
 
+  /// <summary>Field number for the "MosaicLocation" field.</summary>
+  public const int MosaicLocationFieldNumber = 6;
+  private string mosaicLocation_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string MosaicLocation {
+    get { return mosaicLocation_; }
+    set {
+      mosaicLocation_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ProjectStructure);
@@ -595,6 +767,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (LargeFileId != other.LargeFileId) return false;
     if(!smallFileIds_.Equals(other.smallFileIds_)) return false;
     if (Progress != other.Progress) return false;
+    if (MosaicLocation != other.MosaicLocation) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -606,6 +779,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (LargeFileId.Length != 0) hash ^= LargeFileId.GetHashCode();
     hash ^= smallFileIds_.GetHashCode();
     if (Progress != 0) hash ^= Progress.GetHashCode();
+    if (MosaicLocation.Length != 0) hash ^= MosaicLocation.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -636,6 +810,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       output.WriteRawTag(40);
       output.WriteEnum((int) Progress);
     }
+    if (MosaicLocation.Length != 0) {
+      output.WriteRawTag(50);
+      output.WriteString(MosaicLocation);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -656,6 +834,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     size += smallFileIds_.CalculateSize(_repeated_smallFileIds_codec);
     if (Progress != 0) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Progress);
+    }
+    if (MosaicLocation.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(MosaicLocation);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -680,6 +861,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     smallFileIds_.Add(other.smallFileIds_);
     if (other.Progress != 0) {
       Progress = other.Progress;
+    }
+    if (other.MosaicLocation.Length != 0) {
+      MosaicLocation = other.MosaicLocation;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -712,6 +896,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
           progress_ = (global::ProjectStructure.Types.State) input.ReadEnum();
           break;
         }
+        case 50: {
+          MosaicLocation = input.ReadString();
+          break;
+        }
       }
     }
   }
@@ -742,7 +930,7 @@ public sealed partial class ProjectResponse : pb::IMessage<ProjectResponse> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[4]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -905,7 +1093,7 @@ public sealed partial class ProjectMultipleResponse : pb::IMessage<ProjectMultip
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[5]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

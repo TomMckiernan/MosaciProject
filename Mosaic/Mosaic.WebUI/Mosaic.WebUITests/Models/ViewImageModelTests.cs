@@ -10,7 +10,7 @@ namespace Mosaic.WebUITests.Models
     [TestClass]
     public class ViewImageModelTests
     {
-        public string copyLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\tiles\\";
+        public string copyLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\test\\";
 
         [TestMethod]
         public void IfCopyDirectoryDoesNotExistReturnsError()
@@ -36,8 +36,11 @@ namespace Mosaic.WebUITests.Models
             model.CopyImage(filePath);
             Assert.AreEqual(copyLocation + Path.GetFileName(filePath), model.FilePath);
 
+            Assert.IsTrue(File.Exists(model.FilePath));
             // cleanup
-            model.DeleteImage();
+            model.DeleteImage(model.FilePath);
+            Assert.IsFalse(File.Exists(model.FilePath));
+
             // call method which deletes the file that has been created
         }
     }

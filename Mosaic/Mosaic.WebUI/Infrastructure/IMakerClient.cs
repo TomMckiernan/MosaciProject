@@ -12,8 +12,12 @@ namespace Infrastructure
         IndexedLocationResponse ReadIndexedLocation();
 
         ImageFileIndexResponse ReadImageFileIndex(string indexedLocation);
-        
+
         Task<ImageFileIndexUpdateResponse> UpdateImageFileIndex(string indexedLocation);
+
+        ImageFileResponse ReadImageFile(string id);
+
+        ImageFileIndexResponse ReadAllImageFiles(IList<string> ids);
 
         ProjectResponse CreateProject();
 
@@ -25,6 +29,10 @@ namespace Infrastructure
 
         ProjectResponse InsertLargeFile(string id, string fileId);
 
+        ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
+
         ProjectResponse DeleteProject(string id);
+
+        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random);
     }
 }

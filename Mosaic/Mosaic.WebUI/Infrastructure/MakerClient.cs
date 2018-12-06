@@ -24,7 +24,7 @@ namespace Infrastructure
         public ImageFileIndexResponse ReadImageFileIndex(string indexedLocation)
         {
             var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
-            var response = new ImageFileIndexService.ImageFileIndex().ReadImageFileIndex(request);
+            var response = new ImageFileIndexService.ImageFileIndex().ReadAllImageFileIndex(request);
             return response;
         }
 
@@ -32,6 +32,21 @@ namespace Infrastructure
         {
             var request = new ImageFileIndexRequest() { IndexedLocation = indexedLocation };
             var response = await new ImageFileIndexService.ImageFileIndex().AnalyseImageFileIndex(request);
+            return response;
+        }
+
+        public ImageFileResponse ReadImageFile(string id)
+        {
+            var request = new ImageFileRequest() { Id = id };
+            var response = new ImageFileIndexService.ImageFileIndex().ReadImageFile(request);
+            return response;
+        }
+
+        public ImageFileIndexResponse ReadAllImageFiles(IList<string> ids)
+        {
+            var request = new ImageFilesAllRequest();
+            request.Ids.AddRange(ids);
+            var response = new ImageFileIndexService.ImageFileIndex().ReadAllImageFiles(request);
             return response;
         }
 
@@ -69,10 +84,25 @@ namespace Infrastructure
             return response;
         }
 
+        public ProjectResponse InsertMosaicFile(string id, string mosaicLocation)
+        {
+            var request = new ProjectInsertMosaicFileRequest() { Id = id, Location = mosaicLocation };
+            var response = new ProjectService.Project().InsertMosaicFile(request);
+            return response;
+        }
+
         public ProjectResponse DeleteProject(string id)
         {
             var request = new ProjectRequest() { Id = id };
             var response = new ProjectService.Project().DeleteProject(request);
+            return response;
+        }
+
+        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random)
+        {
+            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random};
+            request.Tiles.AddRange(tiles);
+            var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;
         }
     }

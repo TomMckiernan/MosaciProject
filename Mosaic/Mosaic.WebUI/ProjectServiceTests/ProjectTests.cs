@@ -29,6 +29,12 @@ namespace ProjectServiceTests
             return service.InsertLargeFile(insertRequest);
         }
 
+        private ProjectResponse InsertMosaicFileHelper(Project service, string id)
+        {
+            var insertRequest = new ProjectInsertMosaicFileRequest() { Id = id, Location = "//MosaicLocation//test.jpg" };
+            return service.InsertMosaicFile(insertRequest);
+        }
+
         private ProjectResponse ReadProjectHelper(Project service, string id)
         {
             var request = new ProjectRequest() { Id = id };
@@ -89,6 +95,16 @@ namespace ProjectServiceTests
             Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Largeadded);
         }
 
+        [TestMethod]
+        public void InsertMosaicFileInsertsLocationIntoProjectAndUpdatesState()
+        {
+            var createResponse = service.CreateProject();
+            var insertResponse = InsertMosaicFileHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
+            Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Completed);
+        }
 
         [TestMethod]
         public void DeleteProjectRemovesProjectFromCollection()

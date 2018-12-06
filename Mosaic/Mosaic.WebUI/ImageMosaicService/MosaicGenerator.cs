@@ -6,34 +6,34 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace ImageMosaic
+namespace ImageMosaicService
 {
     public class MosaicGenerator
     {
-        public Mosaic Generate(string imageToMash, string srcImageDirectory)
+        public Mosaic Generate(string masterImage, List<ImageFileIndexStructure> tileImages, bool random = false)
         {
             var imageProcessing = new ImageProcessing();
             var imageInfos = new List<ImageInfo>();
             var mosaic = new Mosaic();
 
-            var di = new DirectoryInfo(srcImageDirectory);
-            var files = di.GetFiles("*.png", SearchOption.AllDirectories).ToList();
-
-            Parallel.ForEach(files, f =>
+            Parallel.ForEach(tileImages, f =>
             {
-                using (var inputBmp = imageProcessing.Resize(f.FullName))
+                var info = new ImageInfo(f.FilePath);
+                info.AverageBL = Color.FromArgb(f.Data.AverageBL);
+                info.AverageBR = Color.FromArgb(f.Data.AverageBR);
+                info.AverageTL = Color.FromArgb(f.Data.AverageTL);
+                info.AverageTR = Color.FromArgb(f.Data.AverageTR);
+                   
+                if(info != null)
                 {
-                    var info = imageProcessing.GetAverageColor(inputBmp, f.FullName);
-                    
-                    if(info != null)
-                        imageInfos.Add(info);
+                    imageInfos.Add(info);
                 }
             });
 
-            using (var source = new Bitmap(imageToMash))
+            using (var source = new Bitmap(masterImage))
             {
                 var colorMap = imageProcessing.CreateMap(source);
-                mosaic = imageProcessing.Render(source, colorMap, imageInfos);
+                mosaic = imageProcessing.Render(source, colorMap, imageInfos, random);
             }
 
             return mosaic;

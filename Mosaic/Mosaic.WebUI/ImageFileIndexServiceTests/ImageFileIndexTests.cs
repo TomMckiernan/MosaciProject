@@ -33,17 +33,16 @@ namespace ImageFileIndexServiceTests
                 var service = new ImageFileIndex("TestMosaicDatabase");
                 await service.AnalyseImageFileIndex(request);
             });
-            var result = new MongoImageFileIndex().Read(database, indexedLocation);
+            var result = new MongoImageFileIndex().ReadAll(database, indexedLocation);
             Assert.AreEqual(7, result.Files.Count);
-
         }
 
-        // Test jpg files in subdirectores are read - tested in mongo test class
-        // However the initial ftech of the sub directory files is not checked
+        // Test png files in subdirectores are read - tested in mongo test class
+        // However the initial fetch of the sub directory files is not checked
 
-        // Test jpg files deleted in directory no longer appear in collection
+        // Test png files deleted in directory no longer appear in collection
 
-        // Test jpg files updated in directory are updated in collection
+        // Test png files updated in directory are updated in collection
         // This may be manual only 
 
         // Test file with same name but in different directories doesn't alter

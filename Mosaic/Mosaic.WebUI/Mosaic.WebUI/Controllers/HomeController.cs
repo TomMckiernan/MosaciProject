@@ -55,7 +55,7 @@ namespace Mosaic.WebUI.Controllers
             model.RequestIndexedLocation(client);
 
             var progress = client.ReadProject(Id).Project.Progress;
-            if (progress == ProjectStructure.Types.State.Smalladded)
+            if (progress == ProjectStructure.Types.State.Smalladded|| progress == ProjectStructure.Types.State.Completed)
             {
                 return new TileController().Generate(Id);
             }

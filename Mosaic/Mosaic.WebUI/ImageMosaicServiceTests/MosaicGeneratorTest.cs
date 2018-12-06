@@ -3,8 +3,9 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ImageMosaic;
 using System.Drawing;
+using ImageMosaicService;
+using System.IO;
 
 namespace ImageMosaicTest
 {
@@ -48,6 +49,12 @@ namespace ImageMosaicTest
         }
 
         [TestMethod]
+        public void GetBestImageIndexReturnsBestIndexAnd()
+        {
+
+        }
+
+        [TestMethod]
         public void CreateMapTest()
         {
             using (var input = Bitmap.FromFile(sourceFile))
@@ -59,6 +66,10 @@ namespace ImageMosaicTest
             }
         }
 
+        // Move these into a separate file, to act as end to end tests
+        // Will need to call implementation in ImageFileIndex service
+        //############################################################
+
         //This seemed to crash when no jpg were found in the image folder
         // Also generic error when saving to c:temp 
         [TestMethod]
@@ -68,7 +79,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\Test7Images";
 
-            var mosaic = mosaicGenerator.Generate(srcImage,imageFolder );
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage,tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -83,7 +100,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\BlockColourTests\\rgb-circles.jpg";
             var imageFolder = "..\\..\\..\\..\\..\\..\\test\\BlockColours";
 
-            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -98,7 +121,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage1.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
-              var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -113,7 +142,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage1Small2.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
-            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -128,7 +163,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
-            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -143,7 +184,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\DogImage2Small2.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
-            var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();
@@ -158,7 +205,13 @@ namespace ImageMosaicTest
             var srcImage = "..\\..\\..\\..\\..\\..\\test\\SourceImages\\144196672.png";
             var imageFolder = "C:\\Users\\Tom_m\\OneDrive\\Pictures\\clubs";
 
-              var mosaic = mosaicGenerator.Generate(srcImage, imageFolder);
+            var tileImages = new List<string>();
+            foreach (var path in Directory.GetFiles(imageFolder))
+            {
+                tileImages.Add(Path.GetFullPath(path));
+            }
+
+            var mosaic = mosaicGenerator.Generate(srcImage, tileImages);
 
             mosaic.Image.Save(string.Format("..\\..\\..\\..\\..\\..\\test\\{0}.jpg", Guid.NewGuid().ToString("N")));
             mosaic.Image.Dispose();

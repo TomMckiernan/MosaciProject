@@ -54,7 +54,6 @@ namespace ProjectService
             return result;
         }
 
-        // Could change the return type
         public ProjectResponse InsertSmallFiles(IMongoDatabase db, ProjectInsertSmallFilesRequest request)
         {
             if (request.SmallFileIds == null || request.SmallFileIds.Count == 0)
@@ -79,7 +78,6 @@ namespace ProjectService
             return new ProjectResponse() { Project = response };
         }
         
-        // Could change the return type
         public ProjectResponse InsertLargeFile(IMongoDatabase db, ProjectInsertLargeFileRequest request)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
@@ -96,7 +94,22 @@ namespace ProjectService
             return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId } };
         }
 
-        // Could change the return type
+        public ProjectResponse InsertMosaicFile(IMongoDatabase db, ProjectInsertMosaicFileRequest request)
+        {
+            var collection = db.GetCollection<ProjectStructure>("Project");
+
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location))
+            {
+                return new ProjectResponse() { Error = "Location cannot be null or empty" };
+            }
+
+            var update = Builders<ProjectStructure>.Update.Set(x => x.MosaicLocation, request.Location)
+                .Set(x => x.Progress, ProjectStructure.Types.State.Completed);
+            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, MosaicLocation = request.Location } };
+        }
+
         public ProjectResponse Delete(IMongoDatabase db, ProjectRequest request)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");

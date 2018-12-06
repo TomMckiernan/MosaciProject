@@ -1,6 +1,8 @@
-﻿using MongoDB.Bson;
+﻿using ImageMosaicService;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,9 +21,19 @@ namespace ImageFileIndexService
             database = client.GetDatabase(dbName);
         }
 
-        public ImageFileIndexResponse ReadImageFileIndex(ImageFileIndexRequest request)
+        public ImageFileIndexResponse ReadAllImageFileIndex(ImageFileIndexRequest request)
         {
-            return new MongoImageFileIndex().Read(database, request.IndexedLocation);
+            return new MongoImageFileIndex().ReadAll(database, request.IndexedLocation);
+        }
+
+        public ImageFileResponse ReadImageFile(ImageFileRequest request)
+        {
+            return new MongoImageFileIndex().ReadImageFile(database, request.Id);
+        }
+
+        public ImageFileIndexResponse ReadAllImageFiles(ImageFilesAllRequest request)
+        {
+            return new MongoImageFileIndex().ReadAllImageFiles(database, request.Ids.ToList());
         }
 
         // Analyse all files in current directory and update collection to reflect directory
@@ -37,7 +49,7 @@ namespace ImageFileIndexService
                     var directoryFiles = indexedDirectory.GetFiles("*.png", SearchOption.AllDirectories).ToList();
 
                     // Get exisiting files in location
-                    var existingFiles = ReadImageFileIndex(request).Files.ToList();
+                    var existingFiles = ReadAllImageFileIndex(request).Files.ToList();
 
                     // Get new files
                     var newFiles = directoryFiles.Where(f => !existingFiles.Any(f2 => f2.FilePath == f.FullName));
@@ -65,21 +77,34 @@ namespace ImageFileIndexService
 
         public async Task AnalyseNewFiles(FileInfo x)
         {
+            var data = GenerateMetaData(x);
             var request = new ImageFileIndexStructure()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 FileName = x.Name,
                 FilePath = x.FullName,
                 LastWriteTime = x.LastWriteTime.ToString(),
-                Metadata = GenerateMetaData()
+                Data = new Metadata()
+                {
+                    AverageBL = data.AverageBL.ToArgb(),
+                    AverageBR = data.AverageBR.ToArgb(),
+                    AverageTL = data.AverageTL.ToArgb(),
+                    AverageTR = data.AverageTR.ToArgb() 
+                }
             };
             var response = new MongoImageFileIndex().Insert(database, request);
-     
         }
 
-        private string GenerateMetaData()
+        private ImageInfo GenerateMetaData(FileInfo file)
         {
-            return String.Empty;
+            var imageProcessing = new ImageProcessing();
+            ImageInfo info;
+
+            using (var inputBmp = imageProcessing.Resize(file.FullName))
+            {
+                info = imageProcessing.GetAverageColor(inputBmp, file.FullName);
+            }
+            return info;
         }
 
         public async Task AnalyseUpdatedFiles(FileInfo x)
