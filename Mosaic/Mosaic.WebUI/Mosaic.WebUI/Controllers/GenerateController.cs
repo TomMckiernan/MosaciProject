@@ -26,13 +26,16 @@ namespace Mosaic.WebUI.Controllers
             var response = model.Generate(client, id, random);
             if (String.IsNullOrEmpty(response.Error))
             {
+                // copy generated image to root directory to allow it display
                 var image = new ViewImageModel();
-                // copy image to root of project to display it
                 image.CopyImage(response.Location);
-                // Update project status and store location
-                new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(image.ImagePath);
+                // update project status and store location
+                var insertResponse = new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
+                if (String.IsNullOrEmpty(insertResponse.Error))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return Json(image.ImagePath);
+                }
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);

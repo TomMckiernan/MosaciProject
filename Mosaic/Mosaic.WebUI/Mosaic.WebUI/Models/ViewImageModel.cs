@@ -18,14 +18,15 @@ namespace Mosaic.WebUI.Models
             CopyPath = Path.GetFullPath(copyPath);
         }
 
-        public void CopyImage(string fileToCopy)
+        public void CopyImage(string fileToCopy, string fileName = "")
         {
             //Need to check if already exists i.e if want to generate again
             if (File.Exists(fileToCopy))
             {
                 if (Directory.Exists(CopyPath))
                 {
-                    var newfile = CopyPath + Path.GetFileName(fileToCopy);
+                    var newFileName = String.IsNullOrEmpty(fileName) ? Path.GetFileName(fileToCopy) : fileName + Path.GetExtension(fileToCopy);
+                    var newfile = CopyPath + newFileName;
                     // Copies files to location and will override if already exists
                     File.Copy(fileToCopy, newfile, true);
                     FilePath = newfile;

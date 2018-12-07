@@ -13,6 +13,7 @@ namespace Mosaic.WebUI.Controllers
     public class MasterController : Controller
     {
         IMakerClient client = new MakerClient();
+        string MASTER_IMAGE_LOCATION = "wwwroot\\images\\master\\";
 
         [HttpPost]
         public ActionResult ReadImageFileIndex(string indexedLocation, string id)
@@ -36,10 +37,14 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportFile(string id, string fileId)
+        public ActionResult ImportFile(string id, string fileId, string filePath)
         {
-            var model = new MasterFileModel();
+            // copy master image to root directory to allow it display
+            // set the name of the local master image to the project id
+            var viewImage = ViewImage(filePath, id);
 
+            // update project status and store master file id
+            var model = new MasterFileModel();
             var response = model.InsertMasterFile(client, id, fileId);
             if (String.IsNullOrEmpty(response.Error))
             {
@@ -51,11 +56,10 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewImage(string filepath)
+        public ActionResult ViewImage(string filepath, string fileName)
         {
-            var model = new ViewImageModel("");
-            model.DeleteImage(model.ImagePath);
-            model.CopyImage(filepath);
+            var model = new ViewImageModel(MASTER_IMAGE_LOCATION);
+            model.CopyImage(filepath, fileName);
             if (String.IsNullOrEmpty(model.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
