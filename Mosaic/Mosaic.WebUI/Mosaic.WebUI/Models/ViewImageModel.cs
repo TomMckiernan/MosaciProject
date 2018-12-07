@@ -31,7 +31,7 @@ namespace Mosaic.WebUI.Models
                     File.Copy(fileToCopy, newfile, true);
                     FilePath = newfile;
                     ImagePath = CopyPath.Substring(CopyPath.IndexOf("\\images\\"));
-                    ImagePath = ImagePath + Path.GetFileName(fileToCopy);
+                    ImagePath = ImagePath + Path.GetFileName(newfile);
                 }
                 else
                 {

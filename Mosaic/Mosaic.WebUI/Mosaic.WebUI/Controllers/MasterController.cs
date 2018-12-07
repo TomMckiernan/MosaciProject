@@ -41,11 +41,12 @@ namespace Mosaic.WebUI.Controllers
         {
             // copy master image to root directory to allow it display
             // set the name of the local master image to the project id
-            var viewImage = ViewImage(filePath, id);
+            var image = new ViewImageModel(MASTER_IMAGE_LOCATION);
+            image.CopyImage(filePath, id);
 
             // update project status and store master file id
             var model = new MasterFileModel();
-            var response = model.InsertMasterFile(client, id, fileId);
+            var response = model.InsertMasterFile(client, id, fileId, image.ImagePath);
             if (String.IsNullOrEmpty(response.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;
@@ -56,10 +57,10 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewImage(string filepath, string fileName)
+        public ActionResult ViewImage(string filepath, string id)
         {
             var model = new ViewImageModel(MASTER_IMAGE_LOCATION);
-            model.CopyImage(filepath, fileName);
+            model.CopyImage(filepath, id);
             if (String.IsNullOrEmpty(model.Error))
             {
                 Response.StatusCode = (int)HttpStatusCode.OK;

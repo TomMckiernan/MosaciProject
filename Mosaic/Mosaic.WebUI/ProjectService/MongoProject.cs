@@ -82,13 +82,15 @@ namespace ProjectService
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
 
-            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.LargeFileId))
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.LargeFileId) || String.IsNullOrEmpty(request.Location))
             {
-                return new ProjectResponse() { Error = "Id cannot be null or empty" };
+                return new ProjectResponse() { Error = "Id or location cannot be null or empty" };
             }
 
             var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId)
-                .Set(x => x.Progress, ProjectStructure.Types.State.Largeadded);
+                .Set(x => x.Progress, ProjectStructure.Types.State.Largeadded)
+                .Set(x => x.MasterLocation, request.Location);
+
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             
             return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId } };

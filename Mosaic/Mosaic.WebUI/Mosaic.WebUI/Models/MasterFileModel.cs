@@ -8,9 +8,9 @@ namespace Mosaic.WebUI.Models
 {
     public class MasterFileModel
     {
-        public ProjectResponse InsertMasterFile(IMakerClient client, string id, string fileId)
+        public ProjectResponse InsertMasterFile(IMakerClient client, string id, string fileId, string masterLocation)
         {
-            var response = client.InsertLargeFile(id, fileId);
+            var response = client.InsertLargeFile(id, fileId, masterLocation);
             return response;
         }
     }

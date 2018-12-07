@@ -10,6 +10,7 @@ namespace Mosaic.WebUI.Models
     {
         public string ProjectId { get; set; }
         public int TileImageCount { get; set; }
+        public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
         public ProjectStructure.Types.State State { get; set; }
         public string MasterFileName { get; set; }
@@ -20,6 +21,7 @@ namespace Mosaic.WebUI.Models
             ProjectId = project.Id;
             TileImageCount = project.SmallFileIds.Count;
             State = project.Progress;
+            MasterLocation = project.MasterLocation;
             MosaicLocation = project.MosaicLocation;
             TimeOfCreation = project.TimeOfCreation;
             if (!String.IsNullOrEmpty(project.LargeFileId))

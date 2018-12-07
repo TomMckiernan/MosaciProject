@@ -33,21 +33,20 @@ namespace Mosaic.WebUITests.Models
         public void ReadAllProjectsReturnsProjectMultipleResponse()
         {
             var response = new ProjectMultipleResponse() { };
-            var expected = new List<ProjectStructure>()
+            var expectedProjects = new List<ProjectStructure>()
             {
                 new ProjectStructure { Id = ObjectId.GenerateNewId().ToString() },
                 new ProjectStructure { Id = ObjectId.GenerateNewId().ToString() }
             };
 
             var returnObject = new ProjectMultipleResponse();
-            returnObject.Projects.AddRange(expected);
+            returnObject.Projects.AddRange(expectedProjects);
             MockMakerClient.Setup(x => x.ReadAllProjects()).Returns(returnObject);
 
             var model = new ProjectModel();
             model.ReadAllProjects(MockMakerClient.Object);
             Assert.IsTrue(string.IsNullOrEmpty(model.Error));
-            Assert.AreEqual(expected.Count, model.Projects.Count);
-            Assert.IsTrue(expected.SequenceEqual(model.Projects));
+            Assert.AreEqual(expectedProjects.Count, model.Projects.Count);
         }
     }
 }

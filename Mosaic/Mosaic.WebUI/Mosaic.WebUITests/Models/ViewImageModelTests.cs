@@ -43,5 +43,21 @@ namespace Mosaic.WebUITests.Models
 
             // call method which deletes the file that has been created
         }
+
+        [TestMethod]
+        public void IfFileNameSetCopiedImageWillBeRenamedToFileName()
+        {
+            var filePath = "..\\..\\..\\..\\..\\..\\test\\TestImages\\752.jpg";
+            var model = new ViewImageModel(copyLocation);
+            var newFileName = "renamedFile";
+            model.CopyImage(filePath, newFileName);
+            Assert.AreEqual(copyLocation + newFileName + Path.GetExtension(filePath), model.FilePath);
+
+            Assert.AreEqual(newFileName + Path.GetExtension(filePath), Path.GetFileName(model.ImagePath));
+            Assert.IsTrue(File.Exists(model.FilePath));
+            // cleanup
+            model.DeleteImage(model.FilePath);
+            Assert.IsFalse(File.Exists(model.FilePath));
+        }
     }
 }

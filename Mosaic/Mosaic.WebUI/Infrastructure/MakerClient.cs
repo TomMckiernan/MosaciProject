@@ -77,9 +77,9 @@ namespace Infrastructure
             return response;
         }
 
-        public ProjectResponse InsertLargeFile(string id, string fileId)
+        public ProjectResponse InsertLargeFile(string id, string fileId, string masterLocation)
         {
-            var request = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = fileId };
+            var request = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = fileId, Location = masterLocation };
             var response = new ProjectService.Project().InsertLargeFile(request);
             return response;
         }

@@ -36,6 +36,7 @@ namespace Mosaic.WebUITests.Models
             }
             if (LargeAdded)
             {
+                project.MosaicLocation = "//MasterLocation//";
                 project.LargeFileId = ObjectId.GenerateNewId().ToString();
                 project.Progress = ProjectStructure.Types.State.Largeadded;
             }

@@ -16,9 +16,13 @@
                         {
                             <img src="@Model.Projects[i].MosaicLocation">
                         }
-                        else
+                        else if (Model.Projects[i].State == ProjectStructure.Types.State.Created)
                         {
                             <img src="~/images/face_image.jpg">
+                        }
+                        else
+                        {
+                            <img src="@Model.Projects[i].MasterLocation">
                         }
                         <table class="project-table">
                             <tr>

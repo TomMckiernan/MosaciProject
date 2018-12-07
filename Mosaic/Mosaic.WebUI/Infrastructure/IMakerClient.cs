@@ -27,7 +27,7 @@ namespace Infrastructure
 
         ProjectResponse InsertSmallFiles(string id, IList<string> fileIds);
 
-        ProjectResponse InsertLargeFile(string id, string fileId);
+        ProjectResponse InsertLargeFile(string id, string fileId, string masterLocation);
 
         ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
 
