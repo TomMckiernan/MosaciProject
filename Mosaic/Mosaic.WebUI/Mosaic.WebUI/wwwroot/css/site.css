@@ -116,10 +116,7 @@ body {
 
 .project-table {
     border-collapse : separate;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    padding: 20px, 20px, 20px, 20px;
 }
 
 #project-container {
@@ -137,4 +134,9 @@ body {
 .master-image {
     width:50%;
     float:right;
+}
+
+.card img {
+    object-fit: cover;
+    max-height:200px;
 }

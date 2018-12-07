@@ -13,6 +13,7 @@ namespace Mosaic.WebUI.Models
         public string MosaicLocation { get; set; }
         public ProjectStructure.Types.State State { get; set; }
         public string MasterFileName { get; set; }
+        public string TimeOfCreation { get; set; }
 
         public ProjectCardModel(IMakerClient client, ProjectStructure project)
         {
@@ -20,6 +21,7 @@ namespace Mosaic.WebUI.Models
             TileImageCount = project.SmallFileIds.Count;
             State = project.Progress;
             MosaicLocation = project.MosaicLocation;
+            TimeOfCreation = project.TimeOfCreation;
             if (!String.IsNullOrEmpty(project.LargeFileId))
             {
                 var imageFile = client.ReadImageFile(project.LargeFileId);

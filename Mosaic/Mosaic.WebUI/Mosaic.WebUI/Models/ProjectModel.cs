@@ -8,7 +8,7 @@ namespace Mosaic.WebUI.Models
 {
     public class ProjectModel
     {
-        public IList<ProjectStructure> Projects{ get; set; }
+        public IList<ProjectCardModel> Projects{ get; set; }
 
         public string Error { get; set; }
 
@@ -22,7 +22,7 @@ namespace Mosaic.WebUI.Models
         {
             var response = client.ReadAllProjects();
             var projectCards = response.Projects.Select(x => new ProjectCardModel(client, x)).ToList();
-            Projects = response.Projects.ToList();
+            Projects = projectCards;
             Error = response.Error;
         }
     }

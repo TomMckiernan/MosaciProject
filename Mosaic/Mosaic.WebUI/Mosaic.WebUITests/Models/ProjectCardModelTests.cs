@@ -48,7 +48,7 @@ namespace Mosaic.WebUITests.Models
         }
 
         [TestMethod]
-        public void ConstructorPopulates()
+        public void ConstructorPopulatesAllPropertiesIfMosaicGenerated()
         {
             var project = CreateProjectStructureHelper(true, true, true);
             var response = new ImageFileResponse(){ File = new ImageFileIndexStructure() {Id = project.LargeFileId, FileName = "ImageFile.jpg" } };
