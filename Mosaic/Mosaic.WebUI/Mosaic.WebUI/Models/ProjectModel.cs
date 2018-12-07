@@ -21,6 +21,7 @@ namespace Mosaic.WebUI.Models
         public void ReadAllProjects(IMakerClient client)
         {
             var response = client.ReadAllProjects();
+            var projectCards = response.Projects.Select(x => new ProjectCardModel(client, x)).ToList();
             Projects = response.Projects.ToList();
             Error = response.Error;
         }

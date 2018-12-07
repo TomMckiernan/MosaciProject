@@ -14,13 +14,17 @@ namespace Mosaic.WebUI.Models
         public ProjectStructure.Types.State State { get; set; }
         public string MasterFileName { get; set; }
 
-        public ProjectCardModel(IMakerClient client, ProjectStructure project, ImageFileResponse imageFile)
+        public ProjectCardModel(IMakerClient client, ProjectStructure project)
         {
             ProjectId = project.Id;
             TileImageCount = project.SmallFileIds.Count;
-            MosaicLocation = project.MosaicLocation;
             State = project.Progress;
-            MasterFileName = imageFile.File.FileName;
+            MosaicLocation = project.MosaicLocation;
+            if (!String.IsNullOrEmpty(project.LargeFileId))
+            {
+                var imageFile = client.ReadImageFile(project.LargeFileId);
+                MasterFileName = imageFile?.File?.FileName;
+            }        
             // Tests for wrong id and whether assigning values are not null or empty
         }
     }
