@@ -44,6 +44,9 @@
                 <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
             </ul>
+
+            @Html.Partial("_PieChart")
+
         </div>
     </div>
     <div class="row">
@@ -91,4 +94,6 @@
         });
     });
 
+    myPiechart['colors'] = ["#fde23e", "#f16e23", "#57d9ff", "#937e88"]
+    myPiechart.draw();
 </script>

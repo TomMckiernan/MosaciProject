@@ -26,4 +26,8 @@
     <Folder Include="wwwroot\images\project\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\PieChart.js" />
+  </ItemGroup>
+
 </Project>
