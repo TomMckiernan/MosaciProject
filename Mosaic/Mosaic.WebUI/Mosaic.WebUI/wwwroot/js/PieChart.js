@@ -71,9 +71,9 @@ var Piechart = function (options) {
 
 var myPiechart = new Piechart(
     {
-        canvas: myCanvas,
-        data: myVinyls,
-        colors: ["#fde23e", "#f16e23", "#57d9ff", "#937e88"]
+        canvas:myCanvas,
+        data:myVinyls,
+        colors:["#fde23e","#f16e23", "#57d9ff","#937e88"]
     }
 );
 myPiechart.draw();
