@@ -157,7 +157,6 @@
         }
 
         var importFile = function (id, fileId, filePath) {
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFile", "Master")',
@@ -185,7 +184,6 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            debugger;
             importFile("@Model.ProjectId", data[0].id, data[0].filePath);
         });
     });

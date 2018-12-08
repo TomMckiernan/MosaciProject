@@ -13,33 +13,33 @@
         <div class="item active">
             <img src="~/images/face_image.jpg" alt="ASP.NET" class="img-responsive" />
             <div class="carousel-caption" role="option">
+                <button type="button" class="btn btn-primary create_mosaic">
+                    Create my Mosaic
+                </button>
                 <p>
                     Learn how to build ASP.NET apps that can run anywhere.
-                    <a asp-area="" asp-controller="Home" asp-action="Create">
-                        Learn More
-                    </a>
                 </p>
             </div>
         </div>
         <div class="item">
             <img src="~/images/seagull_image.jpg" alt="Visual Studio" class="img-responsive" />
             <div class="carousel-caption" role="option">
+                <button type="button" class="btn btn-primary create_mosaic">
+                    Create my Mosaic
+                </button>
                 <p>
                     There are powerful new features in Visual Studio for building modern web apps.
-                    <a asp-area="" asp-controller="Home" asp-action="Create">
-                        Learn More
-                    </a>
                 </p>
             </div>
         </div>
         <div class="item">
             <img src="~/images/face_image_2.jpg" alt="Microsoft Azure" class="img-responsive" />
             <div class="carousel-caption" role="option">
+                <button type="button" class="btn btn-primary create_mosaic">
+                    Create my Mosaic
+                </button>
                 <p>
                     Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a asp-area="" asp-controller="Home" asp-action="Create">
-                        Learn More
-                    </a>
                 </p>
             </div>
         </div>
@@ -53,4 +53,33 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+    $(function () {
+
+        var createMosaic = function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create", "Home")',
+                dataType: 'json',
+                cache: false,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    var id = response.project.id;
+                    var link = '@Url.Action("ImportMaster", "Home", new { Id = "-1" })';
+                    link = link.replace("-1", id);
+                    window.location.href = link;
+
+                }
+            });
+        }
+
+        $(".create_mosaic").click(function () {
+            createMosaic();
+        });
+    });
+</script>
 
