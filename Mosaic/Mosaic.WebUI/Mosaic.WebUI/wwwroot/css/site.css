@@ -116,8 +116,14 @@ body {
 
 .project-table {
     border-collapse : separate;
-    padding: 20px, 20px, 20px, 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
+    
+     .project-table th {
+         padding-left: 10px;
+         padding-right: 10px;
+     }
 
 #project-container {
     padding-left: 0px;

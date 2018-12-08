@@ -1,6 +1,7 @@
 ﻿using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Mosaic.WebUI.Models
         public int TileImageCount { get; set; }
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
-        public ProjectStructure.Types.State State { get; set; } 
+        public ProjectStructure.Types.State State { get; set; }
         public List<string> TileImageColours { get; set; }
         public List<string> MasterImageColours { get; set; }
 
@@ -31,7 +32,7 @@ namespace Mosaic.WebUI.Models
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
             }
-        } 
+        }
 
         public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false)
         {
@@ -41,7 +42,7 @@ namespace Mosaic.WebUI.Models
             {
                 return new ImageMosaicResponse() { Error = project.Error };
             }
-       
+
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
             var tileFiles = client.ReadAllImageFiles(tileFilesId);
@@ -49,7 +50,7 @@ namespace Mosaic.WebUI.Models
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
             var masterFile = client.ReadImageFile(masterFileId);
-            if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error) )
+            if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error))
             {
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
@@ -75,19 +76,32 @@ namespace Mosaic.WebUI.Models
                 project.Error = "Master or tile images not specified";
             }
             return project;
-
         }
 
-        //Structure for mosaic generator model
-        //- properties needed
-        //- Master image
-        //- Tile image count
-        //- Average colour for the tile files
-        //- Master image average colour analysis
-        //  - i.e the average colour for each tile in the image
+        private void ReadTileColours(IMakerClient client, ProjectResponse project)
+        {
+            var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
+            // This a shortcut version of this method
+            // At the moment is takes into account the four quadrant averages of the file
+            // rather than just one average which represents the whole tile.
 
-        //  Get all imagefileindexstructure files for the id
-        //  Get the image file index structure for the master image
-        //  Therefore need request to get the current project structure
+            var smallFileAveragesBL = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageBL));
+            var smallFileAveragesBR = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageBR));
+            var smallFileAveragesTL = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageTL));
+            var smallFileAveragesTR = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageTR));
+            return "";
+
+            //Structure for mosaic generator model
+            //- properties needed
+            //- Master image
+            //- Tile image count
+            //- Average colour for the tile files
+            //- Master image average colour analysis
+            //  - i.e the average colour for each tile in the image
+
+            //  Get all imagefileindexstructure files for the id
+            //  Get the image file index structure for the master image
+            //  Therefore need request to get the current project structure
+        }
     }
 }
