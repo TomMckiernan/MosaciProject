@@ -35,6 +35,7 @@ message Metadata {
 	int32 AverageBR          = 2;
 	int32 AverageTL          = 3;
 	int32 AverageTR          = 4;
+	int32 AverageWhole       = 5;
 }
 
 message ImageFileIndexStructureResponse {

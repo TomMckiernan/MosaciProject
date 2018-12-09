@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Utility
@@ -12,6 +13,11 @@ namespace Utility
             value.Id = doc.GetValue("_id").ToString();
             value.IndexedLocation = doc.GetValue("IndexedLocation").ToString();
             return value;
+        }
+
+        public static string ToHex(this Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
     }
 }

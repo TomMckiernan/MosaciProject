@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Utility;
 
 namespace Mosaic.WebUI.Models
 {
@@ -14,7 +15,7 @@ namespace Mosaic.WebUI.Models
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
         public ProjectStructure.Types.State State { get; set; }
-        public List<string> TileImageColours { get; set; }
+        public Dictionary<string, int> TileImageColours { get; set; }
         public List<string> MasterImageColours { get; set; }
 
         public GenerateMosaicModel(string id)
@@ -31,6 +32,7 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
+                ReadTileColours(client, project);
             }
         }
 
@@ -78,18 +80,31 @@ namespace Mosaic.WebUI.Models
             return project;
         }
 
-        private void ReadTileColours(IMakerClient client, ProjectResponse project)
+        public void ReadTileColours(IMakerClient client, ProjectResponse project)
         {
             var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
             // This a shortcut version of this method
             // At the moment is takes into account the four quadrant averages of the file
             // rather than just one average which represents the whole tile.
 
-            var smallFileAveragesBL = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageBL));
-            var smallFileAveragesBR = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageBR));
-            var smallFileAveragesTL = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageTL));
-            var smallFileAveragesTR = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageTR));
-            return "";
+            var tileHexValues = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole).ToHex());
+
+
+            Dictionary<string, int> colours = new Dictionary<string, int>();
+            foreach (var value in tileHexValues)
+            {
+                if (!colours.ContainsKey(value))
+                {
+                    colours.Add(value, 1);
+                }
+                else
+                {
+                    colours[value]++;
+                }
+            }
+
+            TileImageColours = colours;
+            string myJsonString = new System.Web.Script.SerializationJavaScriptSerializer().Serialize(colours);
 
             //Structure for mosaic generator model
             //- properties needed

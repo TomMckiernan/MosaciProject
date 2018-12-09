@@ -10,6 +10,7 @@ namespace ImageMosaicService
         public Color AverageTR { get; set; }
         public Color AverageBL { get; set; }
         public Color AverageBR { get; set; }
+        public Color AverageWhole { get; set; }
         public string Path { get; set; }
         private ArrayList _data;
         public ArrayList Data
