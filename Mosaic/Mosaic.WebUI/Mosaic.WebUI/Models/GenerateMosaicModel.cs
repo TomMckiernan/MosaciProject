@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Utility;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace Mosaic.WebUI.Models
 {
@@ -16,6 +18,8 @@ namespace Mosaic.WebUI.Models
         public string MosaicLocation { get; set; }
         public ProjectStructure.Types.State State { get; set; }
         public Dictionary<string, int> TileImageColours { get; set; }
+        public string JsonTileImageColours { get; set; }
+        public string JsonTileImageHexColours { get; set; }
         public List<string> MasterImageColours { get; set; }
 
         public GenerateMosaicModel(string id)
@@ -104,8 +108,10 @@ namespace Mosaic.WebUI.Models
             }
 
             TileImageColours = colours;
-            string myJsonString = new System.Web.Script.SerializationJavaScriptSerializer().Serialize(colours);
-
+            JsonTileImageColours = JsonConvert.SerializeObject(colours, Formatting.Indented);
+            JsonTileImageHexColours = JsonConvert.SerializeObject(colours.Keys, Formatting.Indented);
+            var cNames = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole).ToKnownColor());
+            
             //Structure for mosaic generator model
             //- properties needed
             //- Master image

@@ -93,10 +93,17 @@
             generateMosaic("@Model.ProjectId", true);
         });
     });
-
-
-    var t = JSON.stringify(@Model.TileImageColours);
     debugger;
-    myPiechart['colors'] = ["#fde23e", "#f16e23", "#57d9ff", "#937e88"]
+    var data = @Html.Raw(@Model.JsonTileImageColours);
+    var colours = @Html.Raw(@Model.JsonTileImageHexColours);
+    debugger;
+
+    var myPiechart = new Piechart(
+        {
+            canvas: myCanvas,
+            data: data,
+            colors: colours
+        }
+    );
     myPiechart.draw();
 </script>

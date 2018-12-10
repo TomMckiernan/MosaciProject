@@ -68,11 +68,3 @@ var Piechart = function (options) {
 
     }
 }
-
-var myPiechart = new Piechart(
-    {
-        canvas:myCanvas,
-        data:myVinyls
-    }
-);
-myPiechart.draw();

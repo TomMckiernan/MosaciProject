@@ -165,7 +165,6 @@
         }
 
         var importFiles = function (id, fileIds) {
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFiles", "Tile")',
@@ -175,7 +174,6 @@
                 data: { id: id, fileIds: fileIds },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
-                    debugger;
                 },
                 success: function (response) {
                     window.location.href = '@Url.Action("Generate","Tile", new { Id = Model.ProjectId })';
