@@ -92,7 +92,8 @@ namespace Mosaic.WebUI.Models
             // rather than just one average which represents the whole tile.
 
             var tileHexValues = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole).ToHex());
-
+            // Call FileColorModel and convert the list of colours to the closest 
+            // pre defined colour
 
             Dictionary<string, int> colours = new Dictionary<string, int>();
             foreach (var value in tileHexValues)
