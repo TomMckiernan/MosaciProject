@@ -10,10 +10,6 @@ namespace Mosaic.WebUI.Models
     {
         public List<Color> PreDefinedColours { get; set; }
 
-        //'Red', 'Orange Red', 'Orange', 'Orange Yellow', 'Yellow', 
-        //'Yellow Green', 'Green', 'Blue Green', 'Blue', 'Blue Violet', 'Violet', 
-        //'Red Violet', 'Black', 'Dark Gray', 'Gray', 'Silver', 'White']
-
         public FileColourModel()
         {
             PreDefinedColours = new List<Color>()

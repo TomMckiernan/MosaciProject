@@ -86,21 +86,19 @@ namespace Mosaic.WebUI.Models
 
         public void ReadTileColours(IMakerClient client, ProjectResponse project)
         {
-            var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
-            // This a shortcut version of this method
             // At the moment is takes into account the four quadrant averages of the file
             // rather than just one average which represents the whole tile.
 
+            // Convert the ARGB values stored in project into Color objects
+            var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
             var fileColours = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();
 
-            var fileColorModel = new FileColourModel().FindClosestColour(fileColours);
-
-            var tileHexValues = fileColorModel.Select(x => x.ToHex());
-            // Call FileColorModel and convert the list of colours to the closest 
-            // pre defined colour
+            // Find the closest standard Color object for each color in file colours
+            var fileClosestColours = new FileColourModel().FindClosestColour(fileColours);
+            var fileClosestColoursHex = fileClosestColours.Select(x => x.ToHex());
 
             Dictionary<string, int> colours = new Dictionary<string, int>();
-            foreach (var value in tileHexValues)
+            foreach (var value in fileClosestColoursHex)
             {
                 if (!colours.ContainsKey(value))
                 {
@@ -115,18 +113,6 @@ namespace Mosaic.WebUI.Models
             TileImageColours = colours;
             JsonTileImageColours = JsonConvert.SerializeObject(colours, Formatting.Indented);
             JsonTileImageHexColours = JsonConvert.SerializeObject(colours.Keys, Formatting.Indented);
-            
-            //Structure for mosaic generator model
-            //- properties needed
-            //- Master image
-            //- Tile image count
-            //- Average colour for the tile files
-            //- Master image average colour analysis
-            //  - i.e the average colour for each tile in the image
-
-            //  Get all imagefileindexstructure files for the id
-            //  Get the image file index structure for the master image
-            //  Therefore need request to get the current project structure
         }
     }
 }
