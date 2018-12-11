@@ -91,7 +91,11 @@ namespace Mosaic.WebUI.Models
             // At the moment is takes into account the four quadrant averages of the file
             // rather than just one average which represents the whole tile.
 
-            var tileHexValues = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole).ToHex());
+            var fileColours = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();
+
+            var fileColorModel = new FileColourModel().FindClosestColour(fileColours);
+
+            var tileHexValues = fileColorModel.Select(x => x.ToHex());
             // Call FileColorModel and convert the list of colours to the closest 
             // pre defined colour
 
@@ -111,7 +115,6 @@ namespace Mosaic.WebUI.Models
             TileImageColours = colours;
             JsonTileImageColours = JsonConvert.SerializeObject(colours, Formatting.Indented);
             JsonTileImageHexColours = JsonConvert.SerializeObject(colours.Keys, Formatting.Indented);
-            var cNames = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole).ToKnownColor());
             
             //Structure for mosaic generator model
             //- properties needed

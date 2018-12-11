@@ -20,28 +20,48 @@ namespace Mosaic.WebUI.Models
             {
                 Color.Red, Color.OrangeRed, Color.Orange, Color.Gold, Color.Yellow, Color.YellowGreen,
                 Color.Green, Color.Aqua, Color.Blue, Color.BlueViolet, Color.Violet, Color.MediumVioletRed,
-                Color.Black, Color.DarkGray, Color.Gray, Color.Silver, Color.White
+                Color.Black, Color.DarkGray, Color.Silver, Color.White
             };        
         }
 
 
         public List<Color> FindClosestColour(List<Color> colours)
         {
-
-
-            return colours;
-
-            // for each color in colours call method which
-            // finds best color fit to list of predefined colors
+            var bestFitColours = colours.Select(x => GetBestColour(x)).ToList();
+            return bestFitColours;
         }
 
-        private Color best(Color color)
+        private Color GetBestColour(Color color)
         {
-            int r = (int)color.R - color.R,
-                g = (int)color.G - color.G,
-                b = (int)color.B - color.B;
-            //return (r * r + g * g + b * b) <= threshold * threshold;
-            return color;
+            double difference;
+            double bestDifference = double.MaxValue;
+            Color bestColor;
+
+
+            for (int i = 0; i < PreDefinedColours.Count(); i++)
+            {
+                difference = GetDifference(color, PreDefinedColours[i]);
+                if (difference < bestDifference)
+                {
+                    bestDifference = difference;
+                    bestColor = PreDefinedColours[i];
+                }
+            }
+
+            return bestColor;
+        }
+
+        private double GetDifference(Color colour, Color preDefinedColour)
+        {
+            double difference;
+
+            var r = Math.Abs(colour.R - preDefinedColour.R);
+            var g = Math.Abs(colour.G - preDefinedColour.G);
+            var b = Math.Abs(colour.B - preDefinedColour.B);
+
+            difference = r + g + b;
+            difference /= 3 * 255;
+            return difference;
         }
     }
 }

@@ -29,19 +29,32 @@ namespace Mosaic.WebUITests.Models
             var actual = model.FindClosestColour(colours);
 
             Assert.AreEqual(0, actual.Count);
-            Assert.AreEqual(colours, actual);
         }
 
         [TestMethod]
-        public void CloseColorWhiteReturnsWhiteAsClosestColour()
+        public void CloseColourWhiteReturnsWhiteAsClosestColour()
         {
             var model = new FileColourModel();
             var closeWhite = Color.FromArgb(255, 255, 254);
-            var colours = new List<Color>() { Color.Red };
+            var colours = new List<Color>() { closeWhite };
             var actual = model.FindClosestColour(colours);
 
             Assert.AreEqual(1, actual.Count);
             Assert.IsTrue(actual.Contains(Color.White));
+        }
+
+        [TestMethod]
+        public void TwoCloseColoursReturnTwoClosestPreDfinedColours()
+        {
+            var model = new FileColourModel();
+            var closeWhite = Color.FromArgb(255, 255, 254);
+            var closeBlue = Color.FromArgb(0, 0, 254);
+            var colours = new List<Color>() { closeWhite, closeBlue };
+            var actual = model.FindClosestColour(colours);
+
+            Assert.AreEqual(2, actual.Count);
+            Assert.IsTrue(actual.Contains(Color.White));
+            Assert.IsTrue(actual.Contains(Color.Blue));
         }
     }
 }
