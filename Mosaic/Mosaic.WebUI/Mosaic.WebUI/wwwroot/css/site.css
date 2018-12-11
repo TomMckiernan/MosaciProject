@@ -146,3 +146,7 @@ body {
     object-fit: cover;
     max-height:200px;
 }
+
+.piechart-info {
+    text-align: center;
+}

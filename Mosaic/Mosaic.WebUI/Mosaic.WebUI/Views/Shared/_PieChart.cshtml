@@ -5,8 +5,22 @@
 
 <html>
 <body>
-    <canvas id="myCanvas"></canvas>
-    <script type="text/javascript" src="~/js/PieChart.js"></script>
+    <figure>
+        <div class="col-md-6">
+            <canvas id="myCanvas"></canvas>
+            <script type="text/javascript" src="~/js/PieChart.js"></script>
+            <figcaption class="piechart-info">
+                Colours found in tile images
+            </figcaption>
+        </div>
+        <div class="col-md-6">
+            <canvas id="myMasterCanvas"></canvas>
+            <script type="text/javascript" src="~/js/PieChart.js"></script>
+            <figcaption class="piechart-info">
+                Colours found in master image
+            </figcaption>
+        </div>
+    </figure>
 </body>
 </html>
 

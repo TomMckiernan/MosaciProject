@@ -17,10 +17,10 @@ namespace Mosaic.WebUI.Models
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
         public ProjectStructure.Types.State State { get; set; }
-        public Dictionary<string, int> TileImageColours { get; set; }
         public string JsonTileImageColours { get; set; }
         public string JsonTileImageHexColours { get; set; }
-        public List<string> MasterImageColours { get; set; }
+        public string JsonMasterImageColours { get; set; }
+        public string JsonMasterImageHexColours { get; set; }
 
         public GenerateMosaicModel(string id)
         {
@@ -88,6 +88,8 @@ namespace Mosaic.WebUI.Models
         {
             // At the moment is takes into account the four quadrant averages of the file
             // rather than just one average which represents the whole tile.
+            //var masterFile = client.ReadMasterFileColours();
+
 
             // Convert the ARGB values stored in project into Color objects
             var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
@@ -110,7 +112,6 @@ namespace Mosaic.WebUI.Models
                 }
             }
 
-            TileImageColours = colours;
             JsonTileImageColours = JsonConvert.SerializeObject(colours, Formatting.Indented);
             JsonTileImageHexColours = JsonConvert.SerializeObject(colours.Keys, Formatting.Indented);
         }

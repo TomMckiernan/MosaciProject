@@ -1,10 +1,4 @@
-﻿var myCanvas = document.getElementById("myCanvas");
-myCanvas.width = 300;
-myCanvas.height = 300;
-
-var ctx = myCanvas.getContext("2d");
-
-function drawLine(ctx, startX, startY, endX, endY) {
+﻿function drawLine(ctx, startX, startY, endX, endY) {
     ctx.beginPath();
     ctx.moveTo(startX, startY);
     ctx.lineTo(endX, endY);
@@ -25,13 +19,6 @@ function drawPieSlice(ctx, centerX, centerY, radius, startAngle, endAngle, color
     ctx.closePath();
     ctx.fill();
 }
-
-var myVinyls = {
-    "Classical music": 10,
-    "Alternative rock": 14,
-    "Pop": 2,
-    "Jazz": 12
-};
 
 var Piechart = function (options) {
     this.options = options;

@@ -93,11 +93,12 @@
             generateMosaic("@Model.ProjectId", true);
         });
     });
-    debugger;
+
     var data = @Html.Raw(@Model.JsonTileImageColours);
     var colours = @Html.Raw(@Model.JsonTileImageHexColours);
-    debugger;
 
+    var myCanvas = document.getElementById("myCanvas");
+    var ctx = myCanvas.getContext("2d");
     var myPiechart = new Piechart(
         {
             canvas: myCanvas,
@@ -106,4 +107,15 @@
         }
     );
     myPiechart.draw();
+
+    myCanvas = document.getElementById("myMasterCanvas")
+    var myPiechart = new Piechart(
+        {
+            canvas: myCanvas,
+            data: data,
+            colors: colours
+        }
+    );
+    myPiechart.draw();
+
 </script>
