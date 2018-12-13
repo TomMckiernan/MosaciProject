@@ -94,26 +94,29 @@
         });
     });
 
-    var data = @Html.Raw(@Model.JsonTileImageColours);
-    var colours = @Html.Raw(@Model.JsonTileImageHexColours);
+    var tilesData = @Html.Raw(@Model.JsonTileImageColours);
+    var tilesColours = @Html.Raw(@Model.JsonTileImageHexColours);
 
     var myCanvas = document.getElementById("myCanvas");
     var ctx = myCanvas.getContext("2d");
     var myPiechart = new Piechart(
         {
             canvas: myCanvas,
-            data: data,
-            colors: colours
+            data: tilesData,
+            colors: tilesColours
         }
     );
     myPiechart.draw();
+
+    var masterData = @Html.Raw(@Model.JsonMasterImageColours);
+    var masterColours = @Html.Raw(@Model.JsonMasterImageHexColours);
 
     myCanvas = document.getElementById("myMasterCanvas")
     var myPiechart = new Piechart(
         {
             canvas: myCanvas,
-            data: data,
-            colors: colours
+            data: masterData,
+            colors: masterColours
         }
     );
     myPiechart.draw();
