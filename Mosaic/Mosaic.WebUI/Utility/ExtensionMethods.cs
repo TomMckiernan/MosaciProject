@@ -19,5 +19,16 @@ namespace Utility
         {
             return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
+
+        public static List<Color> ToList(this Color[,] colors)
+        {
+            List<Color> list = new List<Color>();
+
+            foreach (var color in colors)
+            {
+                list.Add(color);
+            }
+            return list;
+        }
     }
 }

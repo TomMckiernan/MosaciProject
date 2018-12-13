@@ -18,5 +18,5 @@ message MasterImageColourRequest {
 }
 
 message MasterImageColourResponse {
-    repeated string MasterTileAverageColours  = 1;
+    repeated int32 AverageTileARGB  = 1;
 }

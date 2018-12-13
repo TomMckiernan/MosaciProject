@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace ImageMosaicService
 {
@@ -29,7 +30,12 @@ namespace ImageMosaicService
                 colorMap = imageProcessing.CreateMap(source);
             }
 
-            var masterArgbValues = colorMap
+            var colorList = colorMap.ToList();
+            var hexColorList = colorList.Select(x => x.ToArgb());
+            var response = new MasterImageColourResponse() { };
+            response.AverageTileARGB.AddRange(hexColorList);
+
+            return response;
         }
     }
 }

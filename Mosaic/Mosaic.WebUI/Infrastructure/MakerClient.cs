@@ -105,5 +105,13 @@ namespace Infrastructure
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;
         }
+
+        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file)
+        {
+            var request = new MasterImageColourRequest() { Master = file };
+            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request);
+            return response;
+        }
+
     }
 }

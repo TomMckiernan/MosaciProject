@@ -88,19 +88,39 @@ namespace Mosaic.WebUI.Models
         {
             // At the moment is takes into account the four quadrant averages of the file
             // rather than just one average which represents the whole tile.
-            //var masterFile = client.ReadMasterFileColours();
 
+            // Convert the ARGB values from master file into Color objects
+            var master = client.ReadImageFile(project.Project.LargeFileId);
+            var masterARGB = client.ReadMasterFileColours(master.File);
+            var masterColours = masterARGB.AverageTileARGB.Select(x => Color.FromArgb(x)).ToList();
+
+            // Find the closest standard Color object for each color in master file colours
+            var masterClosestColours = new FileColourModel().FindClosestColour(masterColours);
+            var masterClosestColoursHex = masterClosestColours.Select(x => x.ToHex()).ToList();
+
+            var masterFileDictionary = ConvertColourListToDictionary(masterClosestColoursHex);
+
+            JsonMasterImageColours = JsonConvert.SerializeObject(masterFileDictionary, Formatting.Indented);
+            JsonMasterImageHexColours = JsonConvert.SerializeObject(masterFileDictionary.Keys, Formatting.Indented);
 
             // Convert the ARGB values stored in project into Color objects
-            var smallFiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
-            var fileColours = smallFiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();
+            var tiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
+            var tilesColours = tiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();
 
-            // Find the closest standard Color object for each color in file colours
-            var fileClosestColours = new FileColourModel().FindClosestColour(fileColours);
-            var fileClosestColoursHex = fileClosestColours.Select(x => x.ToHex());
+            // Find the closest standard Color object for each color in tile files colours
+            var tilesClosestColours = new FileColourModel().FindClosestColour(tilesColours);
+            var tilesFilesClosestColoursHex = tilesClosestColours.Select(x => x.ToHex()).ToList();
 
+            var tilesDictionary = ConvertColourListToDictionary(tilesFilesClosestColoursHex);
+
+            JsonTileImageColours = JsonConvert.SerializeObject(tilesDictionary, Formatting.Indented);
+            JsonTileImageHexColours = JsonConvert.SerializeObject(tilesDictionary.Keys, Formatting.Indented);
+        }
+
+        private Dictionary<string, int> ConvertColourListToDictionary(IList<string> list)
+        {
             Dictionary<string, int> colours = new Dictionary<string, int>();
-            foreach (var value in fileClosestColoursHex)
+            foreach (var value in list)
             {
                 if (!colours.ContainsKey(value))
                 {
@@ -111,9 +131,7 @@ namespace Mosaic.WebUI.Models
                     colours[value]++;
                 }
             }
-
-            JsonTileImageColours = JsonConvert.SerializeObject(colours, Formatting.Indented);
-            JsonTileImageHexColours = JsonConvert.SerializeObject(colours.Keys, Formatting.Indented);
+            return colours;
         }
     }
 }
