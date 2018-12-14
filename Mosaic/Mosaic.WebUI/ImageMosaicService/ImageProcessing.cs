@@ -235,27 +235,30 @@ namespace ImageMosaicService
 
             for (int i = 0; i < library.Count(); i++)
             {
-                difference = GetLibraryTileDifference(color, i);
-
-                if (difference < bestPercent)
+                if (library[i] != null)
                 {
-                    Point point = new Point();
+                    difference = GetLibraryTileDifference(color, i);
 
-                    if (library[i].Data.Count > 0 && library[i].Data[0] != null)
+                    if (difference < bestPercent)
                     {
-                        point = (Point)library[i].Data[0];
+                        Point point = new Point();
+
+                        if (library[i].Data.Count > 0 && library[i].Data[0] != null)
+                        {
+                            point = (Point)library[i].Data[0];
+                        }
+                        if (point.IsEmpty)
+                        {
+                            bestPercent = difference;
+                            bestIndex = i;
+                        }
+                        else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
+                        {
+                            bestPercent = difference;
+                            bestIndex = i;
+                        }
                     }
-                    if (point.IsEmpty)
-                    {
-                        bestPercent = difference;
-                        bestIndex = i;
-                    }
-                    else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
-                    {
-                        bestPercent = difference;
-                        bestIndex = i;
-                    }
-                }
+                }               
             }
 
             library[bestIndex].Data.Add(new Point(x, y));
