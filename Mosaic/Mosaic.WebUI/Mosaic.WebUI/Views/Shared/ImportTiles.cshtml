@@ -24,7 +24,7 @@
             <th>ID</th>
             <th>FileName</th>
             <th>FilePath</th>
-            <th>Metadata</th>
+            <th>Average Colour</th>
             <th>Last Write Time</th>
         </tr>
     </thead>
@@ -33,7 +33,7 @@
             <th>ID</th>
             <th>FileName</th>
             <th>FilePath</th>
-            <th>Metadata</th>
+            <th>Average Colour</th>
             <th>Last Write Time</th>
         </tr>
     </tfoot>
@@ -151,7 +151,7 @@
                     { "data": "id" },
                     { "data": "fileName" },
                     { "data": "filePath" },
-                    { "data": "data" },
+                    { "data": "averageColour" },
                     { "data": "lastWriteTime" }
                 ],
                 "columnDefs": [
@@ -160,7 +160,10 @@
                 buttons: [
                     'selectAll',
                     'selectNone'
-                ]
+                ],
+                "createdRow": function (row, data, index) {
+                    $('td', row).eq(2).css('background-color', data.averageColour);             
+                }
             });
         }
 
@@ -195,7 +198,6 @@
             var fileIds = $.map(data, function (n) {
                 return n.id;
             });
-            debugger;
             importFiles("@Model.ProjectId", fileIds);
         });
     });

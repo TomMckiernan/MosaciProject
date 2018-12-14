@@ -41,8 +41,9 @@ namespace Mosaic.WebUI.Controllers
 
             if (String.IsNullOrEmpty(model.Error))
             {
+                var tileTableModel = model.Files.Select(x => new TileTableModel(x));
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(model.Files);
+                return Json(tileTableModel);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;

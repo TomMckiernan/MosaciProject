@@ -44,7 +44,7 @@ namespace Mosaic.WebUITests.Models
         }
 
         [TestMethod]
-        public void TwoCloseColoursReturnTwoClosestPreDfinedColours()
+        public void TwoCloseColoursReturnTwoClosestPreDefinedColours()
         {
             var model = new FileColourModel();
             var closeWhite = Color.FromArgb(255, 255, 254);
