@@ -22,7 +22,8 @@ namespace Mosaic.WebUI.Models
         public string JsonMasterImageColours { get; set; }
         public string JsonMasterImageHexColours { get; set; }
 
-        public void ReadProjectData(IMakerClient client, string projectId)
+        // To bool values are for the purpose of testing
+        public void ReadProjectData(IMakerClient client, string projectId, bool readMaster = true, bool readTiles = true)
         {
             var project = ProjectErrorCheck(client, projectId);
             if (String.IsNullOrEmpty(project.Error))
@@ -32,11 +33,11 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
-                if (!String.IsNullOrEmpty(project.Project.LargeFileId))
+                if (readMaster)
                 {
                     ReadMasterColours(client, project);
                 }
-                if (project.Project.SmallFileIds != null && project.Project.SmallFileIds.Count != 0)
+                if (readTiles)
                 {
                     ReadTileColours(client, project);
                 }
@@ -87,7 +88,7 @@ namespace Mosaic.WebUI.Models
             return project;
         }
 
-        private void ReadMasterColours(IMakerClient client, ProjectResponse project)
+        public void ReadMasterColours(IMakerClient client, ProjectResponse project)
         {
             // Convert the ARGB values from master file into Color objects
             var master = client.ReadImageFile(project.Project.LargeFileId);
