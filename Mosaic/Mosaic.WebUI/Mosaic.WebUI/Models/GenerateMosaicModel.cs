@@ -22,10 +22,6 @@ namespace Mosaic.WebUI.Models
         public string JsonMasterImageColours { get; set; }
         public string JsonMasterImageHexColours { get; set; }
 
-        public GenerateMosaicModel(string id)
-        {
-        }
-
         public void ReadProjectData(IMakerClient client, string projectId)
         {
             var project = ProjectErrorCheck(client, projectId);
@@ -36,7 +32,14 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
-                ReadTileColours(client, project);
+                if (!String.IsNullOrEmpty(project.Project.LargeFileId))
+                {
+                    ReadMasterColours(client, project);
+                }
+                if (project.Project.SmallFileIds != null && project.Project.SmallFileIds.Count != 0)
+                {
+                    ReadTileColours(client, project);
+                }
             }
         }
 
@@ -84,11 +87,8 @@ namespace Mosaic.WebUI.Models
             return project;
         }
 
-        public void ReadTileColours(IMakerClient client, ProjectResponse project)
+        private void ReadMasterColours(IMakerClient client, ProjectResponse project)
         {
-            // At the moment is takes into account the four quadrant averages of the file
-            // rather than just one average which represents the whole tile.
-
             // Convert the ARGB values from master file into Color objects
             var master = client.ReadImageFile(project.Project.LargeFileId);
             var masterARGB = client.ReadMasterFileColours(master.File);
@@ -102,7 +102,12 @@ namespace Mosaic.WebUI.Models
 
             JsonMasterImageColours = JsonConvert.SerializeObject(masterFileDictionary, Formatting.Indented);
             JsonMasterImageHexColours = JsonConvert.SerializeObject(masterFileDictionary.Keys, Formatting.Indented);
+        }
 
+        public void ReadTileColours(IMakerClient client, ProjectResponse project)
+        {
+            // At the moment is takes into account the four quadrant averages of the file
+            // rather than just one average which represents the whole tile.
             // Convert the ARGB values stored in project into Color objects
             var tiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
             var tilesColours = tiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();

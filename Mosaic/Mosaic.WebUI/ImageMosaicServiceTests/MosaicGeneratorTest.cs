@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Drawing;
 using ImageMosaicService;
 using System.IO;
+using MongoDB.Bson;
 
 namespace ImageMosaicTest
 {
@@ -50,9 +51,17 @@ namespace ImageMosaicTest
         }
 
         [TestMethod]
-        public void GetBestImageIndexReturnsBestIndexAnd()
+        public void GetMasterImageAverageColoursReturnsColourList()
         {
-
+            var master = new ImageFileIndexStructure()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                FileName = Path.GetFileName(sourceFile),
+                FilePath = sourceFile
+            };
+            var request = new MasterImageColourRequest() { Master = master };
+            var response = new ImageMosaic().GetMasterImageAverageColours(request);
+            Assert.AreNotEqual(0, response.AverageTileARGB.ToList().Count);
         }
 
         [TestMethod]

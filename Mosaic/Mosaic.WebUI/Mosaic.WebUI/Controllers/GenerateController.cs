@@ -22,7 +22,7 @@ namespace Mosaic.WebUI.Controllers
         public ActionResult GenerateMosaic(string id, bool random)
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
             var response = model.Generate(client, id, random);
             if (String.IsNullOrEmpty(response.Error))
             {

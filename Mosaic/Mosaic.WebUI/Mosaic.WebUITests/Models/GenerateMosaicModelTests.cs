@@ -26,7 +26,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfIdNullOrEmpty()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
             var response = model.Generate(MockMakerClient.Object, null);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
@@ -35,7 +35,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfReadProjectReturnsError()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Error = "Error"};
 
@@ -49,7 +49,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfProjectDoesNotContainAnySmallFiles()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
 
@@ -63,7 +63,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfReadAllImageFilesReturnsError()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
             projectResponse.Project.SmallFileIds.Add("1");
@@ -80,7 +80,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfProjectDoesNotContainALargeFile()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id } };
             projectResponse.Project.SmallFileIds.Add("1");
@@ -95,7 +95,7 @@ namespace Mosaic.WebUITests.Models
         public void GenerateReturnsErrorIfReadImageFileReturnsError()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
             projectResponse.Project.SmallFileIds.Add("1");
@@ -112,7 +112,7 @@ namespace Mosaic.WebUITests.Models
         public void ReadProjectDataSetsAllProjectPropertiesCorrectly()
         {
             var id = ObjectId.GenerateNewId().ToString();
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
 
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
             projectResponse.Project.SmallFileIds.Add("1");
