@@ -58,7 +58,15 @@ namespace ProjectServiceTests
         [TestMethod]
         public void InsertLargeFileReturnsErrorIfNullLargeImageId()
         {
-            var request = new ProjectInsertLargeFileRequest() { Id = ObjectId.GenerateNewId().ToString() };
+            var request = new ProjectInsertLargeFileRequest() { Id = ObjectId.GenerateNewId().ToString(), Location = "MasterLocation" };
+            var response = new MongoProject().InsertLargeFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void InsertLargeFileReturnsErrorIfNullMasterLocation()
+        {
+            var request = new ProjectInsertLargeFileRequest() { Id = ObjectId.GenerateNewId().ToString(), LargeFileId = ObjectId.GenerateNewId().ToString() };
             var response = new MongoProject().InsertLargeFile(MockMongoDatabase.Object, request);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }

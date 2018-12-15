@@ -116,11 +116,14 @@ body {
 
 .project-table {
     border-collapse : separate;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
+    
+     .project-table th {
+         padding-left: 10px;
+         padding-right: 10px;
+     }
 
 #project-container {
     padding-left: 0px;
@@ -137,4 +140,13 @@ body {
 .master-image {
     width:50%;
     float:right;
+}
+
+.card img {
+    object-fit: cover;
+    max-height:200px;
+}
+
+.piechart-info {
+    text-align: center;
 }

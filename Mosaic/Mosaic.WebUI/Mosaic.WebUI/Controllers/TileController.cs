@@ -41,8 +41,9 @@ namespace Mosaic.WebUI.Controllers
 
             if (String.IsNullOrEmpty(model.Error))
             {
+                var tileTableModel = model.Files.Select(x => new TileTableModel(x));
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(model.Files);
+                return Json(tileTableModel);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -82,7 +83,7 @@ namespace Mosaic.WebUI.Controllers
 
         public ActionResult Generate(string Id)
         {
-            var model = new GenerateMosaicModel(Id);
+            var model = new GenerateMosaicModel();
             model.ReadProjectData(client, Id);
 
             return View("Generate", model);

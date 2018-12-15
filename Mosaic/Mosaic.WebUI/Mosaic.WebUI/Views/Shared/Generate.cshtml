@@ -18,7 +18,7 @@
                     <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MosaicLocation" width="100%" />
                 }
                 else {
-                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="~/images/face_image.jpg" width="100%" />
+                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MasterLocation" width="100%" />
                 }
             </div>
         </div>
@@ -28,7 +28,7 @@
                 Tile images added
             </h3>
             <h3>
-                <span style="color:#d34615; font-size:2em;">10.4%</span>
+                <span style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
                 match between colours found in master image and the colours found in tile images
             </h3>
             <button id="generate_mosaic" type="button" class="btn btn-primary">
@@ -44,6 +44,9 @@
                 <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
             </ul>
+
+            @Html.Partial("_PieChart")
+
         </div>
     </div>
     <div class="row">
@@ -90,5 +93,32 @@
             generateMosaic("@Model.ProjectId", true);
         });
     });
+
+    var tilesData = @Html.Raw(@Model.ColoursModel.JsonTileImageColours);
+    var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
+
+    var myCanvas = document.getElementById("myCanvas");
+    var ctx = myCanvas.getContext("2d");
+    var myPiechart = new Piechart(
+        {
+            canvas: myCanvas,
+            data: tilesData,
+            colors: tilesColours
+        }
+    );
+    myPiechart.draw();
+
+    var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
+    var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
+
+    myCanvas = document.getElementById("myMasterCanvas")
+    var myPiechart = new Piechart(
+        {
+            canvas: myCanvas,
+            data: masterData,
+            colors: masterColours
+        }
+    );
+    myPiechart.draw();
 
 </script>

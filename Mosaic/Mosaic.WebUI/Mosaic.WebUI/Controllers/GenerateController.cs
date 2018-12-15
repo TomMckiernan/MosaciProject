@@ -22,17 +22,20 @@ namespace Mosaic.WebUI.Controllers
         public ActionResult GenerateMosaic(string id, bool random)
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
-            var model = new GenerateMosaicModel(id);
+            var model = new GenerateMosaicModel();
             var response = model.Generate(client, id, random);
             if (String.IsNullOrEmpty(response.Error))
             {
+                // copy generated image to root directory to allow it display
                 var image = new ViewImageModel();
-                // copy image to root of project to display it
                 image.CopyImage(response.Location);
-                // Update project status and store location
-                new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(image.ImagePath);
+                // update project status and store location
+                var insertResponse = new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
+                if (String.IsNullOrEmpty(insertResponse.Error))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return Json(image.ImagePath);
+                }
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);

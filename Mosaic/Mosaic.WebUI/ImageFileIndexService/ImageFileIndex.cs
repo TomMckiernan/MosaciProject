@@ -89,7 +89,8 @@ namespace ImageFileIndexService
                     AverageBL = data.AverageBL.ToArgb(),
                     AverageBR = data.AverageBR.ToArgb(),
                     AverageTL = data.AverageTL.ToArgb(),
-                    AverageTR = data.AverageTR.ToArgb() 
+                    AverageTR = data.AverageTR.ToArgb(),
+                    AverageWhole = data.AverageWhole.ToArgb()
                 }
             };
             var response = new MongoImageFileIndex().Insert(database, request);

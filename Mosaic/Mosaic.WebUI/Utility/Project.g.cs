@@ -24,27 +24,28 @@ public static partial class ProjectReflection {
         string.Concat(
           "Cg1Qcm9qZWN0LnByb3RvIhwKDlByb2plY3RSZXF1ZXN0EgoKAmlkGAEgASgJ",
           "IkIKHlByb2plY3RJbnNlcnRTbWFsbEZpbGVzUmVxdWVzdBIKCgJpZBgBIAEo",
-          "CRIUCgxTbWFsbEZpbGVJZHMYAiADKAkiQAodUHJvamVjdEluc2VydExhcmdl",
-          "RmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEwoLTGFyZ2VGaWxlSWQYAiABKAki",
-          "PgoeUHJvamVjdEluc2VydE1vc2FpY0ZpbGVSZXF1ZXN0EgoKAmlkGAEgASgJ",
-          "EhAKCExvY2F0aW9uGAIgASgJIoMCChBQcm9qZWN0U3RydWN0dXJlEgoKAmlk",
-          "GAEgASgJEhYKDlRpbWVPZkNyZWF0aW9uGAIgASgJEhMKC0xhcmdlRmlsZUlk",
-          "GAMgASgJEhQKDFNtYWxsRmlsZUlkcxgEIAMoCRIpCghQcm9ncmVzcxgFIAEo",
-          "DjIXLlByb2plY3RTdHJ1Y3R1cmUuU3RhdGUSFgoOTW9zYWljTG9jYXRpb24Y",
-          "BiABKAkiXQoFU3RhdGUSCwoHQ1JFQVRFRBAAEg4KClNNQUxMQURERUQQARIO",
-          "CgpMQVJHRUFEREVEEAISDQoJQ09NUExFVEVEEAMSCwoHREVMRVRFRBAEEgsK",
-          "B1VOS05PV04QBSJECg9Qcm9qZWN0UmVzcG9uc2USIgoHUHJvamVjdBgBIAEo",
-          "CzIRLlByb2plY3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkiTQoXUHJvamVj",
-          "dE11bHRpcGxlUmVzcG9uc2USIwoIUHJvamVjdHMYASADKAsyES5Qcm9qZWN0",
-          "U3RydWN0dXJlEg0KBUVycm9yGAIgASgJYgZwcm90bzM="));
+          "CRIUCgxTbWFsbEZpbGVJZHMYAiADKAkiUgodUHJvamVjdEluc2VydExhcmdl",
+          "RmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEwoLTGFyZ2VGaWxlSWQYAiABKAkS",
+          "EAoITG9jYXRpb24YAyABKAkiPgoeUHJvamVjdEluc2VydE1vc2FpY0ZpbGVS",
+          "ZXF1ZXN0EgoKAmlkGAEgASgJEhAKCExvY2F0aW9uGAIgASgJIpsCChBQcm9q",
+          "ZWN0U3RydWN0dXJlEgoKAmlkGAEgASgJEhYKDlRpbWVPZkNyZWF0aW9uGAIg",
+          "ASgJEhMKC0xhcmdlRmlsZUlkGAMgASgJEhQKDFNtYWxsRmlsZUlkcxgEIAMo",
+          "CRIpCghQcm9ncmVzcxgFIAEoDjIXLlByb2plY3RTdHJ1Y3R1cmUuU3RhdGUS",
+          "FgoOTWFzdGVyTG9jYXRpb24YBiABKAkSFgoOTW9zYWljTG9jYXRpb24YByAB",
+          "KAkiXQoFU3RhdGUSCwoHQ1JFQVRFRBAAEg4KClNNQUxMQURERUQQARIOCgpM",
+          "QVJHRUFEREVEEAISDQoJQ09NUExFVEVEEAMSCwoHREVMRVRFRBAEEgsKB1VO",
+          "S05PV04QBSJECg9Qcm9qZWN0UmVzcG9uc2USIgoHUHJvamVjdBgBIAEoCzIR",
+          "LlByb2plY3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkiTQoXUHJvamVjdE11",
+          "bHRpcGxlUmVzcG9uc2USIwoIUHJvamVjdHMYASADKAsyES5Qcm9qZWN0U3Ry",
+          "dWN0dXJlEg0KBUVycm9yGAIgASgJYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectRequest), global::ProjectRequest.Parser, new[]{ "Id" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertSmallFilesRequest), global::ProjectInsertSmallFilesRequest.Parser, new[]{ "Id", "SmallFileIds" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId", "Location" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertMosaicFileRequest), global::ProjectInsertMosaicFileRequest.Parser, new[]{ "Id", "Location" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MosaicLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MasterLocation", "MosaicLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectResponse), global::ProjectResponse.Parser, new[]{ "Project", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectMultipleResponse), global::ProjectMultipleResponse.Parser, new[]{ "Projects", "Error" }, null, null, null)
         }));
@@ -358,6 +359,7 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
   public ProjectInsertLargeFileRequest(ProjectInsertLargeFileRequest other) : this() {
     id_ = other.id_;
     largeFileId_ = other.largeFileId_;
+    location_ = other.location_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -388,6 +390,17 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
     }
   }
 
+  /// <summary>Field number for the "Location" field.</summary>
+  public const int LocationFieldNumber = 3;
+  private string location_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Location {
+    get { return location_; }
+    set {
+      location_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ProjectInsertLargeFileRequest);
@@ -403,6 +416,7 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
     }
     if (Id != other.Id) return false;
     if (LargeFileId != other.LargeFileId) return false;
+    if (Location != other.Location) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -411,6 +425,7 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
     int hash = 1;
     if (Id.Length != 0) hash ^= Id.GetHashCode();
     if (LargeFileId.Length != 0) hash ^= LargeFileId.GetHashCode();
+    if (Location.Length != 0) hash ^= Location.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -432,6 +447,10 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
       output.WriteRawTag(18);
       output.WriteString(LargeFileId);
     }
+    if (Location.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Location);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -445,6 +464,9 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
     }
     if (LargeFileId.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(LargeFileId);
+    }
+    if (Location.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Location);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -463,6 +485,9 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
     if (other.LargeFileId.Length != 0) {
       LargeFileId = other.LargeFileId;
     }
+    if (other.Location.Length != 0) {
+      Location = other.Location;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -480,6 +505,10 @@ public sealed partial class ProjectInsertLargeFileRequest : pb::IMessage<Project
         }
         case 18: {
           LargeFileId = input.ReadString();
+          break;
+        }
+        case 26: {
+          Location = input.ReadString();
           break;
         }
       }
@@ -675,6 +704,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     largeFileId_ = other.largeFileId_;
     smallFileIds_ = other.smallFileIds_.Clone();
     progress_ = other.progress_;
+    masterLocation_ = other.masterLocation_;
     mosaicLocation_ = other.mosaicLocation_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -738,8 +768,19 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
   }
 
+  /// <summary>Field number for the "MasterLocation" field.</summary>
+  public const int MasterLocationFieldNumber = 6;
+  private string masterLocation_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string MasterLocation {
+    get { return masterLocation_; }
+    set {
+      masterLocation_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   /// <summary>Field number for the "MosaicLocation" field.</summary>
-  public const int MosaicLocationFieldNumber = 6;
+  public const int MosaicLocationFieldNumber = 7;
   private string mosaicLocation_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string MosaicLocation {
@@ -767,6 +808,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (LargeFileId != other.LargeFileId) return false;
     if(!smallFileIds_.Equals(other.smallFileIds_)) return false;
     if (Progress != other.Progress) return false;
+    if (MasterLocation != other.MasterLocation) return false;
     if (MosaicLocation != other.MosaicLocation) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -779,6 +821,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (LargeFileId.Length != 0) hash ^= LargeFileId.GetHashCode();
     hash ^= smallFileIds_.GetHashCode();
     if (Progress != 0) hash ^= Progress.GetHashCode();
+    if (MasterLocation.Length != 0) hash ^= MasterLocation.GetHashCode();
     if (MosaicLocation.Length != 0) hash ^= MosaicLocation.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -810,8 +853,12 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       output.WriteRawTag(40);
       output.WriteEnum((int) Progress);
     }
-    if (MosaicLocation.Length != 0) {
+    if (MasterLocation.Length != 0) {
       output.WriteRawTag(50);
+      output.WriteString(MasterLocation);
+    }
+    if (MosaicLocation.Length != 0) {
+      output.WriteRawTag(58);
       output.WriteString(MosaicLocation);
     }
     if (_unknownFields != null) {
@@ -834,6 +881,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     size += smallFileIds_.CalculateSize(_repeated_smallFileIds_codec);
     if (Progress != 0) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Progress);
+    }
+    if (MasterLocation.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(MasterLocation);
     }
     if (MosaicLocation.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(MosaicLocation);
@@ -861,6 +911,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     smallFileIds_.Add(other.smallFileIds_);
     if (other.Progress != 0) {
       Progress = other.Progress;
+    }
+    if (other.MasterLocation.Length != 0) {
+      MasterLocation = other.MasterLocation;
     }
     if (other.MosaicLocation.Length != 0) {
       MosaicLocation = other.MosaicLocation;
@@ -897,6 +950,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
           break;
         }
         case 50: {
+          MasterLocation = input.ReadString();
+          break;
+        }
+        case 58: {
           MosaicLocation = input.ReadString();
           break;
         }

@@ -31,12 +31,12 @@ public static partial class ImageFileIndexReflection {
           "SW5kZXhTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkieQoXSW1hZ2VGaWxlSW5k",
           "ZXhTdHJ1Y3R1cmUSCgoCaWQYASABKAkSEAoIRmlsZVBhdGgYAiABKAkSEAoI",
           "RmlsZU5hbWUYAyABKAkSFwoERGF0YRgEIAEoCzIJLk1ldGFkYXRhEhUKDUxh",
-          "c3RXcml0ZVRpbWUYBSABKAkiVgoITWV0YWRhdGESEQoJQXZlcmFnZUJMGAEg",
+          "c3RXcml0ZVRpbWUYBSABKAkibAoITWV0YWRhdGESEQoJQXZlcmFnZUJMGAEg",
           "ASgFEhEKCUF2ZXJhZ2VCUhgCIAEoBRIRCglBdmVyYWdlVEwYAyABKAUSEQoJ",
-          "QXZlcmFnZVRSGAQgASgFIkIKH0ltYWdlRmlsZUluZGV4U3RydWN0dXJlUmVz",
-          "cG9uc2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJyb3IYAiABKAkiPwocSW1h",
-          "Z2VGaWxlSW5kZXhVcGRhdGVSZXNwb25zZRIQCghGaWxlUGF0aBgBIAEoCRIN",
-          "CgVFcnJvchgCIAEoCWIGcHJvdG8z"));
+          "QXZlcmFnZVRSGAQgASgFEhQKDEF2ZXJhZ2VXaG9sZRgFIAEoBSJCCh9JbWFn",
+          "ZUZpbGVJbmRleFN0cnVjdHVyZVJlc3BvbnNlEhAKCEZpbGVQYXRoGAEgASgJ",
+          "Eg0KBUVycm9yGAIgASgJIj8KHEltYWdlRmlsZUluZGV4VXBkYXRlUmVzcG9u",
+          "c2USEAoIRmlsZVBhdGgYASABKAkSDQoFRXJyb3IYAiABKAliBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -46,7 +46,7 @@ public static partial class ImageFileIndexReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFilesAllRequest), global::ImageFilesAllRequest.Parser, new[]{ "Ids" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileResponse), global::ImageFileResponse.Parser, new[]{ "File", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructure), global::ImageFileIndexStructure.Parser, new[]{ "Id", "FilePath", "FileName", "Data", "LastWriteTime" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Metadata), global::Metadata.Parser, new[]{ "AverageBL", "AverageBR", "AverageTL", "AverageTR" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Metadata), global::Metadata.Parser, new[]{ "AverageBL", "AverageBR", "AverageTL", "AverageTR", "AverageWhole" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexStructureResponse), global::ImageFileIndexStructureResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageFileIndexUpdateResponse), global::ImageFileIndexUpdateResponse.Parser, new[]{ "FilePath", "Error" }, null, null, null)
         }));
@@ -1022,6 +1022,7 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     averageBR_ = other.averageBR_;
     averageTL_ = other.averageTL_;
     averageTR_ = other.averageTR_;
+    averageWhole_ = other.averageWhole_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1074,6 +1075,17 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     }
   }
 
+  /// <summary>Field number for the "AverageWhole" field.</summary>
+  public const int AverageWholeFieldNumber = 5;
+  private int averageWhole_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AverageWhole {
+    get { return averageWhole_; }
+    set {
+      averageWhole_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as Metadata);
@@ -1091,6 +1103,7 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     if (AverageBR != other.AverageBR) return false;
     if (AverageTL != other.AverageTL) return false;
     if (AverageTR != other.AverageTR) return false;
+    if (AverageWhole != other.AverageWhole) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1101,6 +1114,7 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     if (AverageBR != 0) hash ^= AverageBR.GetHashCode();
     if (AverageTL != 0) hash ^= AverageTL.GetHashCode();
     if (AverageTR != 0) hash ^= AverageTR.GetHashCode();
+    if (AverageWhole != 0) hash ^= AverageWhole.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1130,6 +1144,10 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
       output.WriteRawTag(32);
       output.WriteInt32(AverageTR);
     }
+    if (AverageWhole != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(AverageWhole);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1149,6 +1167,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     }
     if (AverageTR != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageTR);
+    }
+    if (AverageWhole != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AverageWhole);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1172,6 +1193,9 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
     }
     if (other.AverageTR != 0) {
       AverageTR = other.AverageTR;
+    }
+    if (other.AverageWhole != 0) {
+      AverageWhole = other.AverageWhole;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1198,6 +1222,10 @@ public sealed partial class Metadata : pb::IMessage<Metadata> {
         }
         case 32: {
           AverageTR = input.ReadInt32();
+          break;
+        }
+        case 40: {
+          AverageWhole = input.ReadInt32();
           break;
         }
       }

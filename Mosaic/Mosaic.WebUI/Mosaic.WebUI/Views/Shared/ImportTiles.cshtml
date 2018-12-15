@@ -24,7 +24,7 @@
             <th>ID</th>
             <th>FileName</th>
             <th>FilePath</th>
-            <th>Metadata</th>
+            <th>Average Colour</th>
             <th>Last Write Time</th>
         </tr>
     </thead>
@@ -33,7 +33,7 @@
             <th>ID</th>
             <th>FileName</th>
             <th>FilePath</th>
-            <th>Metadata</th>
+            <th>Average Colour</th>
             <th>Last Write Time</th>
         </tr>
     </tfoot>
@@ -151,7 +151,7 @@
                     { "data": "id" },
                     { "data": "fileName" },
                     { "data": "filePath" },
-                    { "data": "data" },
+                    { "data": "averageColour" },
                     { "data": "lastWriteTime" }
                 ],
                 "columnDefs": [
@@ -160,12 +160,14 @@
                 buttons: [
                     'selectAll',
                     'selectNone'
-                ]
+                ],
+                "createdRow": function (row, data, index) {
+                    $('td', row).eq(2).css('background-color', data.averageColour);             
+                }
             });
         }
 
         var importFiles = function (id, fileIds) {
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFiles", "Tile")',
@@ -175,7 +177,6 @@
                 data: { id: id, fileIds: fileIds },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
-                    debugger;
                 },
                 success: function (response) {
                     window.location.href = '@Url.Action("Generate","Tile", new { Id = Model.ProjectId })';
@@ -197,7 +198,6 @@
             var fileIds = $.map(data, function (n) {
                 return n.id;
             });
-            debugger;
             importFiles("@Model.ProjectId", fileIds);
         });
     });

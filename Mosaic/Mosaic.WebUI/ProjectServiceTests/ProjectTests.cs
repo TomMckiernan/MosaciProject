@@ -25,7 +25,7 @@ namespace ProjectServiceTests
 
         private ProjectResponse InsertLargeFileHelper(Project service, string id)
         {
-            var insertRequest = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() };
+            var insertRequest = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString(), Location = "//MasterLocation//test.jpg" };
             return service.InsertLargeFile(insertRequest);
         }
 
@@ -85,13 +85,14 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
-        public void InsertLargeFileInsertsImageIdIntoProjectAndUpdatesState()
+        public void InsertLargeFileInsertsImageIdIntoProjectSetsMasterLocationAndUpdatesState()
         {
             var createResponse = service.CreateProject();
             var insertResponse = InsertLargeFileHelper(service, createResponse.Project.Id);
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.LargeFileId, readResponse.Project.LargeFileId);
+            Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
             Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Largeadded);
         }
 

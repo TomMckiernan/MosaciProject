@@ -27,12 +27,17 @@ public static partial class ImageMosaicReflection {
           "CzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJlEigKBk1hc3RlchgDIAEoCzIY",
           "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCCI2ChNJ",
           "bWFnZU1vc2FpY1Jlc3BvbnNlEhAKCGxvY2F0aW9uGAEgASgJEg0KBUVycm9y",
-          "GAIgASgJYgZwcm90bzM="));
+          "GAIgASgJIkQKGE1hc3RlckltYWdlQ29sb3VyUmVxdWVzdBIoCgZNYXN0ZXIY",
+          "ASABKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZSI0ChlNYXN0ZXJJbWFn",
+          "ZUNvbG91clJlc3BvbnNlEhcKD0F2ZXJhZ2VUaWxlQVJHQhgBIAMoBWIGcHJv",
+          "dG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourRequest), global::MasterImageColourRequest.Parser, new[]{ "Master" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourResponse), global::MasterImageColourResponse.Parser, new[]{ "AverageTileARGB" }, null, null, null)
         }));
   }
   #endregion
@@ -399,6 +404,263 @@ public sealed partial class ImageMosaicResponse : pb::IMessage<ImageMosaicRespon
         }
         case 18: {
           Error = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MasterImageColourRequest : pb::IMessage<MasterImageColourRequest> {
+  private static readonly pb::MessageParser<MasterImageColourRequest> _parser = new pb::MessageParser<MasterImageColourRequest>(() => new MasterImageColourRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MasterImageColourRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageMosaicReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourRequest(MasterImageColourRequest other) : this() {
+    master_ = other.master_ != null ? other.master_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourRequest Clone() {
+    return new MasterImageColourRequest(this);
+  }
+
+  /// <summary>Field number for the "Master" field.</summary>
+  public const int MasterFieldNumber = 1;
+  private global::ImageFileIndexStructure master_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::ImageFileIndexStructure Master {
+    get { return master_; }
+    set {
+      master_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MasterImageColourRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MasterImageColourRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Master, other.Master)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (master_ != null) hash ^= Master.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (master_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Master);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (master_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Master);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MasterImageColourRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.master_ != null) {
+      if (master_ == null) {
+        master_ = new global::ImageFileIndexStructure();
+      }
+      Master.MergeFrom(other.Master);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (master_ == null) {
+            master_ = new global::ImageFileIndexStructure();
+          }
+          input.ReadMessage(master_);
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MasterImageColourResponse : pb::IMessage<MasterImageColourResponse> {
+  private static readonly pb::MessageParser<MasterImageColourResponse> _parser = new pb::MessageParser<MasterImageColourResponse>(() => new MasterImageColourResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MasterImageColourResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ImageMosaicReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourResponse(MasterImageColourResponse other) : this() {
+    averageTileARGB_ = other.averageTileARGB_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MasterImageColourResponse Clone() {
+    return new MasterImageColourResponse(this);
+  }
+
+  /// <summary>Field number for the "AverageTileARGB" field.</summary>
+  public const int AverageTileARGBFieldNumber = 1;
+  private static readonly pb::FieldCodec<int> _repeated_averageTileARGB_codec
+      = pb::FieldCodec.ForInt32(10);
+  private readonly pbc::RepeatedField<int> averageTileARGB_ = new pbc::RepeatedField<int>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<int> AverageTileARGB {
+    get { return averageTileARGB_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MasterImageColourResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MasterImageColourResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!averageTileARGB_.Equals(other.averageTileARGB_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= averageTileARGB_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    averageTileARGB_.WriteTo(output, _repeated_averageTileARGB_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += averageTileARGB_.CalculateSize(_repeated_averageTileARGB_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MasterImageColourResponse other) {
+    if (other == null) {
+      return;
+    }
+    averageTileARGB_.Add(other.averageTileARGB_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10:
+        case 8: {
+          averageTileARGB_.AddEntriesFrom(input, _repeated_averageTileARGB_codec);
           break;
         }
       }

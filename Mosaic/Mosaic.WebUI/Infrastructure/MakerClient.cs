@@ -77,9 +77,9 @@ namespace Infrastructure
             return response;
         }
 
-        public ProjectResponse InsertLargeFile(string id, string fileId)
+        public ProjectResponse InsertLargeFile(string id, string fileId, string masterLocation)
         {
-            var request = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = fileId };
+            var request = new ProjectInsertLargeFileRequest() { Id = id, LargeFileId = fileId, Location = masterLocation };
             var response = new ProjectService.Project().InsertLargeFile(request);
             return response;
         }
@@ -105,5 +105,13 @@ namespace Infrastructure
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;
         }
+
+        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file)
+        {
+            var request = new MasterImageColourRequest() { Master = file };
+            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request);
+            return response;
+        }
+
     }
 }

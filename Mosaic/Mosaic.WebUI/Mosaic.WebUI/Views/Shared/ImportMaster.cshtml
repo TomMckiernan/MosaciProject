@@ -156,14 +156,14 @@
             });
         }
 
-        var importFile = function (id, fileId) {
+        var importFile = function (id, fileId, filePath) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("ImportFile", "Master")',
                 dataType: 'json',
                 traditional: true,
                 cache: false,
-                data: { id: id, fileId: fileId },
+                data: { id: id, fileId: fileId, filePath: filePath },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -184,10 +184,7 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            var fileId = $.map(data, function (n) {
-                return n.id;
-            });
-            importFile("@Model.ProjectId", fileId[0]);
+            importFile("@Model.ProjectId", data[0].id, data[0].filePath);
         });
     });
 </script>

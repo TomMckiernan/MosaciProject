@@ -12,3 +12,11 @@ message ImageMosaicResponse {
     string location                     = 1;
 	string Error                        = 2;
 }
+
+message MasterImageColourRequest {
+    ImageFileIndexStructure Master = 1;
+}
+
+message MasterImageColourResponse {
+    repeated int32 AverageTileARGB  = 1;
+}

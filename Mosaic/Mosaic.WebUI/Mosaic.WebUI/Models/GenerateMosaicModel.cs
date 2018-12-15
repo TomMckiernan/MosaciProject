@@ -1,8 +1,12 @@
 ﻿using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Utility;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace Mosaic.WebUI.Models
 {
@@ -10,16 +14,13 @@ namespace Mosaic.WebUI.Models
     {
         public string ProjectId { get; set; }
         public int TileImageCount { get; set; }
+        public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
-        public ProjectStructure.Types.State State { get; set; } 
-        public List<string> TileImageColours { get; set; }
-        public List<string> MasterImageColours { get; set; }
+        public ProjectStructure.Types.State State { get; set; }        
+        public GenerateMosaicColoursModel ColoursModel { get; set; }
 
-        public GenerateMosaicModel(string id)
-        {
-        }
-
-        public void ReadProjectData(IMakerClient client, string projectId)
+        // To bool values are for the purpose of testing
+        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true)
         {
             var project = ProjectErrorCheck(client, projectId);
             if (String.IsNullOrEmpty(project.Error))
@@ -27,9 +28,14 @@ namespace Mosaic.WebUI.Models
                 ProjectId = project.Project.Id;
                 TileImageCount = project.Project.SmallFileIds.Count;
                 State = project.Project.Progress;
+                MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
+                if (readColours)
+                {
+                    ColoursModel = new GenerateMosaicColoursModel(client, project);
+                }
             }
-        } 
+        }
 
         public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false)
         {
@@ -39,7 +45,7 @@ namespace Mosaic.WebUI.Models
             {
                 return new ImageMosaicResponse() { Error = project.Error };
             }
-       
+
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
             var tileFiles = client.ReadAllImageFiles(tileFilesId);
@@ -47,7 +53,7 @@ namespace Mosaic.WebUI.Models
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
             var masterFile = client.ReadImageFile(masterFileId);
-            if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error) )
+            if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error))
             {
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
@@ -73,19 +79,6 @@ namespace Mosaic.WebUI.Models
                 project.Error = "Master or tile images not specified";
             }
             return project;
-
         }
-
-        //Structure for mosaic generator model
-        //- properties needed
-        //- Master image
-        //- Tile image count
-        //- Average colour for the tile files
-        //- Master image average colour analysis
-        //  - i.e the average colour for each tile in the image
-
-        //  Get all imagefileindexstructure files for the id
-        //  Get the image file index structure for the master image
-        //  Therefore need request to get the current project structure
     }
 }

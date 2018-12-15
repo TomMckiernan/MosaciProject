@@ -1,9 +1,11 @@
 ﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace ImageMosaicService
 {
@@ -17,6 +19,23 @@ namespace ImageMosaicService
             var location = string.Format("C:\\Users\\Tom_m\\OneDrive\\Pictures\\MosaicImageTests\\{0}.jpg", request.Id);
             mosaic.Image.Save(location);
             return new ImageMosaicResponse() { Location = location };
+        }
+
+        public MasterImageColourResponse GetMasterImageAverageColours(MasterImageColourRequest request)
+        {
+            var imageProcessing = new ImageProcessing();
+            Color[,] colorMap;
+            using (var source = new Bitmap(request.Master.FilePath))
+            {
+                colorMap = imageProcessing.CreateMap(source);
+            }
+
+            var colorList = colorMap.ToList();
+            var hexColorList = colorList.Select(x => x.ToArgb());
+            var response = new MasterImageColourResponse() { };
+            response.AverageTileARGB.AddRange(hexColorList);
+
+            return response;
         }
     }
 }

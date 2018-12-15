@@ -40,13 +40,19 @@ namespace Mosaic.WebUI.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Create()
         {
             ViewData["Message"] = "Begin the creation of your Mosaic Image";
 
             var response = new ProjectModel().CreateProject(client);
-
-            return ImportMaster(response.Project.Id);
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(response);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
         }
 
         public IActionResult SelectProject(string Id)

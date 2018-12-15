@@ -11,6 +11,7 @@
     <PackageReference Include="jQuery" Version="3.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,10 @@
     <Folder Include="wwwroot\images\test\" />
     <Folder Include="wwwroot\images\tiles\" />
     <Folder Include="wwwroot\images\project\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\PieChart.js" />
   </ItemGroup>
 
 </Project>
