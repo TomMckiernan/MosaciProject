@@ -118,7 +118,7 @@ namespace Mosaic.WebUITests.Models
             projectResponse.Project.SmallFileIds.Add("1");
             MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
 
-            model.ReadProjectData(MockMakerClient.Object, id, false, false);
+            model.ReadProjectData(MockMakerClient.Object, id, false);
 
             Assert.AreEqual(id, model.ProjectId);
             Assert.AreEqual(1, model.TileImageCount);

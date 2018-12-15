@@ -28,7 +28,7 @@
                 Tile images added
             </h3>
             <h3>
-                <span style="color:#d34615; font-size:2em;">10.4%</span>
+                <span style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
                 match between colours found in master image and the colours found in tile images
             </h3>
             <button id="generate_mosaic" type="button" class="btn btn-primary">
@@ -94,8 +94,8 @@
         });
     });
 
-    var tilesData = @Html.Raw(@Model.JsonTileImageColours);
-    var tilesColours = @Html.Raw(@Model.JsonTileImageHexColours);
+    var tilesData = @Html.Raw(@Model.ColoursModel.JsonTileImageColours);
+    var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
 
     var myCanvas = document.getElementById("myCanvas");
     var ctx = myCanvas.getContext("2d");
@@ -108,8 +108,8 @@
     );
     myPiechart.draw();
 
-    var masterData = @Html.Raw(@Model.JsonMasterImageColours);
-    var masterColours = @Html.Raw(@Model.JsonMasterImageHexColours);
+    var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
+    var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
 
     myCanvas = document.getElementById("myMasterCanvas")
     var myPiechart = new Piechart(

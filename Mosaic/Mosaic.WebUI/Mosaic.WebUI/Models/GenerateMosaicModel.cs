@@ -16,14 +16,11 @@ namespace Mosaic.WebUI.Models
         public int TileImageCount { get; set; }
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
-        public ProjectStructure.Types.State State { get; set; }
-        public string JsonTileImageColours { get; set; }
-        public string JsonTileImageHexColours { get; set; }
-        public string JsonMasterImageColours { get; set; }
-        public string JsonMasterImageHexColours { get; set; }
+        public ProjectStructure.Types.State State { get; set; }        
+        public GenerateMosaicColoursModel ColoursModel { get; set; }
 
         // To bool values are for the purpose of testing
-        public void ReadProjectData(IMakerClient client, string projectId, bool readMaster = true, bool readTiles = true)
+        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true)
         {
             var project = ProjectErrorCheck(client, projectId);
             if (String.IsNullOrEmpty(project.Error))
@@ -33,13 +30,9 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
-                if (readMaster)
+                if (readColours)
                 {
-                    ReadMasterColours(client, project);
-                }
-                if (readTiles)
-                {
-                    ReadTileColours(client, project);
+                    ColoursModel = new GenerateMosaicColoursModel(client, project);
                 }
             }
         }
@@ -86,58 +79,6 @@ namespace Mosaic.WebUI.Models
                 project.Error = "Master or tile images not specified";
             }
             return project;
-        }
-
-        public void ReadMasterColours(IMakerClient client, ProjectResponse project)
-        {
-            // Convert the ARGB values from master file into Color objects
-            var master = client.ReadImageFile(project.Project.LargeFileId);
-            var masterARGB = client.ReadMasterFileColours(master.File);
-            var masterColours = masterARGB.AverageTileARGB.Select(x => Color.FromArgb(x)).ToList();
-
-            // Find the closest standard Color object for each color in master file colours
-            var masterClosestColours = new FileColourModel().FindClosestColour(masterColours);
-            var masterClosestColoursHex = masterClosestColours.Select(x => x.ToHex()).ToList();
-
-            var masterFileDictionary = ConvertColourListToDictionary(masterClosestColoursHex);
-
-            JsonMasterImageColours = JsonConvert.SerializeObject(masterFileDictionary, Formatting.Indented);
-            JsonMasterImageHexColours = JsonConvert.SerializeObject(masterFileDictionary.Keys, Formatting.Indented);
-        }
-
-        public void ReadTileColours(IMakerClient client, ProjectResponse project)
-        {
-            // At the moment is takes into account the four quadrant averages of the file
-            // rather than just one average which represents the whole tile.
-            // Convert the ARGB values stored in project into Color objects
-            var tiles = client.ReadAllImageFiles(project.Project.SmallFileIds);
-            var tilesColours = tiles.Files.Select(x => Color.FromArgb(x.Data.AverageWhole)).ToList();
-
-            // Find the closest standard Color object for each color in tile files colours
-            var tilesClosestColours = new FileColourModel().FindClosestColour(tilesColours);
-            var tilesFilesClosestColoursHex = tilesClosestColours.Select(x => x.ToHex()).ToList();
-
-            var tilesDictionary = ConvertColourListToDictionary(tilesFilesClosestColoursHex);
-
-            JsonTileImageColours = JsonConvert.SerializeObject(tilesDictionary, Formatting.Indented);
-            JsonTileImageHexColours = JsonConvert.SerializeObject(tilesDictionary.Keys, Formatting.Indented);
-        }
-
-        private Dictionary<string, int> ConvertColourListToDictionary(IList<string> list)
-        {
-            Dictionary<string, int> colours = new Dictionary<string, int>();
-            foreach (var value in list)
-            {
-                if (!colours.ContainsKey(value))
-                {
-                    colours.Add(value, 1);
-                }
-                else
-                {
-                    colours[value]++;
-                }
-            }
-            return colours;
         }
     }
 }
