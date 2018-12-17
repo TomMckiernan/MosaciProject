@@ -21,6 +21,9 @@
                     <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MasterLocation" width="100%" />
                 }
             </div>
+            
+            @Html.Partial("_TileImage")
+
         </div>
         <div class="col-md-6">
             <button id="view_master" type="button" class="btn btn-primary">
@@ -137,5 +140,7 @@
         }
     );
     myPiechart.draw();
+
+    im.src = "@Model.JSMasterLocation";
 
 </script>
