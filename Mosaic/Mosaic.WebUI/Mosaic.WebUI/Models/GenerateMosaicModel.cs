@@ -16,6 +16,8 @@ namespace Mosaic.WebUI.Models
         public int TileImageCount { get; set; }
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
+        public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
+        public string JSMasterLocation { get { return GetJSMasterLocation(); } }
         public ProjectStructure.Types.State State { get; set; }        
         public GenerateMosaicColoursModel ColoursModel { get; set; }
 
@@ -79,6 +81,16 @@ namespace Mosaic.WebUI.Models
                 project.Error = "Master or tile images not specified";
             }
             return project;
+        }
+
+        private string GetJSMasterLocation()
+        {
+            return MasterLocation.Replace(@"\", @"\\");
+        }
+
+        private string GetJSMosaicLocation()
+        {
+            return MosaicLocation.Replace(@"\", @"\\");
         }
     }
 }

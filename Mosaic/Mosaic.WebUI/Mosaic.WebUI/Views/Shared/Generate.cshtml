@@ -23,6 +23,12 @@
             </div>
         </div>
         <div class="col-md-6">
+            <button id="view_master" type="button" class="btn btn-primary">
+                View Master
+            </button>
+            <button id="view_mosaic" type="button" class="btn btn-primary">
+                View Mosaic
+            </button>
             <h3>
                 <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
                 Tile images added
@@ -91,6 +97,17 @@
             $(this).attr("disabled", true);
             $('#generate_mosaic').attr("disabled", true)
             generateMosaic("@Model.ProjectId", true);
+        });
+
+        $("#view_master").click(function () {
+            var val = "@Model.JSMasterLocation";
+            $('#mosaic-image').attr('src', val + "?rnd=" + Math.random());
+
+        });
+
+        $("#view_mosaic").click(function () {
+            var val = ("@Model.JSMosaicLocation");
+            $('#mosaic-image').attr('src', val + "?rnd=" + Math.random());
         });
     });
 
