@@ -16,12 +16,19 @@ var gridOptions = {
 im.onload = function () {
     var scaleFactor = 540 / im.width;
     debugger;
+    ctxImage.width = im.width * scaleFactor;
+    ctxImage.height = im.height * scaleFactor;
     ctxImage.drawImage(im, 0, 0, im.width, im.height,              // source tile
-        0, 0, im.width * scaleFactor, im.height * scaleFactor); // destination tile
+                       0, 0, ctxImage.width, ctxImage.height); // destination tile
     debugger;
     drawGridLines(gridOptions.minorLines);
     debugger;
     //drawGridLines(gridOptions.majorLines);
+}
+
+function clearCanvas() {
+    debugger;
+    ctxImage.clearRect(0, 0, ctxImage.width, ctxImage.height);
 }
 
 function drawGridLines(lineOptions) {
@@ -29,6 +36,7 @@ function drawGridLines(lineOptions) {
 
     var iWidth = im.width * scaleFactor;
     var iHeight = im.height * scaleFactor;
+    var scaleSeparation = lineOptions.separation * scaleFactor;
 
     ctxImage.strokeStyle = lineOptions.color;
     ctxImage.strokeWidth = 0.1;
@@ -40,19 +48,19 @@ function drawGridLines(lineOptions) {
     var x = null;
     var y = null;
 
-    iCount = Math.floor(iWidth / lineOptions.separation);
+    iCount = Math.floor(iWidth / scaleSeparation);
 
     for (i = 1; i <= iCount; i++) {
-        x = (i * lineOptions.separation);
+        x = (i * scaleSeparation);
         ctxImage.moveTo(x, 0);
         ctxImage.lineTo(x, iHeight);
         ctxImage.stroke();
     }
 
-    iCount = Math.floor(iHeight / lineOptions.separation);
+    iCount = Math.floor(iHeight / scaleSeparation);
 
     for (i = 1; i <= iCount; i++) {
-        y = (i * lineOptions.separation);
+        y = (i * scaleSeparation);
         ctxImage.moveTo(0, y);
         ctxImage.lineTo(iWidth, y);
         ctxImage.stroke();
