@@ -22,19 +22,19 @@ public static partial class ImageMosaicReflection {
   static ImageMosaicReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8igwEK",
+          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8iqgEK",
           "EkltYWdlTW9zYWljUmVxdWVzdBIKCgJJZBgBIAEoCRInCgVUaWxlcxgCIAMo",
           "CzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJlEigKBk1hc3RlchgDIAEoCzIY",
-          "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCCI2ChNJ",
-          "bWFnZU1vc2FpY1Jlc3BvbnNlEhAKCGxvY2F0aW9uGAEgASgJEg0KBUVycm9y",
-          "GAIgASgJIkQKGE1hc3RlckltYWdlQ29sb3VyUmVxdWVzdBIoCgZNYXN0ZXIY",
-          "ASABKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZSI0ChlNYXN0ZXJJbWFn",
-          "ZUNvbG91clJlc3BvbnNlEhcKD0F2ZXJhZ2VUaWxlQVJHQhgBIAMoBWIGcHJv",
-          "dG8z"));
+          "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCBIRCgl0",
+          "aWxlV2lkdGgYBSABKAUSEgoKdGlsZUhlaWdodBgGIAEoBSI2ChNJbWFnZU1v",
+          "c2FpY1Jlc3BvbnNlEhAKCGxvY2F0aW9uGAEgASgJEg0KBUVycm9yGAIgASgJ",
+          "IkQKGE1hc3RlckltYWdlQ29sb3VyUmVxdWVzdBIoCgZNYXN0ZXIYASABKAsy",
+          "GC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZSI0ChlNYXN0ZXJJbWFnZUNvbG91",
+          "clJlc3BvbnNlEhcKD0F2ZXJhZ2VUaWxlQVJHQhgBIAMoBWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random", "TileWidth", "TileHeight" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourRequest), global::MasterImageColourRequest.Parser, new[]{ "Master" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourResponse), global::MasterImageColourResponse.Parser, new[]{ "AverageTileARGB" }, null, null, null)
@@ -73,6 +73,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     tiles_ = other.tiles_.Clone();
     master_ = other.master_ != null ? other.master_.Clone() : null;
     random_ = other.random_;
+    tileWidth_ = other.tileWidth_;
+    tileHeight_ = other.tileHeight_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -124,6 +126,28 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
   }
 
+  /// <summary>Field number for the "tileWidth" field.</summary>
+  public const int TileWidthFieldNumber = 5;
+  private int tileWidth_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int TileWidth {
+    get { return tileWidth_; }
+    set {
+      tileWidth_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "tileHeight" field.</summary>
+  public const int TileHeightFieldNumber = 6;
+  private int tileHeight_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int TileHeight {
+    get { return tileHeight_; }
+    set {
+      tileHeight_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ImageMosaicRequest);
@@ -141,6 +165,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if(!tiles_.Equals(other.tiles_)) return false;
     if (!object.Equals(Master, other.Master)) return false;
     if (Random != other.Random) return false;
+    if (TileWidth != other.TileWidth) return false;
+    if (TileHeight != other.TileHeight) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -151,6 +177,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     hash ^= tiles_.GetHashCode();
     if (master_ != null) hash ^= Master.GetHashCode();
     if (Random != false) hash ^= Random.GetHashCode();
+    if (TileWidth != 0) hash ^= TileWidth.GetHashCode();
+    if (TileHeight != 0) hash ^= TileHeight.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -177,6 +205,14 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
       output.WriteRawTag(32);
       output.WriteBool(Random);
     }
+    if (TileWidth != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(TileWidth);
+    }
+    if (TileHeight != 0) {
+      output.WriteRawTag(48);
+      output.WriteInt32(TileHeight);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -194,6 +230,12 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
     if (Random != false) {
       size += 1 + 1;
+    }
+    if (TileWidth != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(TileWidth);
+    }
+    if (TileHeight != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(TileHeight);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -218,6 +260,12 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
     if (other.Random != false) {
       Random = other.Random;
+    }
+    if (other.TileWidth != 0) {
+      TileWidth = other.TileWidth;
+    }
+    if (other.TileHeight != 0) {
+      TileHeight = other.TileHeight;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -247,6 +295,14 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
         }
         case 32: {
           Random = input.ReadBool();
+          break;
+        }
+        case 40: {
+          TileWidth = input.ReadInt32();
+          break;
+        }
+        case 48: {
+          TileHeight = input.ReadInt32();
           break;
         }
       }

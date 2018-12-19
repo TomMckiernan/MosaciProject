@@ -6,6 +6,8 @@ message ImageMosaicRequest {
     repeated ImageFileIndexStructure Tiles = 2;
 	ImageFileIndexStructure Master         = 3;
 	bool Random                            = 4;
+	int32 tileWidth                        = 5;
+	int32 tileHeight                       = 6;
 }
 
 message ImageMosaicResponse {

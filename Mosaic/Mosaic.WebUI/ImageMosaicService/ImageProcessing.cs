@@ -10,8 +10,13 @@ namespace ImageMosaicService
     public class ImageProcessing
     {
         private int quality = 6, resizeHeight = 119, resizeWidth = 119;
-        private Size tileSize = new Size(10, 10);
+        private Size tileSize;
         private List<ImageInfo> library;
+
+        public ImageProcessing(int tileHeight = 10, int tileWidth = 10)
+        {
+            tileSize = new Size(tileHeight, tileWidth);
+        }
 
         public Bitmap Resize(string srcFile)
         {
@@ -74,8 +79,8 @@ namespace ImageMosaicService
 
         public Color[,] CreateMap(Bitmap img)
         {
-            int horizontalTiles = (int)img.Width / 10;
-            int verticalTiles = (int)img.Height / 10;
+            int horizontalTiles = (int)img.Width / 20;
+            int verticalTiles = (int)img.Height / 20;
 
             var colorMap = new Color[horizontalTiles, verticalTiles];
 

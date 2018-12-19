@@ -33,7 +33,7 @@ namespace Infrastructure
 
         ProjectResponse DeleteProject(string id);
 
-        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random);
+        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height);
 
         MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file);
     }

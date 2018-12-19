@@ -60,7 +60,7 @@ namespace Mosaic.WebUI.Models
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
 
-            return client.Generate(id, tileFiles.Files, masterFile.File, random);
+            return client.Generate(id, tileFiles.Files, masterFile.File, random, 20, 20);
         }
 
         //Return project response
