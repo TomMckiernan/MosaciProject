@@ -53,7 +53,7 @@
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
             </ul>
 
-            @Html.Partial("_PieChart")
+            @Html.Partial("_PieChart", Model)
 
         </div>
     </div>
@@ -113,33 +113,6 @@
             //im.onload();
         });
     });
-
-    var tilesData = @Html.Raw(@Model.ColoursModel.JsonTileImageColours);
-    var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
-
-    var myCanvas = document.getElementById("myCanvas");
-    var ctx = myCanvas.getContext("2d");
-    var myPiechart = new Piechart(
-        {
-            canvas: myCanvas,
-            data: tilesData,
-            colors: tilesColours
-        }
-    );
-    myPiechart.draw();
-
-    var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
-    var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
-
-    myCanvas = document.getElementById("myMasterCanvas")
-    var myPiechart = new Piechart(
-        {
-            canvas: myCanvas,
-            data: masterData,
-            colors: masterColours
-        }
-    );
-    myPiechart.draw();
 
     if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
         im.src = "@Model.JSMosaicLocation";

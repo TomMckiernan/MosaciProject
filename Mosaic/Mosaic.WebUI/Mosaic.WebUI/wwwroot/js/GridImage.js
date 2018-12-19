@@ -15,14 +15,11 @@ var gridOptions = {
 
 im.onload = function () {
     var scaleFactor = 540 / im.width;
-    debugger;
     ctxImage.width = im.width * scaleFactor;
     ctxImage.height = im.height * scaleFactor;
     ctxImage.drawImage(im, 0, 0, im.width, im.height,              // source tile
                        0, 0, ctxImage.width, ctxImage.height); // destination tile
-    debugger;
     drawGridLines(gridOptions.minorLines);
-    debugger;
     //drawGridLines(gridOptions.majorLines);
 }
 
