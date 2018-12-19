@@ -2,6 +2,7 @@
 var ctxImage = can.getContext("2d");
 var im = new Image();
 var showGrid = true;
+var container = document.getElementById("image-container");
 
 var gridOptions = {
     minorLines: {
@@ -14,10 +15,11 @@ var gridOptions = {
     }
 };
 
+// First work out the scaling factor
+// Then set the actual width and height 
+// and width of the canvas from this
 im.onload = function () {
-    debugger;
     clearCanvas();
-    debugger;
     drawImage();
     if (showGrid) {
         drawGridLines(gridOptions.minorLines);
@@ -33,17 +35,25 @@ function toggleGrid() {
     im.onload();
 }
 
+function drawResize() {
+    im.onload();
+}
+
 function drawImage() {
-    var scaleFactor = 540 / im.width;
-    ctxImage.width = im.width * scaleFactor;
-    ctxImage.height = im.height * scaleFactor;
+    var scaleFactor = container.offsetWidth / im.width;
+    var w = im.width * scaleFactor;
+    var h = im.height * scaleFactor;
+    can.width = w;
+    can.height = h;
+    ctxImage.width = w;
+    ctxImage.height = h;
+
     ctxImage.drawImage(im, 0, 0, im.width, im.height,              // source tile
         0, 0, ctxImage.width, ctxImage.height); // destination tile
 }
 
 function drawGridLines(lineOptions) {
-    var scaleFactor = 540 / im.width;
-
+    var scaleFactor = container.offsetWidth / im.width;
     var iWidth = im.width * scaleFactor;
     var iHeight = im.height * scaleFactor;
     var scaleSeparation = lineOptions.separation * scaleFactor;
