@@ -15,7 +15,9 @@ var gridOptions = {
 };
 
 im.onload = function () {
+    debugger;
     clearCanvas();
+    debugger;
     drawImage();
     if (showGrid) {
         drawGridLines(gridOptions.minorLines);

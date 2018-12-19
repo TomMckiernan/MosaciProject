@@ -82,7 +82,8 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    $('#mosaic-image').attr("src", response + "?rnd=" + Math.random());
+                    debugger;
+                    im.src = response + "?rnd=" + Math.random();
                 },
                 complete: function () {
                     $('#generate_mosaic').attr("disabled", false);
@@ -105,11 +106,12 @@
         });
 
         $("#view_master").click(function () {
-            im.src = "@Model.JSMasterLocation";
+            debugger;
+            im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
         });
 
         $("#view_mosaic").click(function () {
-            im.src = "@Model.JSMosaicLocation";
+            im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
         });
 
         $("#toggle_grid").click(function () {

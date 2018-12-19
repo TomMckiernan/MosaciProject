@@ -11,6 +11,8 @@ namespace Mosaic.WebUI.Models
         public string CopyPath { get; set; }
         public string FilePath { get; set; }
         public string ImagePath { get; set; }
+        public string JSImagePath { get { return GetJSImagePath(); } }
+
         public string Error { get; set; }
 
         public ViewImageModel(string copyPath = "wwwroot\\images\\project\\")
@@ -50,6 +52,11 @@ namespace Mosaic.WebUI.Models
         {
             var location = Path.GetFullPath(fileToDelete);
             File.Delete(location);
+        }
+
+        private string GetJSImagePath()
+        {
+            return ImagePath.Replace(@"\", @"\\");
         }
     }
 }
