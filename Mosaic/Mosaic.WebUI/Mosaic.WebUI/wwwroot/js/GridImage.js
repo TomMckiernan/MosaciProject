@@ -24,7 +24,6 @@ im.onload = function () {
 }
 
 function clearCanvas() {
-    debugger;
     ctxImage.clearRect(0, 0, ctxImage.width, ctxImage.height);
 }
 

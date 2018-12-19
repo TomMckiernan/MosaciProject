@@ -158,7 +158,15 @@
                     { "visible": false, "targets": 0 }
                 ],
                 buttons: [
-                    'selectAll',
+                    {
+                        extend: 'selectAll',
+                        className: 'selectall',
+                        action: function (e) {
+                            e.preventDefault();
+                            table.rows({ search: 'applied' }).deselect();
+                            table.rows({ search: 'applied' }).select();
+                        }
+                    },
                     'selectNone'
                 ],
                 "createdRow": function (row, data, index) {
