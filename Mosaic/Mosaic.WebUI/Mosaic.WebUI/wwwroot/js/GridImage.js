@@ -1,6 +1,7 @@
 ﻿can = document.getElementById("canvas");
 var ctxImage = can.getContext("2d");
 var im = new Image();
+var showGrid = true;
 
 var gridOptions = {
     minorLines: {
@@ -14,17 +15,28 @@ var gridOptions = {
 };
 
 im.onload = function () {
-    var scaleFactor = 540 / im.width;
-    ctxImage.width = im.width * scaleFactor;
-    ctxImage.height = im.height * scaleFactor;
-    ctxImage.drawImage(im, 0, 0, im.width, im.height,              // source tile
-                       0, 0, ctxImage.width, ctxImage.height); // destination tile
-    drawGridLines(gridOptions.minorLines);
-    //drawGridLines(gridOptions.majorLines);
+    clearCanvas();
+    drawImage();
+    if (showGrid) {
+        drawGridLines(gridOptions.minorLines);
+    }
 }
 
 function clearCanvas() {
     ctxImage.clearRect(0, 0, ctxImage.width, ctxImage.height);
+}
+
+function toggleGrid() {
+    showGrid = !showGrid;
+    im.onload();
+}
+
+function drawImage() {
+    var scaleFactor = 540 / im.width;
+    ctxImage.width = im.width * scaleFactor;
+    ctxImage.height = im.height * scaleFactor;
+    ctxImage.drawImage(im, 0, 0, im.width, im.height,              // source tile
+        0, 0, ctxImage.width, ctxImage.height); // destination tile
 }
 
 function drawGridLines(lineOptions) {
