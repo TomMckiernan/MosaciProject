@@ -20,6 +20,17 @@ function drawPieSlice(ctx, centerX, centerY, radius, startAngle, endAngle, color
     ctx.fill();
 }
 
+function createPieChart(myCanvas, data, colours) {
+    var myPiechart = new Piechart(
+        {
+            canvas: myCanvas,
+            data: data,
+            colors: colours
+        }
+    );
+    myPiechart.draw();
+}
+
 var Piechart = function (options) {
     this.options = options;
     this.canvas = options.canvas;

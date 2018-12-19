@@ -1,4 +1,5 @@
-﻿
+﻿@model Mosaic.WebUI.Models.GenerateMosaicModel
+
 @{
     ViewData["Title"] = "_PieChart";
 }
@@ -8,14 +9,12 @@
     <figure>
         <div class="col-md-6">
             <canvas id="myCanvas"></canvas>
-            <script type="text/javascript" src="~/js/PieChart.js"></script>
             <figcaption class="piechart-info">
                 Colours found in tile images
             </figcaption>
         </div>
         <div class="col-md-6">
             <canvas id="myMasterCanvas"></canvas>
-            <script type="text/javascript" src="~/js/PieChart.js"></script>
             <figcaption class="piechart-info">
                 Colours found in master image
             </figcaption>
@@ -23,4 +22,23 @@
     </figure>
 </body>
 </html>
+
+<script type="text/javascript" src="~/js/PieChart.js"></script>
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+    $(function () {
+
+        var tilesData = @Html.Raw(@Model.ColoursModel.JsonTileImageColours);
+        var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
+
+        var myCanvas = document.getElementById("myCanvas");
+        createPieChart(myCanvas, tilesData, tilesColours);
+
+        var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
+        var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
+
+        myCanvas = document.getElementById("myMasterCanvas");
+        createPieChart(myCanvas, masterData, masterColours);
+    });
+</script>
 

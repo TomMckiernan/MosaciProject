@@ -13,16 +13,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
-            <div class="media">
-                @if (Model.State == ProjectStructure.Types.State.Completed){
-                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MosaicLocation" width="100%" />
-                }
-                else {
-                    <img id="mosaic-image" class="mr-3" alt="Bootstrap Media Preview" src="@Model.MasterLocation" width="100%" />
-                }
+            <div id="image-container" class="media">                            
+                @Html.Partial("_TileImage")
             </div>
         </div>
         <div class="col-md-6">
+            <button id="view_master" type="button" class="btn btn-primary">
+                View Master
+            </button>
+            <button id="view_mosaic" type="button" class="btn btn-primary">
+                View Mosaic
+            </button>
+            <button id="toggle_grid" type="button" class="btn btn-primary">
+                Toggle Grid
+            </button>
             <h3>
                 <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
                 Tile images added
@@ -45,7 +49,7 @@
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
             </ul>
 
-            @Html.Partial("_PieChart")
+            @Html.Partial("_PieChart", Model)
 
         </div>
     </div>
@@ -71,7 +75,7 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    $('#mosaic-image').attr("src", response + "?rnd=" + Math.random());
+                    im.src = response + "?rnd=" + Math.random();
                 },
                 complete: function () {
                     $('#generate_mosaic').attr("disabled", false);
@@ -92,33 +96,30 @@
             $('#generate_mosaic').attr("disabled", true)
             generateMosaic("@Model.ProjectId", true);
         });
+
+        $("#view_master").click(function () {
+            im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
+        });
+
+        $("#view_mosaic").click(function () {
+            im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
+        });
+
+        $("#toggle_grid").click(function () {
+            toggleGrid();
+        });
+
+        $(window).resize(function () {
+            drawResize();
+        });
     });
 
-    var tilesData = @Html.Raw(@Model.ColoursModel.JsonTileImageColours);
-    var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
-
-    var myCanvas = document.getElementById("myCanvas");
-    var ctx = myCanvas.getContext("2d");
-    var myPiechart = new Piechart(
-        {
-            canvas: myCanvas,
-            data: tilesData,
-            colors: tilesColours
-        }
-    );
-    myPiechart.draw();
-
-    var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
-    var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
-
-    myCanvas = document.getElementById("myMasterCanvas")
-    var myPiechart = new Piechart(
-        {
-            canvas: myCanvas,
-            data: masterData,
-            colors: masterColours
-        }
-    );
-    myPiechart.draw();
+    if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
+        im.src = "@Model.JSMosaicLocation";
+    }
+    else {
+        im.src = "@Model.JSMasterLocation";
+    }
+    
 
 </script>
