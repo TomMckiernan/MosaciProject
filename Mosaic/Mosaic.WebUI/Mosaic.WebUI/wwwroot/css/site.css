@@ -150,3 +150,11 @@ body {
 .piechart-info {
     text-align: center;
 }
+
+#myCanvas {
+    width : 100%;
+}
+
+#myMasterCanvas {
+    width : 100%;
+}
