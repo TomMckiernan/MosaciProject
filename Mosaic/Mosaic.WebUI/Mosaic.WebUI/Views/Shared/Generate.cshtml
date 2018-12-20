@@ -18,6 +18,20 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="row tile-size-row">
+                <div class="select-tile-size btn-group">
+                    <button type="button" class="btn btn-primary tile-size-button">Action</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="option-1">10</li>
+                        <li class="option-2">20</li>
+                    </ul>
+                </div>
+            </div>
+
             <button id="view_master" type="button" class="btn btn-primary">
                 View Master
             </button>
@@ -64,13 +78,13 @@
 <script>
     $(function () {
 
-        var generateMosaic = function (id, random) {
+        var generateMosaic = function (id, random, tileWidth, tileHeight) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id, random : random },
+                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -87,14 +101,14 @@
         $("#generate_mosaic").click(function () {
             $(this).attr("disabled", true);
             $('#generate_random_mosaic').attr("disabled", true)
-            generateMosaic("@Model.ProjectId", false);
+            generateMosaic("@Model.ProjectId", false, 10, 10);
 
         });
 
         $("#generate_random_mosaic").click(function () {
             $(this).attr("disabled", true);
             $('#generate_mosaic').attr("disabled", true)
-            generateMosaic("@Model.ProjectId", true);
+            generateMosaic("@Model.ProjectId", true, 10, 10);
         });
 
         $("#view_master").click(function () {
@@ -112,14 +126,24 @@
         $(window).resize(function () {
             drawResize();
         });
-    });
 
-    if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
-        im.src = "@Model.JSMosaicLocation";
-    }
-    else {
-        im.src = "@Model.JSMasterLocation";
-    }
-    
+        $(".dropdown-menu").on('click', 'li', function () {
+            $(".btn:first-child").text("Tile Size : " + $(this).text());
+            $(".btn:first-child").val($(this).text());
+        });
+        
+        var first = $('.dropdown-menu li:nth(0)')[0]; 
+        var t = $(".tile-size-button");
+        $(t).text("Tile Size : " + $(first).text());
+        $(t).val($(first).text());
+
+        
+        if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
+            im.src = "@Model.JSMosaicLocation";
+        }
+        else {
+            im.src = "@Model.JSMasterLocation";
+        }
+    });
 
 </script>
