@@ -118,12 +118,24 @@ body {
     border-collapse : separate;
     padding-bottom: 10px;
     padding-top: 10px;
+    width: 100%;
 }
     
      .project-table th {
          padding-left: 10px;
          padding-right: 10px;
+         float:left;
      }
+
+    .project-table td {
+        float: left;
+    }
+
+    .project-table .delete-column {
+        float: right;
+        padding-right: 10px;
+        padding-left:10px;
+    }
 
 #project-container {
     padding-left: 0px;
