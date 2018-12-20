@@ -79,8 +79,8 @@ namespace ImageMosaicService
 
         public Color[,] CreateMap(Bitmap img)
         {
-            int horizontalTiles = (int)img.Width / 20;
-            int verticalTiles = (int)img.Height / 20;
+            int horizontalTiles = (int)img.Width / tileSize.Width;
+            int verticalTiles = (int)img.Height / tileSize.Height;
 
             var colorMap = new Color[horizontalTiles, verticalTiles];
 
