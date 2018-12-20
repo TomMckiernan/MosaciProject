@@ -83,6 +83,22 @@ namespace Mosaic.WebUI.Controllers
             return View("ImportMaster", model);
         }
 
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var project = client.ReadProject(id);
+            // Create a model which will do the following
+            //Depending on the current state of the project
+            // Delete the copy of the master image
+            // Using master image location then check file exists
+            // Delete the copy of the mosaic image
+            // Using mosaic image location then check file exists
+            // Delete the project from the collection
+            // Then return to the controller
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return Json("The update large file id request was valid");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -36,7 +36,7 @@
                             <tr>
                                 <th class="text-muted glyphicon glyphicon-calendar" title="Created" aria-hidden="true"></th>
                                 <td class="card-text">@Html.DisplayFor(model => model.Projects[i].TimeOfCreation, new { @class = "text-muted" })</td>
-                                <td class="delete-column"><i class="text-muted glyphicon glyphicon-remove" title="Delete"></i></td>
+                                <td class="delete-project"><i class="text-muted glyphicon glyphicon-remove" title="Delete"></i></td>
                             </tr>
                         </table>
                     </div>
@@ -46,6 +46,33 @@
     </div>
 </div>
 
+<script>
+    $(function () {
+
+        var deleteProject = function (id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete", "Home")',
+                dataType: 'json',
+                cache: false,
+                data: { id: id },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    alert("Valid request")
+                }
+            });
+        }
+
+        $(".delete-project").click(function () {
+            var closestCard = $(this).closest(".card")[0];
+            var id = $(closestCard).id;
+            deleteProject(id);
+        });
+    });
+
+</script>
 
 
 
