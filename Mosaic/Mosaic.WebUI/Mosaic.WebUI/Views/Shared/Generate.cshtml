@@ -130,13 +130,15 @@
         $(".dropdown-menu").on('click', 'li', function () {
             $(".btn:first-child").text("Tile Size : " + $(this).text());
             $(".btn:first-child").val($(this).text());
+            gridOptions.minorLines.separation = parseInt($(this).text());
+            drawResize();
         });
         
-        var first = $('.dropdown-menu li:nth(0)')[0]; 
-        var t = $(".tile-size-button");
-        $(t).text("Tile Size : " + $(first).text());
-        $(t).val($(first).text());
-
+        var firstOption = $('.dropdown-menu li:nth(0)')[0]; 
+        var tileSizeButton = $(".tile-size-button");
+        $(tileSizeButton).text("Tile Size : " + $(firstOption).text());
+        $(tileSizeButton).val($(firstOption).text());
+        gridOptions.minorLines.separation = parseInt($(firstOption).text());
         
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
             im.src = "@Model.JSMosaicLocation";
