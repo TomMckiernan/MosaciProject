@@ -3,6 +3,7 @@ var ctxImage = can.getContext("2d");
 var im = new Image();
 var showGrid = true;
 var container = document.getElementById("image-container");
+var currentSeparation = 10;
 
 var gridOptions = {
     minorLines: {
@@ -37,6 +38,15 @@ function toggleGrid() {
 
 function drawResize() {
     im.onload();
+}
+
+function setSeparation(separation) {
+    currentSeparation = separation;
+    gridOptions.minorLines.separation = separation;
+}
+
+function getSeparation() {
+    return currentSeparation;
 }
 
 function drawImage() {
