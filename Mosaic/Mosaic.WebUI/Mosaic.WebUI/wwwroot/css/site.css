@@ -121,11 +121,16 @@ body {
     width: 100%;
 }
     
-     .project-table th {
-         padding-left: 10px;
-         padding-right: 10px;
-         float:left;
-     }
+    .project-table tr {
+        height: 20px;
+        min-height : 20px !important;
+    }
+
+    .project-table th {
+        padding-left: 10px;
+        padding-right: 10px;
+        float:left;
+    }
 
     .project-table td {
         float: left;
