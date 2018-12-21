@@ -29,6 +29,7 @@ namespace ImageMosaicService
                 
                 using (var g = Graphics.FromImage((Image)b))
                 {
+                    g.Clear(Color.White);
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                     g.DrawImage(scrBitmap, 0, 0, resizeHeight, resizeWidth);
                     g.Dispose();
@@ -126,6 +127,7 @@ namespace ImageMosaicService
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
 
             var g = Graphics.FromImage(newImg);
+            g.Clear(Color.White);
             var b = new SolidBrush(Color.Black);
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
@@ -284,18 +286,18 @@ namespace ImageMosaicService
             passColor[2] = library[i].AverageBL;
             passColor[3] = library[i].AverageBR;
 
-            a = passColor[0].A + passColor[1].A + passColor[2].A + passColor[3].A;
+            //a = passColor[0].A + passColor[1].A + passColor[2].A + passColor[3].A;
             r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
             g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
             b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
 
-            a = Math.Abs(color.A - (a / 4));
+            //a = Math.Abs(color.A - (a / 4));
             r = Math.Abs(color.R - (r / 4));
             g = Math.Abs(color.G - (g / 4));
             b = Math.Abs(color.B - (b / 4));
 
-            difference = a + r + g + b;
-            difference /= 4 * 255;
+            difference = r + g + b;
+            difference /= 3 * 255;
             return difference;
         }
     }
