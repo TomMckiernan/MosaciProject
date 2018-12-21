@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{496F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageMosaicService", "ImageMosaicService\ImageMosaicService.csproj", "{EB1B5A33-8CD5-45DD-A98B-9C076F6464FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageMosaicServiceTests", "ImageMosaicServiceTests\ImageMosaicServiceTests.csproj", "{C2F045CD-90D8-4DBB-A98C-D337ACC47508}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageMosaicServiceTests", "ImageMosaicServiceTests\ImageMosaicServiceTests.csproj", "{C2F045CD-90D8-4DBB-A98C-D337ACC47508}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

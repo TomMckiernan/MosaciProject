@@ -83,6 +83,20 @@ namespace Mosaic.WebUI.Controllers
             return View("ImportMaster", model);
         }
 
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var model = new DeleteProjectModel();
+            model.DeleteProject(client, id);
+            if (String.IsNullOrEmpty(model.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("Delete project request was valid");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(model.Error);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

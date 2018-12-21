@@ -36,6 +36,7 @@
                             <tr>
                                 <th class="text-muted glyphicon glyphicon-calendar" title="Created" aria-hidden="true"></th>
                                 <td class="card-text">@Html.DisplayFor(model => model.Projects[i].TimeOfCreation, new { @class = "text-muted" })</td>
+                                <td class="delete-project"><i class="text-muted glyphicon glyphicon-remove" title="Delete"></i></td>
                             </tr>
                         </table>
                     </div>
@@ -45,6 +46,62 @@
     </div>
 </div>
 
+<div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Project</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the project?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="confirm-delete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        var deleteProject = function (id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete", "Home")',
+                dataType: 'json',
+                cache: false,
+                data: { id: id },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
+
+        $(".delete-project").click(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var closestCard = $(this).closest(".card")[0];
+            var id = $(closestCard)[0].id;
+            $('#myModal').modal({
+                show: 'true'
+            });
+            var dialog = $('.modal-content')[0];
+            dialog.id = id;
+        });
+
+        $("#confirm-delete").click(function (e) {
+            var id = $('.modal-content')[0].id;
+            deleteProject(id);
+        });
+    });
+
+</script>
 
 
 

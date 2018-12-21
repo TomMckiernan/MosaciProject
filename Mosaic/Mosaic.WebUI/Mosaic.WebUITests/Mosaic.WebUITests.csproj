@@ -25,4 +25,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="images\master\" />
+    <Folder Include="images\project\" />
+  </ItemGroup>
+
 </Project>
