@@ -46,6 +46,24 @@
     </div>
 </div>
 
+<div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Project</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the project?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="confirm-delete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
 
@@ -70,6 +88,15 @@
             e.stopImmediatePropagation();
             var closestCard = $(this).closest(".card")[0];
             var id = $(closestCard)[0].id;
+            $('#myModal').modal({
+                show: 'true'
+            });
+            var dialog = $('.modal-content')[0];
+            dialog.id = id;
+        });
+
+        $("#confirm-delete").click(function (e) {
+            var id = $('.modal-content')[0].id;
             deleteProject(id);
         });
     });
