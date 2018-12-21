@@ -86,17 +86,15 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public IActionResult Delete(string id)
         {
-            var project = client.ReadProject(id);
-            // Create a model which will do the following
-            //Depending on the current state of the project
-            // Delete the copy of the master image
-            // Using master image location then check file exists
-            // Delete the copy of the mosaic image
-            // Using mosaic image location then check file exists
-            // Delete the project from the collection
-            // Then return to the controller
-            Response.StatusCode = (int)HttpStatusCode.OK;
-            return Json("The update large file id request was valid");
+            var model = new DeleteProjectModel();
+            model.DeleteProject(client, id);
+            if (String.IsNullOrEmpty(model.Error))
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json("Delete project request was valid");
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(model.Error);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

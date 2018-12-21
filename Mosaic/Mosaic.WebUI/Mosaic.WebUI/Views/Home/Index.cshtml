@@ -67,7 +67,8 @@
 
         $(".delete-project").click(function () {
             var closestCard = $(this).closest(".card")[0];
-            var id = $(closestCard).id;
+            var id = $(closestCard)[0].id;
+    debugger;
             deleteProject(id);
         });
     });

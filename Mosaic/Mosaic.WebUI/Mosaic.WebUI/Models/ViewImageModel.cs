@@ -28,6 +28,8 @@ namespace Mosaic.WebUI.Models
                     var newFileName = String.IsNullOrEmpty(fileName) ? Path.GetFileName(fileToCopy) : fileName + Path.GetExtension(fileToCopy);
                     var newfile = CopyPath + newFileName;
                     // Copies files to location and will override if already exists
+                    // won't release the file handle until the application has been closed
+                    // Explore other options to allow to close file
                     File.Copy(fileToCopy, newfile, true);
                     FilePath = newfile;
                     ImagePath = CopyPath.Substring(CopyPath.IndexOf("\\images\\"));

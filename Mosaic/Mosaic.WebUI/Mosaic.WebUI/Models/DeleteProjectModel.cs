@@ -9,33 +9,55 @@ namespace Mosaic.WebUI.Models
 {
     public class DeleteProjectModel
     {
+        public string MasterImageFolder { get; set; }
+        public string MosaicImageFolder { get; set; }
         public string Error { get; set; }
+
+        public DeleteProjectModel(string master = "wwwroot\\images\\master\\", string mosaic = "wwwroot\\images\\project\\")
+        {
+            MasterImageFolder = Path.GetFullPath(master);
+            MosaicImageFolder = Path.GetFullPath(mosaic);
+        }
 
         public void DeleteProject(IMakerClient client, string id)
         {
-            var project = client.ReadProject(id);
-            if (project != null && String.IsNullOrEmpty(project.Error))
+            if (!String.IsNullOrEmpty(id))
             {
-                if (!String.IsNullOrEmpty(project.Project.MasterLocation))
+                var project = client.ReadProject(id);
+                if (project != null && String.IsNullOrEmpty(project.Error))
                 {
-                    DeleteMasterImage(project.Project.MasterLocation);
+                    if (!String.IsNullOrEmpty(project.Project.MasterLocation))
+                    {
+                        DeleteMasterImage(project.Project.MasterLocation);
+                    }
+                    if (!String.IsNullOrEmpty(project.Project.MosaicLocation))
+                    {
+                        DeleteMosaicImage(project.Project.MosaicLocation);
+                    }
+                    var response = client.DeleteProject(id);
+                    if (!String.IsNullOrEmpty(response.Error))
+                    {
+                        Error = response.Error;
+                    }
                 }
-                if (!String.IsNullOrEmpty(project.Project.MosaicLocation))
+                else
                 {
-                    DeleteMosaicImage(project.Project.MosaicLocation);
+                    Error = "Error in fetching project with id";
                 }
             }
             else
             {
-                Error = "Error in fetching project with id";
+                Error = "Id cannot be null or empty";
             }
         }
 
         public void DeleteMasterImage(string masterLocation)
         {
-            if (File.Exists(masterLocation))
+            var masterFile = Path.GetFileName(masterLocation);
+            var masterPath = MasterImageFolder + masterFile;
+            if (File.Exists(masterPath))
             {
-                File.Delete(masterLocation);
+                File.Delete(masterPath);
             }
             else
             {
@@ -45,9 +67,11 @@ namespace Mosaic.WebUI.Models
 
         public void DeleteMosaicImage(string mosaicLocation)
         {
-            if (File.Exists(mosaicLocation))
+            var root = Directory.GetCurrentDirectory();
+            var mosaicPath = Path.GetFullPath(root + mosaicLocation);
+            if (File.Exists(mosaicPath))
             {
-                File.Delete(mosaicLocation);
+                File.Delete(mosaicPath);
             }
             else
             {
