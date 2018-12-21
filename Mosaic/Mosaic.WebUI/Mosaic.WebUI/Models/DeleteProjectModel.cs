@@ -67,8 +67,8 @@ namespace Mosaic.WebUI.Models
 
         public void DeleteMosaicImage(string mosaicLocation)
         {
-            var root = Directory.GetCurrentDirectory();
-            var mosaicPath = Path.GetFullPath(root + mosaicLocation);
+            var mosaicFile = Path.GetFileName(mosaicLocation);
+            var mosaicPath = MosaicImageFolder + mosaicFile;
             if (File.Exists(mosaicPath))
             {
                 File.Delete(mosaicPath);

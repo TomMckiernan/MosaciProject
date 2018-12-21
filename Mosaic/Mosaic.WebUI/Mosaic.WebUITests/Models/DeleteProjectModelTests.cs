@@ -13,8 +13,9 @@ namespace Mosaic.WebUITests.Models
     [TestClass]
     public class DeleteProjectModelTests
     {
-        public string masterLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\test\\"
-        public string mosaicLocation = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUI\\wwwroot\\images\\test\\"
+        public string masterPath = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUITests\\images\\master\\";
+        public string mosaicPath = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUITests\\images\\project\\";
+
         Mock<IMakerClient> MockMakerClient;
 
         [TestInitialize]
@@ -62,7 +63,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void DeleteMasterWillDeleteLocalMasterFileIfExists()
         {
-            var masterLocation = "..//..//..//Images//Master.txt";
+            var masterLocation = masterPath + "Master.txt";
             // Closes the file after creating it
             File.Create(masterLocation).Dispose();
 
@@ -76,7 +77,7 @@ namespace Mosaic.WebUITests.Models
             MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse { Project = project });
             MockMakerClient.Setup(x => x.DeleteProject(It.IsAny<string>())).Returns(new ProjectResponse { Error = "Error" });
 
-            var model = new DeleteProjectModel();
+            var model = new DeleteProjectModel(masterPath, mosaicPath);
             model.DeleteProject(MockMakerClient.Object, ObjectId.GenerateNewId().ToString());
             Assert.IsFalse(File.Exists(masterLocation));
         }
@@ -102,7 +103,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void DeleteMosaicWillDeleteLocalMosaicFileIfExists()
         {
-            var mosaicLocation = "..//..//..//Images//Mosaic.txt";
+            var mosaicLocation = mosaicPath + "Mosaic.txt";
             // Closes the file after creating it
             File.Create(mosaicLocation).Dispose();
 
@@ -116,7 +117,7 @@ namespace Mosaic.WebUITests.Models
             MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse { Project = project });
             MockMakerClient.Setup(x => x.DeleteProject(It.IsAny<string>())).Returns(new ProjectResponse { Error = "Error" });
 
-            var model = new DeleteProjectModel();
+            var model = new DeleteProjectModel(masterPath, mosaicPath);
             model.DeleteProject(MockMakerClient.Object, ObjectId.GenerateNewId().ToString());
             Assert.IsFalse(File.Exists(mosaicLocation));
         }

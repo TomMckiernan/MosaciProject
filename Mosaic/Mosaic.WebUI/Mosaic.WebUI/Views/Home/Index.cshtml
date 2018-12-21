@@ -60,15 +60,16 @@
                     alert("Invalid request");
                 },
                 success: function (response) {
-                    alert("Valid request")
+                    location.reload();
                 }
             });
         }
 
-        $(".delete-project").click(function () {
+        $(".delete-project").click(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
             var closestCard = $(this).closest(".card")[0];
             var id = $(closestCard)[0].id;
-    debugger;
             deleteProject(id);
         });
     });
