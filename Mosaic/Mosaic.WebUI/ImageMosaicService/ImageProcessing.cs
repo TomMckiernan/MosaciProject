@@ -56,7 +56,7 @@ namespace ImageMosaicService
 
         private Color getAverageColor(Rectangle area, Bitmap bmp, int quality)
         {
-            Int64 r = 0, g = 0, b = 0;
+            Int64 a = 0, r = 0, g = 0, b = 0;
             var color = Color.Empty;
             int p = 0;
 
@@ -67,6 +67,7 @@ namespace ImageMosaicService
                 for (int y = area.Y; y < end.Y; y += quality)
                 {
                     color = bmp.GetPixel(x, y);
+                    a += color.A;
                     r += color.R;
                     g += color.G;
                     b += color.B;
@@ -74,7 +75,7 @@ namespace ImageMosaicService
                 }
             }
 
-            return Color.FromArgb(255, (int)(r / p), (int)(g / p), (int)(b / p));
+            return Color.FromArgb((int)(a / p), (int)(r / p), (int)(g / p), (int)(b / p));
         }
 
         public Color[,] CreateMap(Bitmap img)
@@ -87,7 +88,7 @@ namespace ImageMosaicService
             int tileWidth = (img.Width - img.Width % horizontalTiles) / horizontalTiles;
             int tileHeight = (img.Height - img.Height % verticalTiles) / verticalTiles;
 
-            Int64 r, g, b;
+            Int64 a, r, g, b;
             int pixelCount;
             Color color;
 
@@ -97,6 +98,7 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < verticalTiles; y++)
                 {
+                    a = 0;
                     r = 0;
                     g = 0;
                     b = 0;
@@ -107,11 +109,11 @@ namespace ImageMosaicService
                         for (yPos = tileHeight * y; yPos < y * tileHeight + tileHeight; yPos++)
                         {
                             color = img.GetPixel(xPos, yPos);
-                            r += color.R; g += color.G; b += color.B;
+                            a += color.A; r += color.R; g += color.G; b += color.B;
                             pixelCount++;
                         }
                     }
-                    colorMap[x, y] = Color.FromArgb(255, (int)r / pixelCount, (int)g / pixelCount, (int)b / pixelCount);
+                    colorMap[x, y] = Color.FromArgb((int)a / pixelCount, (int)r / pixelCount, (int)g / pixelCount, (int)b / pixelCount);
                 }
 
             }
@@ -272,7 +274,7 @@ namespace ImageMosaicService
 
         private double GetLibraryTileDifference(Color color, int i)
         {
-            int r, g, b;
+            int a, r, g, b;
             Color[] passColor;
             double difference;
 
@@ -282,16 +284,18 @@ namespace ImageMosaicService
             passColor[2] = library[i].AverageBL;
             passColor[3] = library[i].AverageBR;
 
+            a = passColor[0].A + passColor[1].A + passColor[2].A + passColor[3].A;
             r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
             g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
             b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
 
+            a = Math.Abs(color.A - (a / 4));
             r = Math.Abs(color.R - (r / 4));
             g = Math.Abs(color.G - (g / 4));
             b = Math.Abs(color.B - (b / 4));
 
-            difference = r + g + b;
-            difference /= 3 * 255;
+            difference = a + r + g + b;
+            difference /= 4 * 255;
             return difference;
         }
     }
