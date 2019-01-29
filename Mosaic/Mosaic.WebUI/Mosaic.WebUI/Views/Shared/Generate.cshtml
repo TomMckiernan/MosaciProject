@@ -4,7 +4,15 @@
     ViewData["Title"] = "Generate";
 }
 
-<div class="jumbotron">
+<nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
+    <ul class="nav navbar-nav">
+        <li><a asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.ProjectId">Master</a></li>
+        <li><a asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.ProjectId">Tiles</a></li>
+        <li><a asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.ProjectId">Generate</a></li>
+    </ul>
+</nav>
+
+<div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Generate Mosaic Image</h1>
     <hr class="my-4">
     <p>Generate the mosaic image from your master and tile images</p>
@@ -13,7 +21,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
-            <div id="image-container" class="media">                            
+            <div id="image-container" class="media">
                 @Html.Partial("_TileImage")
             </div>
         </div>
@@ -69,7 +77,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-           
+
         </div>
     </div>
 </div>
@@ -141,8 +149,8 @@
             $(".btn:first-child").val($(this).text());
             setSeparation(parseInt($(this).text()));
             drawResize();
-        });       
-        
+        });
+
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
             im.src = "@Model.JSMosaicLocation";
         }

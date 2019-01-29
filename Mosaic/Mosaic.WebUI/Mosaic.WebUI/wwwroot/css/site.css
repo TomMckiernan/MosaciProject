@@ -191,3 +191,29 @@ body {
         text-align:center;
         cursor: pointer;
     }
+
+.jumbotron-with-navbar {
+    padding-top : 10px;
+}
+
+.navbar-centred {
+    margin-bottom: 0px !important;
+    text-align: center;
+    float: none;
+}
+
+    .navbar-centred .navbar-nav > li {
+        /*float: none;*/
+        /*display: inline;*/
+    }
+
+        .navbar-centred > li > a {
+            display: inline-block;
+        }
+
+.navbar-light {
+    background-color: #eeeeee;
+}
+    .navbar-light a {
+        color: black;
+    }

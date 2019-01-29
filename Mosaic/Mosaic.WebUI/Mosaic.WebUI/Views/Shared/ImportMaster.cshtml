@@ -4,14 +4,22 @@
     ViewData["Title"] = "ImportMaster";
 }
 
-<div class="jumbotron">
+<nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
+    <ul class="nav navbar-nav">
+        <li><a asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.ProjectId">Master</a></li>
+        <li><a asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.ProjectId">Tiles</a></li>
+        <li><a asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.ProjectId">Generate</a></li>
+    </ul>
+</nav>
+
+<div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Select Master File</h1>
     <hr class="my-4">
     <p>Select master file from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
-<nav class="navbar navbar-light bg-faded">
+<nav class="navbar bg-faded">
     <form class="form-inline">
         @Html.EditorFor(x=> x.IndexedLocation,
             new { htmlAttributes = new { @class = "form-control mr-sm-2", style = "Width:400px" } })
