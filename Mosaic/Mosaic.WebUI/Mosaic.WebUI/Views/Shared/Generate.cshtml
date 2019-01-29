@@ -3,14 +3,7 @@
 @{
     ViewData["Title"] = "Generate";
 }
-
-<nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
-    <ul class="nav navbar-nav">
-        <li><a asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.ProjectId">Master</a></li>
-        <li><a asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.ProjectId">Tiles</a></li>
-        <li><a asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.ProjectId">Generate</a></li>
-    </ul>
-</nav>
+@Html.Partial("_ProjectNavBar", Model.ProjectId)
 
 <div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Generate Mosaic Image</h1>

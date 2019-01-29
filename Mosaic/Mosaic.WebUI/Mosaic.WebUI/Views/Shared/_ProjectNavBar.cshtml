@@ -1,0 +1,12 @@
+﻿@model string
+@{
+    ViewData["Title"] = "_ProjectNavBar";
+}
+
+<nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
+    <ul class="nav navbar-nav">
+        <li><a asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model">Master</a></li>
+        <li><a asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model">Tiles</a></li>
+        <li><a asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model">Generate</a></li>
+    </ul>
+</nav>
