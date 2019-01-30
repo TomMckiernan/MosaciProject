@@ -14,10 +14,10 @@ namespace Mosaic.WebUI.Controllers
         IMakerClient client = new MakerClient();
 
         [HttpPost]
-        public ActionResult UpdateIndexedLocation(string indexedLocation)
+        public ActionResult UpdateIndexedLocation(string indexedLocation, string id)
         {
             // pass client into constructor
-            var model = new IndexedLocationModel(client);
+            var model = new IndexedLocationModel(client, id);
 
             var response = model.UpdateIndexedLocation(client, indexedLocation);
             if (String.IsNullOrEmpty(response.Error))

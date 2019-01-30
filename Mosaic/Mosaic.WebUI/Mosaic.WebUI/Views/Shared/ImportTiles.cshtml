@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Indexed Tile Files";
 }
-@Html.Partial("_ProjectNavBar", Model.ProjectId)
+@Html.Partial("_ProjectNavBar", Model.PartialModel)
 
 <div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Select Tile Files</h1>
@@ -92,7 +92,7 @@
                 url: '@Url.Action("UpdateIndexedLocation", "Tile")',
                 dataType: 'json',
                 cache: false,
-                data: { IndexedLocation: IndexedLocation },
+                data: { IndexedLocation: IndexedLocation, Id: "@Model.ProjectId" },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                     // Display a toastr message to indicate failure
