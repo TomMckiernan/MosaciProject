@@ -125,6 +125,7 @@
             im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
         });
 
+        // disable view mosaic button if no mosaic has been generated
         $("#view_mosaic").click(function () {
             im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
         });

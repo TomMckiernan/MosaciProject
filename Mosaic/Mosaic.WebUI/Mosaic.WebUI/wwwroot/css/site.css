@@ -215,6 +215,16 @@ body {
 .navbar-light {
     background-color: #eeeeee;
 }
+    .navbar-light li {
+        cursor: default;
+    }
+
     .navbar-light a {
         color: black;
     }
+
+        .navbar-light a.disabled {
+            pointer-events: none;
+            cursor: default;
+        }
+

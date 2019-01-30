@@ -5,8 +5,30 @@
 
 <nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
     <ul class="nav navbar-nav">
-        <li><a asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.Item1">Master</a></li>
-        <li><a asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.Item1">Tiles</a></li>
-        <li><a asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.Item1">Generate</a></li>
+        <li><a id="masterLink" asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.Item1">Master</a></li>
+        <li><a id="tilesLink" asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.Item1">Tiles</a></li>
+        <li><a id="generateLink" asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.Item1">Generate</a></li>
     </ul>
 </nav>
+
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script>
+    $(function () {
+        var tiles = document.getElementById("tilesLink");
+        var generate = document.getElementById("generateLink");
+        var created = "@ProjectStructure.Types.State.Created";
+        var largeAdded = "@ProjectStructure.Types.State.Largeadded";
+        
+        var state = "@Model.Item2";
+        if (state == created) {
+            $(tiles).addClass("disabled");
+            $(tiles).removeAttr("href");
+            $(generate).addClass("disabled");
+            $(generate).removeAttr("href");
+        }
+        else if (state == largeAdded) {
+            $(generate).addClass("disabled");
+            $(generate).removeAttr("href");
+        }
+    });
+</script>
