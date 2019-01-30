@@ -18,9 +18,27 @@ namespace Mosaic.WebUI.Models
 
         public string ProjectId {get; private set;}
 
-        public IndexedLocationModel(string projectId = "Default")
+        public Tuple<string, ProjectStructure.Types.State> PartialModel { get; set; }
+
+        public IndexedLocationModel(IMakerClient client, string projectId = "Default")
         {
-            ProjectId = projectId;
+            var project = ProjectErrorCheck(client, projectId);
+            if (String.IsNullOrEmpty(project.Error))
+            {
+                ProjectId = projectId;
+                PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, project.Project.Progress);
+            }
+        }
+
+        private ProjectResponse ProjectErrorCheck(IMakerClient client, string id)
+        {
+            // Get project
+            if (String.IsNullOrEmpty(id))
+            {
+                return new ProjectResponse() { Error = "Project Id cannot be null or empty" };
+            }
+            var project = client.ReadProject(id);
+            return project;
         }
 
         public void RequestIndexedLocation(IMakerClient client)

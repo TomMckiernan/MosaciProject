@@ -37,7 +37,7 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ImportFile(string id, string fileId, string filePath)
+        public ActionResult ImportMaster(string id, string fileId, string filePath)
         {
             // copy master image to root directory to allow it display
             // set the name of the local master image to the project id
@@ -72,6 +72,7 @@ namespace Mosaic.WebUI.Controllers
 
         public ActionResult ImportTiles(string Id)
         {
+            // pass client into constructor
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 

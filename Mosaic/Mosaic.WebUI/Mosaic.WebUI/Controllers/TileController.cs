@@ -16,7 +16,8 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult UpdateIndexedLocation(string indexedLocation)
         {
-            var model = new IndexedLocationModel();
+            // pass client into constructor
+            var model = new IndexedLocationModel(client);
 
             var response = model.UpdateIndexedLocation(client, indexedLocation);
             if (String.IsNullOrEmpty(response.Error))
@@ -67,7 +68,7 @@ namespace Mosaic.WebUI.Controllers
 
         [HttpPost]
         [RequestFormSizeLimit(valueCountLimit: 2000)]
-        public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
+        public ActionResult ImportTiles(string id, IEnumerable<string> fileIds)
         {
             var model = new TileFilesModel();
 

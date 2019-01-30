@@ -57,6 +57,7 @@ namespace Mosaic.WebUI.Controllers
 
         public IActionResult SelectProject(string Id)
         {
+            // pass client into constructor
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 
@@ -77,6 +78,7 @@ namespace Mosaic.WebUI.Controllers
 
         public IActionResult ImportMaster(string Id)
         {
+            // pass client into constructor
             var model = new IndexedLocationModel(Id);
             model.RequestIndexedLocation(client);
 
