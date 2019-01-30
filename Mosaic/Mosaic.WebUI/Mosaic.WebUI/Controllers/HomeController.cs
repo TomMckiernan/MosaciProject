@@ -58,7 +58,7 @@ namespace Mosaic.WebUI.Controllers
         public IActionResult SelectProject(string Id)
         {
             // pass client into constructor
-            var model = new IndexedLocationModel(Id);
+            var model = new IndexedLocationModel(client, Id);
             model.RequestIndexedLocation(client);
 
             var progress = client.ReadProject(Id).Project.Progress;
@@ -79,7 +79,7 @@ namespace Mosaic.WebUI.Controllers
         public IActionResult ImportMaster(string Id)
         {
             // pass client into constructor
-            var model = new IndexedLocationModel(Id);
+            var model = new IndexedLocationModel(client, Id);
             model.RequestIndexedLocation(client);
 
             return View("ImportMaster", model);

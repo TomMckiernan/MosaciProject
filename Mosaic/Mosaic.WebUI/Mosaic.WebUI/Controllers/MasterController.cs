@@ -73,7 +73,7 @@ namespace Mosaic.WebUI.Controllers
         public ActionResult ImportTiles(string Id)
         {
             // pass client into constructor
-            var model = new IndexedLocationModel(Id);
+            var model = new IndexedLocationModel(client, Id);
             model.RequestIndexedLocation(client);
 
             return View("ImportTiles", model);
