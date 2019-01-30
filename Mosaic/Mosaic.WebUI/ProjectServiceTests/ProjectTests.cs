@@ -94,7 +94,7 @@ namespace ProjectServiceTests
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.LargeFileId, readResponse.Project.LargeFileId);
-            Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
+            Assert.AreEqual(insertResponse.Project.MasterLocation, readResponse.Project.MasterLocation);
             Assert.AreEqual(ProjectStructure.Types.State.Largeadded, readResponse.Project.Progress);
         }
 
@@ -107,6 +107,31 @@ namespace ProjectServiceTests
 
             Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
             Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Completed);
+        }
+
+        [TestMethod]
+        public void InsertSmallFilesAfterMosaicGenerationInsertsImageIdsIntoProjectButDoesNotUpdateState()
+        {
+            var createResponse = service.CreateProject();
+            var insertMosaicResponse = InsertMosaicFileHelper(service, createResponse.Project.Id);
+            var insertResponse = InsertSmallFilesHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.SmallFileIds, readResponse.Project.SmallFileIds);
+            Assert.AreEqual(ProjectStructure.Types.State.Completed, readResponse.Project.Progress);
+        }
+
+        [TestMethod]
+        public void InsertLargeFileInsertsImageIdIntoProjectSetsMasterLocationButDoesNotUpdateState()
+        {
+            var createResponse = service.CreateProject();
+            var insertMosaicResponse = InsertMosaicFileHelper(service, createResponse.Project.Id);
+            var insertResponse = InsertLargeFileHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.LargeFileId, readResponse.Project.LargeFileId);
+            Assert.AreEqual(insertResponse.Project.MasterLocation, readResponse.Project.MasterLocation);
+            Assert.AreEqual(ProjectStructure.Types.State.Completed, readResponse.Project.Progress);
         }
 
         [TestMethod]

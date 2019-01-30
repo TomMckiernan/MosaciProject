@@ -117,7 +117,7 @@ namespace ProjectService
             }
 
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
-            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId } };
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId, MasterLocation = request.Location } };
         }
 
         public ProjectResponse InsertMosaicFile(IMongoDatabase db, ProjectInsertMosaicFileRequest request)
