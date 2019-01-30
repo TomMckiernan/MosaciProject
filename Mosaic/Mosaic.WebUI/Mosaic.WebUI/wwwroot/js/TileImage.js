@@ -4,10 +4,8 @@ var im = new Image();
 
 im.onload = function () {
     var scaleFactor = 540 / im.width;
-    debugger;
     var tileWidth = im.width / 10;
     var tileHeight = im.height / 10;
-    debugger;
     for (var i = 0; i * 40 < im.width; i++) {
         for (var j = 0; j * 40 < im.height; j++) {
             var x = i * 40;
@@ -17,5 +15,4 @@ im.onload = function () {
                 (x + i * 5) * scaleFactor, (y + j * 5) * scaleFactor, 40 * scaleFactor, 40 * scaleFactor); // destination tile
         }       
     }
-    debugger;
 }
