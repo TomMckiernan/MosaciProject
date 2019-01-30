@@ -194,6 +194,7 @@ body {
 
 .jumbotron-with-navbar {
     padding-top : 10px;
+    padding-bottom : 10px;
 }
 
 .navbar-centred {
