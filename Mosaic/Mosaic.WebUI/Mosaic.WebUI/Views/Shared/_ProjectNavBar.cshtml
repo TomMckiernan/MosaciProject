@@ -3,12 +3,16 @@
     ViewData["Title"] = "_ProjectNavBar";
 }
 
-<nav id="subnav" class="navbar navbar-light navbar-centred" role="navigation">
-    <ul class="nav navbar-nav">
-        <li><a id="masterLink" asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.Item1">Master</a></li>
-        <li><a id="tilesLink" asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.Item1">Tiles</a></li>
-        <li><a id="generateLink" asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.Item1">Generate</a></li>
-    </ul>
+<nav id="subnav" class="navbar navbar-default navbar-light navbar-centred" role="navigation">
+
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                <li><a id="masterLink" asp-area="" asp-controller="Home" asp-action="ImportMaster" asp-route-Id="@Model.Item1">Master</a></li>
+                <li><a id="tilesLink" asp-area="" asp-controller="Master" asp-action="ImportTiles" asp-route-Id="@Model.Item1">Tiles</a></li>
+                <li><a id="generateLink" asp-area="" asp-controller="Tile" asp-action="Generate" asp-route-Id="@Model.Item1">Generate</a></li>
+            </ul>
+        </div>
 </nav>
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>

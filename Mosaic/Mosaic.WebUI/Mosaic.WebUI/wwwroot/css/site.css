@@ -201,6 +201,8 @@ body {
     margin-bottom: 0px !important;
     text-align: center;
     float: none;
+    display: flex;
+    justify-content: center;
 }
 
     .navbar-centred .navbar-nav > li {
@@ -213,18 +215,40 @@ body {
         }
 
 .navbar-light {
-    background-color: #eeeeee;
+    background-color: #eeeeee !important;
+    border-bottom-color: #eeeeee;
+    border-left-color: #eeeeee;
+    border-right-color: #eeeeee;
+    border-top-color: #eeeeee
 }
     .navbar-light li {
         cursor: default;
     }
 
     .navbar-light a {
-        color: black;
+        color: black !important;
     }
 
         .navbar-light a.disabled {
             pointer-events: none;
             cursor: default;
         }
+
+.navbar-light .navbar-nav > li > a {
+    color: #777;
+}
+
+    .navbar-light .navbar-nav > li > a:hover,
+    .navbar-light .navbar-nav > li > a:focus {
+        color: #333;
+        background-color: #dadada;
+    }
+
+    .navbar-light .navbar-nav > a,
+    .navbar-light .navbar-nav > a:hover,
+    .navbar-light .navbar-nav > a:focus {
+        color: #555 !important;
+        background-color: #dadada !important;
+    }
+
 
