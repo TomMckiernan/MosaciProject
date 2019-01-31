@@ -3,8 +3,9 @@
 @{
     ViewData["Title"] = "Generate";
 }
+@Html.Partial("_ProjectNavBar", Model.PartialModel)
 
-<div class="jumbotron">
+<div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Generate Mosaic Image</h1>
     <hr class="my-4">
     <p>Generate the mosaic image from your master and tile images</p>
@@ -13,7 +14,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
-            <div id="image-container" class="media">                            
+            <div id="image-container" class="media">
                 @Html.Partial("_TileImage")
             </div>
         </div>
@@ -69,7 +70,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-           
+
         </div>
     </div>
 </div>
@@ -77,7 +78,6 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-
         var generateMosaic = function (id, random, tileWidth, tileHeight) {
             $.ajax({
                 type: "POST",
@@ -90,10 +90,12 @@
                 },
                 success: function (response) {
                     im.src = response + "?rnd=" + Math.random();
+                    newMosaicLocation = response;
                 },
                 complete: function () {
                     $('#generate_mosaic').attr("disabled", false);
                     $('#generate_random_mosaic').attr("disabled", false)
+                    $('#view_mosaic').attr("disabled", false)
                 }
             });
         }
@@ -141,15 +143,17 @@
             $(".btn:first-child").val($(this).text());
             setSeparation(parseInt($(this).text()));
             drawResize();
-        });       
-        
+        });
+
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
-            im.src = "@Model.JSMosaicLocation";
+            im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
         }
         else {
-            im.src = "@Model.JSMasterLocation";
+            im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
+            $('#view_mosaic').attr("disabled", true)
         }
 
+        var newMosaicLocation = "";
         initialiseTileSize();
     });
 

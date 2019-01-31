@@ -18,8 +18,9 @@ namespace Mosaic.WebUI.Models
         public string MosaicLocation { get; set; }
         public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
         public string JSMasterLocation { get { return GetJSMasterLocation(); } }
-        public ProjectStructure.Types.State State { get; set; }        
+        public ProjectStructure.Types.State State { get; set; }
         public GenerateMosaicColoursModel ColoursModel { get; set; }
+        public Tuple<string, ProjectStructure.Types.State> PartialModel {get; set;}
 
         // To bool values are for the purpose of testing
         public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true)
@@ -32,6 +33,7 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
+                PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, State);
                 if (readColours)
                 {
                     ColoursModel = new GenerateMosaicColoursModel(client, project);

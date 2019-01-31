@@ -25,7 +25,7 @@ namespace Mosaic.WebUITests.Models
         {
             MockMakerClient = new Mock<IMakerClient>();
             MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { });
-            //MockMakerClient.Setup(x => x.UpdateIndexedLocation()).Returns(new IndexedLocationResponse { });
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse { Project = new ProjectStructure()});
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace Mosaic.WebUITests.Models
             var indexedLocation = "Location";
             MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { IndexedLocation = indexedLocation});
 
-            var model = new IndexedLocationModel();
+            var model = new IndexedLocationModel(MockMakerClient.Object);
             model.RequestIndexedLocation(MockMakerClient.Object);
             Assert.AreEqual(indexedLocation, model.IndexedLocation);     
         }
@@ -47,7 +47,7 @@ namespace Mosaic.WebUITests.Models
             MockMakerClient.Setup(x => x.ReadIndexedLocation()).Returns(new IndexedLocationResponse { IndexedLocation = newIndexedLocation, Error = error});
 
             var originalIndexedLocation = "OriginalLocation";
-            var model = new IndexedLocationModel() { IndexedLocation = originalIndexedLocation};
+            var model = new IndexedLocationModel(MockMakerClient.Object) { IndexedLocation = originalIndexedLocation};
             model.RequestIndexedLocation(MockMakerClient.Object);
             Assert.AreEqual(originalIndexedLocation, model.IndexedLocation);
             Assert.AreEqual(error, model.Error);
@@ -56,7 +56,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void UpdateIndexedLocationReturnsErrorIfIndexedLocationEmpty()
         {
-            var model = new IndexedLocationModel();
+            var model = new IndexedLocationModel(MockMakerClient.Object);
             var indexedLocation = String.Empty;
             var response = model.UpdateIndexedLocation(MockMakerClient.Object, indexedLocation);
             Assert.IsTrue(!String.IsNullOrEmpty(response.Error));
@@ -65,7 +65,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void UpdateIndexedLocationReturnsErrorIfIndexedLocationNull()
         {
-            var model = new IndexedLocationModel();
+            var model = new IndexedLocationModel(MockMakerClient.Object);
             var response = model.UpdateIndexedLocation(MockMakerClient.Object, null);
             Assert.IsTrue(!String.IsNullOrEmpty(response.Error));
         }
@@ -73,7 +73,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void IsPathValidFalseIfIndexedLocationInvalid()
         {
-            var model = new IndexedLocationModel();
+            var model = new IndexedLocationModel(MockMakerClient.Object);
             foreach (var location in invalidLocations)
             {
                 model.IndexedLocation = location;
@@ -84,7 +84,7 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void IsPathValidTrueIfIndexedLocationValid()
         {
-            var model = new IndexedLocationModel();
+            var model = new IndexedLocationModel(MockMakerClient.Object);
             foreach (var location in validLocations)
             {
                 model.IndexedLocation = location;
@@ -95,10 +95,29 @@ namespace Mosaic.WebUITests.Models
         [TestMethod]
         public void ProjectIdIsSetCorrectlyByConstructor()
         {
-
             string projectId = "projectId";
-            var model = new IndexedLocationModel(projectId);
+
+            var model = new IndexedLocationModel(MockMakerClient.Object, projectId);
             Assert.AreEqual(projectId, model.ProjectId);
+        }
+
+        [TestMethod]
+        public void PartialModelPropertySetCorrectlyByConstructor()
+        {
+            string projectId = "projectId";
+
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse
+            {
+                Project = new ProjectStructure()
+                {
+                    Id = projectId,
+                    Progress = ProjectStructure.Types.State.Smalladded
+                }
+            });
+            var model = new IndexedLocationModel(MockMakerClient.Object, projectId);
+            Assert.AreEqual(projectId, model.PartialModel.Item1);
+            Assert.AreEqual(ProjectStructure.Types.State.Smalladded, model.PartialModel.Item2);
+
         }
     }
 }

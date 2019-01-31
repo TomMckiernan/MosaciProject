@@ -65,11 +65,13 @@ namespace ProjectServiceTests
         public void InsertSmallFilesInsertsImageIdsIntoProjectAndUpdatesState()
         {
             var createResponse = service.CreateProject();
+            // Insert master file first to get project into correct state
+            var insertLargeResponse = InsertLargeFileHelper(service, createResponse.Project.Id);
             var insertResponse = InsertSmallFilesHelper(service, createResponse.Project.Id);
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.SmallFileIds, readResponse.Project.SmallFileIds);
-            Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Smalladded);
+            Assert.AreEqual(ProjectStructure.Types.State.Smalladded, readResponse.Project.Progress);
         }
 
         [TestMethod]
@@ -92,8 +94,8 @@ namespace ProjectServiceTests
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.LargeFileId, readResponse.Project.LargeFileId);
-            Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
-            Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Largeadded);
+            Assert.AreEqual(insertResponse.Project.MasterLocation, readResponse.Project.MasterLocation);
+            Assert.AreEqual(ProjectStructure.Types.State.Largeadded, readResponse.Project.Progress);
         }
 
         [TestMethod]
@@ -105,6 +107,31 @@ namespace ProjectServiceTests
 
             Assert.AreEqual(insertResponse.Project.MosaicLocation, readResponse.Project.MosaicLocation);
             Assert.AreEqual(readResponse.Project.Progress, ProjectStructure.Types.State.Completed);
+        }
+
+        [TestMethod]
+        public void InsertSmallFilesAfterMosaicGenerationInsertsImageIdsIntoProjectButDoesNotUpdateState()
+        {
+            var createResponse = service.CreateProject();
+            var insertMosaicResponse = InsertMosaicFileHelper(service, createResponse.Project.Id);
+            var insertResponse = InsertSmallFilesHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.SmallFileIds, readResponse.Project.SmallFileIds);
+            Assert.AreEqual(ProjectStructure.Types.State.Completed, readResponse.Project.Progress);
+        }
+
+        [TestMethod]
+        public void InsertLargeFileInsertsImageIdIntoProjectSetsMasterLocationButDoesNotUpdateState()
+        {
+            var createResponse = service.CreateProject();
+            var insertMosaicResponse = InsertMosaicFileHelper(service, createResponse.Project.Id);
+            var insertResponse = InsertLargeFileHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.LargeFileId, readResponse.Project.LargeFileId);
+            Assert.AreEqual(insertResponse.Project.MasterLocation, readResponse.Project.MasterLocation);
+            Assert.AreEqual(ProjectStructure.Types.State.Completed, readResponse.Project.Progress);
         }
 
         [TestMethod]

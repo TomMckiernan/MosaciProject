@@ -3,14 +3,16 @@
 @{
     ViewData["Title"] = "Indexed Tile Files";
 }
-<div class="jumbotron">
+@Html.Partial("_ProjectNavBar", Model.PartialModel)
+
+<div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Select Tile Files</h1>
     <hr class="my-4">
     <p>Select files from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
-<nav class="navbar navbar-light bg-faded">
+<nav class="navbar bg-faded">
     <form class="form-inline">
         @Html.EditorFor(x=> x.IndexedLocation,
             new { htmlAttributes = new { @class = "form-control mr-sm-2", style = "Width:400px" } })
@@ -90,7 +92,7 @@
                 url: '@Url.Action("UpdateIndexedLocation", "Tile")',
                 dataType: 'json',
                 cache: false,
-                data: { IndexedLocation: IndexedLocation },
+                data: { IndexedLocation: IndexedLocation, Id: "@Model.ProjectId" },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                     // Display a toastr message to indicate failure
@@ -170,15 +172,15 @@
                     'selectNone'
                 ],
                 "createdRow": function (row, data, index) {
-                    $('td', row).eq(2).css('background-color', data.averageColour);             
+                    $('td', row).eq(2).css('background-color', data.averageColour);
                 }
             });
         }
 
-        var importFiles = function (id, fileIds) {
+        var importTiles = function (id, fileIds) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ImportFiles", "Tile")',
+                url: '@Url.Action("ImportTiles", "Tile")',
                 dataType: 'json',
                 traditional: true,
                 cache: false,
@@ -206,7 +208,7 @@
             var fileIds = $.map(data, function (n) {
                 return n.id;
             });
-            importFiles("@Model.ProjectId", fileIds);
+            importTiles("@Model.ProjectId", fileIds);
         });
     });
 </script>

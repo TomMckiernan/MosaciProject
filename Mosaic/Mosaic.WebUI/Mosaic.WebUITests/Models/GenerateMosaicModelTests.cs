@@ -123,5 +123,20 @@ namespace Mosaic.WebUITests.Models
             Assert.AreEqual(id, model.ProjectId);
             Assert.AreEqual(1, model.TileImageCount);
         }
+
+        [TestMethod]
+        public void ReadProjectDataSetsPartialModel()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            model.ReadProjectData(MockMakerClient.Object, id, false);
+            Assert.AreEqual(id, model.PartialModel.Item1);
+            Assert.AreEqual(model.State, model.PartialModel.Item2);
+        }
     }
 }

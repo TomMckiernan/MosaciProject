@@ -4,14 +4,16 @@
     ViewData["Title"] = "ImportMaster";
 }
 
-<div class="jumbotron">
+@Html.Partial("_ProjectNavBar", Model.PartialModel)
+
+<div class="jumbotron jumbotron-with-navbar">
     <h1 class="display-4">Select Master File</h1>
     <hr class="my-4">
     <p>Select master file from local system directory to use in the creation of the mosaic image.</p>
 </div>
 
 
-<nav class="navbar navbar-light bg-faded">
+<nav class="navbar bg-faded">
     <form class="form-inline">
         @Html.EditorFor(x=> x.IndexedLocation,
             new { htmlAttributes = new { @class = "form-control mr-sm-2", style = "Width:400px" } })
@@ -88,7 +90,7 @@
                 url: '@Url.Action("UpdateIndexedLocation", "Tile")',
                 dataType: 'json',
                 cache: false,
-                data: { IndexedLocation: IndexedLocation },
+                data: { IndexedLocation: IndexedLocation, Id: "@Model.ProjectId" },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                     // Display a toastr message to indicate failure
@@ -156,10 +158,10 @@
             });
         }
 
-        var importFile = function (id, fileId, filePath) {
+        var importMaster = function (id, fileId, filePath) {
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ImportFile", "Master")',
+                url: '@Url.Action("ImportMaster", "Master")',
                 dataType: 'json',
                 traditional: true,
                 cache: false,
@@ -184,7 +186,7 @@
 
         $("#import_files").click(function () {
             var data = table.rows('.selected').data();
-            importFile("@Model.ProjectId", data[0].id, data[0].filePath);
+            importMaster("@Model.ProjectId", data[0].id, data[0].filePath);
         });
     });
 </script>

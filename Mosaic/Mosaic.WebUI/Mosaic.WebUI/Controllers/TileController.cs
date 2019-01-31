@@ -14,9 +14,10 @@ namespace Mosaic.WebUI.Controllers
         IMakerClient client = new MakerClient();
 
         [HttpPost]
-        public ActionResult UpdateIndexedLocation(string indexedLocation)
+        public ActionResult UpdateIndexedLocation(string indexedLocation, string id)
         {
-            var model = new IndexedLocationModel();
+            // pass client into constructor
+            var model = new IndexedLocationModel(client, id);
 
             var response = model.UpdateIndexedLocation(client, indexedLocation);
             if (String.IsNullOrEmpty(response.Error))
@@ -67,7 +68,7 @@ namespace Mosaic.WebUI.Controllers
 
         [HttpPost]
         [RequestFormSizeLimit(valueCountLimit: 2000)]
-        public ActionResult ImportFiles(string id, IEnumerable<string> fileIds)
+        public ActionResult ImportTiles(string id, IEnumerable<string> fileIds)
         {
             var model = new TileFilesModel();
 

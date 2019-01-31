@@ -61,16 +61,26 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "File ids cannot be null or empty" };
             }
 
+            // Reads the projects with specified id in the db
             var readRequest = new ProjectRequest() { Id = request.Id };
             var project = Read(db, readRequest).Project;
 
             var collection = db.GetCollection<ProjectStructure>("Project");
-
             project.SmallFileIds.AddRange(request.SmallFileIds.Where(x => !project.SmallFileIds.Contains(x)));
-            project.Progress = ProjectStructure.Types.State.Smalladded;
+            UpdateDefinition<ProjectStructure> update;
 
-            var update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, project.SmallFileIds)
-                .Set(x => x.Progress, project.Progress);
+            //Deals with going back in the workflow
+            //Only update the state if not gone backwards in project workflow
+            if (project.Progress == ProjectStructure.Types.State.Largeadded)
+            {
+                update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, project.SmallFileIds)
+                    .Set(x => x.Progress, ProjectStructure.Types.State.Smalladded);
+            }
+            else
+            {
+                update = Builders<ProjectStructure>.Update.Set(x => x.SmallFileIds, project.SmallFileIds);
+            }
+
             var updateResponse = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
             var response = new ProjectStructure() { Id = request.Id };
 
@@ -87,13 +97,27 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Id or location cannot be null or empty" };
             }
 
-            var update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId)
-                .Set(x => x.Progress, ProjectStructure.Types.State.Largeadded)
-                .Set(x => x.MasterLocation, request.Location);
+            // Reads the projects with specified id in the db
+            var readRequest = new ProjectRequest() { Id = request.Id };
+            var project = Read(db, readRequest).Project;
+            UpdateDefinition<ProjectStructure> update;
+
+            // Deals with going back in the workflow
+            // Only update the state if not gone backwards in project workflow
+            if (project.Progress == ProjectStructure.Types.State.Created)
+            {
+                update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId)
+                    .Set(x => x.Progress, ProjectStructure.Types.State.Largeadded)
+                    .Set(x => x.MasterLocation, request.Location);
+            }
+            else
+            {
+                update = Builders<ProjectStructure>.Update.Set(x => x.LargeFileId, request.LargeFileId)
+                    .Set(x => x.MasterLocation, request.Location);
+            }
 
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
-            
-            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId } };
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, LargeFileId = request.LargeFileId, MasterLocation = request.Location } };
         }
 
         public ProjectResponse InsertMosaicFile(IMongoDatabase db, ProjectInsertMosaicFileRequest request)
