@@ -162,6 +162,13 @@ namespace ImageMosaicService
                         srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
                         g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+                        if (colourBlended)
+                        {
+                            var tileAvgColour = colorMap[x, y];
+                            var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
+                            g.FillRectangle(new SolidBrush(colourBlendedValue),
+                                x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                        }
                     }
                 }
             }
