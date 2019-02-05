@@ -23,7 +23,7 @@ namespace Mosaic.WebUI.Controllers
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
             var model = new GenerateMosaicModel();
-            var response = model.Generate(client, id, random, tileWidth, tileHeight);
+            var response = model.Generate(client, id, random, tileWidth, tileHeight, colourBlended);
             if (String.IsNullOrEmpty(response.Error))
             {
                 // copy generated image to root directory to allow it display

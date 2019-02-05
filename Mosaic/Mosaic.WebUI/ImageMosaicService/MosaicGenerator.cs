@@ -10,7 +10,7 @@ namespace ImageMosaicService
 {
     public class MosaicGenerator
     {
-        public Mosaic Generate(string masterImage, List<ImageFileIndexStructure> tileImages, bool random = false, int tileWidth = 10, int tileHeight = 10)
+        public Mosaic Generate(string masterImage, List<ImageFileIndexStructure> tileImages, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false)
         {
             var imageProcessing = new ImageProcessing(tileWidth, tileHeight);
             var imageInfos = new List<ImageInfo>();
@@ -33,7 +33,7 @@ namespace ImageMosaicService
             using (var source = new Bitmap(masterImage))
             {
                 var colorMap = imageProcessing.CreateMap(source);
-                mosaic = imageProcessing.Render(source, colorMap, imageInfos, random);
+                mosaic = imageProcessing.Render(source, colorMap, imageInfos, random, colourBlended);
             }
 
             return mosaic;

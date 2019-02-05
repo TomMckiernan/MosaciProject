@@ -118,7 +118,7 @@ namespace ImageMosaicService
             return colorMap;
         }
 
-        public Mosaic Render(Bitmap img, Color[,] colorMap, List<ImageInfo> imageInfos, bool random = false)
+        public Mosaic Render(Bitmap img, Color[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);

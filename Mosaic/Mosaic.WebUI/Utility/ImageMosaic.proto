@@ -8,6 +8,7 @@ message ImageMosaicRequest {
 	bool Random                            = 4;
 	int32 tileWidth                        = 5;
 	int32 tileHeight                       = 6;
+	bool ColourBlended                     = 7;
 }
 
 message ImageMosaicResponse {

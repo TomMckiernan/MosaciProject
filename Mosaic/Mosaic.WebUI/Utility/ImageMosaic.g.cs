@@ -22,19 +22,20 @@ public static partial class ImageMosaicReflection {
   static ImageMosaicReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8iqgEK",
+          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8iwQEK",
           "EkltYWdlTW9zYWljUmVxdWVzdBIKCgJJZBgBIAEoCRInCgVUaWxlcxgCIAMo",
           "CzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJlEigKBk1hc3RlchgDIAEoCzIY",
           "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCBIRCgl0",
-          "aWxlV2lkdGgYBSABKAUSEgoKdGlsZUhlaWdodBgGIAEoBSI2ChNJbWFnZU1v",
-          "c2FpY1Jlc3BvbnNlEhAKCGxvY2F0aW9uGAEgASgJEg0KBUVycm9yGAIgASgJ",
-          "IkQKGE1hc3RlckltYWdlQ29sb3VyUmVxdWVzdBIoCgZNYXN0ZXIYASABKAsy",
-          "GC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZSI0ChlNYXN0ZXJJbWFnZUNvbG91",
-          "clJlc3BvbnNlEhcKD0F2ZXJhZ2VUaWxlQVJHQhgBIAMoBWIGcHJvdG8z"));
+          "aWxlV2lkdGgYBSABKAUSEgoKdGlsZUhlaWdodBgGIAEoBRIVCg1Db2xvdXJC",
+          "bGVuZGVkGAcgASgIIjYKE0ltYWdlTW9zYWljUmVzcG9uc2USEAoIbG9jYXRp",
+          "b24YASABKAkSDQoFRXJyb3IYAiABKAkiRAoYTWFzdGVySW1hZ2VDb2xvdXJS",
+          "ZXF1ZXN0EigKBk1hc3RlchgBIAEoCzIYLkltYWdlRmlsZUluZGV4U3RydWN0",
+          "dXJlIjQKGU1hc3RlckltYWdlQ29sb3VyUmVzcG9uc2USFwoPQXZlcmFnZVRp",
+          "bGVBUkdCGAEgAygFYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random", "TileWidth", "TileHeight" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random", "TileWidth", "TileHeight", "ColourBlended" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourRequest), global::MasterImageColourRequest.Parser, new[]{ "Master" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourResponse), global::MasterImageColourResponse.Parser, new[]{ "AverageTileARGB" }, null, null, null)
@@ -75,6 +76,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     random_ = other.random_;
     tileWidth_ = other.tileWidth_;
     tileHeight_ = other.tileHeight_;
+    colourBlended_ = other.colourBlended_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -148,6 +150,17 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
   }
 
+  /// <summary>Field number for the "ColourBlended" field.</summary>
+  public const int ColourBlendedFieldNumber = 7;
+  private bool colourBlended_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool ColourBlended {
+    get { return colourBlended_; }
+    set {
+      colourBlended_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ImageMosaicRequest);
@@ -167,6 +180,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (Random != other.Random) return false;
     if (TileWidth != other.TileWidth) return false;
     if (TileHeight != other.TileHeight) return false;
+    if (ColourBlended != other.ColourBlended) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -179,6 +193,7 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (Random != false) hash ^= Random.GetHashCode();
     if (TileWidth != 0) hash ^= TileWidth.GetHashCode();
     if (TileHeight != 0) hash ^= TileHeight.GetHashCode();
+    if (ColourBlended != false) hash ^= ColourBlended.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -213,6 +228,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
       output.WriteRawTag(48);
       output.WriteInt32(TileHeight);
     }
+    if (ColourBlended != false) {
+      output.WriteRawTag(56);
+      output.WriteBool(ColourBlended);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -236,6 +255,9 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
     if (TileHeight != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(TileHeight);
+    }
+    if (ColourBlended != false) {
+      size += 1 + 1;
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -266,6 +288,9 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
     if (other.TileHeight != 0) {
       TileHeight = other.TileHeight;
+    }
+    if (other.ColourBlended != false) {
+      ColourBlended = other.ColourBlended;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -303,6 +328,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
         }
         case 48: {
           TileHeight = input.ReadInt32();
+          break;
+        }
+        case 56: {
+          ColourBlended = input.ReadBool();
           break;
         }
       }
