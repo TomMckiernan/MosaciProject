@@ -66,6 +66,15 @@
                 <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
             </ul>
 
+            <!-- Rounded switch -->
+            <h3>
+                Colour Blended Generation
+            </h3>
+            <label class="switch">
+                <input id="colour_blended" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+
             @Html.Partial("_PieChart", Model)
 
         </div>
@@ -80,13 +89,14 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-        var generateMosaic = function (id, random, tileWidth, tileHeight) {
+        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended) {
+            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight },
+                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -96,8 +106,9 @@
                 },
                 complete: function () {
                     $('#generate_mosaic').attr("disabled", false);
-                    $('#generate_random_mosaic').attr("disabled", false)
-                    $('#view_mosaic').attr("disabled", false)
+                    $('#generate_random_mosaic').attr("disabled", false);
+                    $('#colour_blended').attr("disabled", false);
+                    $('#view_mosaic').attr("disabled", false);
                 }
             });
         }
@@ -114,15 +125,27 @@
             $(this).attr("disabled", true);
             $('#generate_random_mosaic').attr("disabled", true)
             var gridSize = getSeparation();
-            generateMosaic("@Model.ProjectId", false, gridSize, gridSize);
+            var colourBlended = getColourBlended();
+            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended);
         });
 
         $("#generate_random_mosaic").click(function () {
             $(this).attr("disabled", true);
             $('#generate_mosaic').attr("disabled", true)
             var gridSize = getSeparation();
-            generateMosaic("@Model.ProjectId", true, gridSize, gridSize);
+            var colourBlended = getColourBlended();
+            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended);
         });
+
+        var getColourBlended = function () {
+            var colourBlendedToggle = $('#colour_blended');
+            var colourBlendedGeneration = false;
+            if (colourBlendedToggle.is(":checked")) {
+                colourBlendedGeneration = true;
+            }
+            colourBlendedToggle.attr("disabled", true);
+            return colourBlendedGeneration;
+        }
 
         $("#view_master").click(function () {
             im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
