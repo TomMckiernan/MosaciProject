@@ -19,7 +19,7 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateMosaic(string id, bool random, int tileWidth, int tileHeight)
+        public ActionResult GenerateMosaic(string id, bool random, int tileWidth, int tileHeight, bool colourBlended)
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
             var model = new GenerateMosaicModel();
