@@ -46,9 +46,9 @@ namespace ImageMosaicService
             int halfY = bmp.Width / 2;
 
             imageInfo.AverageTL = getAverageColor(new Rectangle(0, 0, halfX, halfY), bmp, quality);
-            imageInfo.AverageTR = getAverageColor(new Rectangle(halfX, 0, bmp.Width - halfX, halfY), bmp, quality);
-            imageInfo.AverageBL = getAverageColor(new Rectangle(0, halfY, halfX, bmp.Height - halfY), bmp, quality);
-            imageInfo.AverageBR = getAverageColor(new Rectangle(halfX, halfY, bmp.Width - halfX, bmp.Height - halfY), bmp, quality);
+            imageInfo.AverageTR = getAverageColor(new Rectangle(halfX, 0, halfX, halfY), bmp, quality);
+            imageInfo.AverageBL = getAverageColor(new Rectangle(0, halfY, halfX, halfY), bmp, quality);
+            imageInfo.AverageBR = getAverageColor(new Rectangle(halfX, halfY, halfX, halfY), bmp, quality);
             imageInfo.AverageWhole = getAverageColor(new Rectangle(0, 0, bmp.Width, bmp.Width), bmp, quality);
 
             return imageInfo;
@@ -77,54 +77,76 @@ namespace ImageMosaicService
             return Color.FromArgb(255, (int)(r / p), (int)(g / p), (int)(b / p));
         }
 
-        public Color[,] CreateMap(Bitmap img)
+        public MosaicTileColour[,] CreateMap(Bitmap img)
         {
             int horizontalTiles = (int)img.Width / tileSize.Width;
             int verticalTiles = (int)img.Height / tileSize.Height;
 
-            var colorMap = new Color[horizontalTiles, verticalTiles];
+            var colorMap = new MosaicTileColour[horizontalTiles, verticalTiles];
 
             int tileWidth = (img.Width - img.Width % horizontalTiles) / horizontalTiles;
             int tileHeight = (img.Height - img.Height % verticalTiles) / verticalTiles;
-
-            Int64 r, g, b;
-            int pixelCount;
-            Color color;
-
-            int xPos, yPos;
 
             for (int x = 0; x < horizontalTiles; x++)
             {
                 for (int y = 0; y < verticalTiles; y++)
                 {
-                    r = 0;
-                    g = 0;
-                    b = 0;
-                    pixelCount = 0;
+                    var xstart = tileWidth * x;
+                    var ystart = tileHeight * y;
 
-                    for (xPos = tileWidth * x; xPos < x * tileWidth + tileWidth; xPos++)
-                    {
-                        for (yPos = tileHeight * y; yPos < y * tileHeight + tileHeight; yPos++)
-                        {
-                            color = img.GetPixel(xPos, yPos);
-                            r += color.R; g += color.G; b += color.B;
-                            pixelCount++;
-                        }
-                    }
-                    colorMap[x, y] = Color.FromArgb(255, (int)r / pixelCount, (int)g / pixelCount, (int)b / pixelCount);
+                    var halfX = xstart + (tileWidth / 2);
+                    var halfY = ystart + (tileHeight / 2);
+
+                    var xend = xstart + tileWidth;
+                    var yend = ystart + tileHeight;
+
+                    colorMap[x, y] = new MosaicTileColour();
+                    //
+                    colorMap[x, y].AverageTL = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth / 2, tileHeight / 2), img, quality);
+                    //
+                    colorMap[x, y].AverageTR = getAverageTileColor(new Rectangle(halfX, ystart, tileWidth / 2, tileHeight / 2), img, quality);
+                    //
+                    colorMap[x, y].AverageBL = getAverageTileColor(new Rectangle(xstart, halfY, tileWidth / 2, tileHeight / 2), img, quality);
+                    //
+                    colorMap[x, y].AverageBR = getAverageTileColor(new Rectangle(halfX, halfY, tileWidth / 2, tileHeight / 2), img, quality);
+
+                    colorMap[x, y].AverageWhole = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth, tileHeight), img, quality);
                 }
-
             }
             return colorMap;
         }
 
-        public Mosaic Render(Bitmap img, Color[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false)
+        private Color getAverageTileColor(Rectangle area, Bitmap bmp, int quality)
+        {
+            Int64 r = 0, g = 0, b = 0;
+            var color = Color.Empty;
+            int pixelCount = 0;
+            int xPos, yPos;
+            var xEnd = area.X + area.Width;
+            var yEnd = area.Y + area.Height;
+
+            for (xPos = area.X; xPos < xEnd; xPos += quality)
+            {
+                for (yPos = area.Y; yPos < yEnd; yPos += quality)
+                {
+                    color = bmp.GetPixel(xPos, yPos);
+                    r += color.R;
+                    g += color.G;
+                    b += color.B;
+                    pixelCount++;
+                }
+            }
+
+            return Color.FromArgb(255, (int)(r / pixelCount), (int)(g / pixelCount), (int)(b / pixelCount));
+        }
+
+        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
 
             var g = Graphics.FromImage(newImg);
-            var b = new SolidBrush(Color.Black);
+            var b = new SolidBrush(Color.White);
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
@@ -141,12 +163,24 @@ namespace ImageMosaicService
                 {
                     if (random)
                     {
-                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
+                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y].AverageWhole, x, y)];
                     }
                     else
                     {
-                        info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
+                        info = imageInfos[GetBestImageIndex(colorMap[x, y].AverageWhole, x, y)];
                     }
+
+                    // Determine if the index found is within threshold
+                    // if not call GetBestImageIndex but for four quadrants
+                    //if (false)
+                    //{
+                    //    using (var source = new Bitmap(img))
+                    //    {
+                    //        var colorMap = imageProcessing.CreateMap(source);
+                    //        mosaic = imageProcessing.Render(source, colorMap, imageInfos, random, colourBlended);
+                    //    }
+                    //}
+
                     using (Image source = Image.FromFile(info.Path))
                     {
                         // Gets current x, y coords of mosaic images, and stores image to be replaced by
@@ -164,7 +198,7 @@ namespace ImageMosaicService
                         g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
                         if (colourBlended)
                         {
-                            var tileAvgColour = colorMap[x, y];
+                            var tileAvgColour = colorMap[x, y].AverageWhole;
                             var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
                             g.FillRectangle(new SolidBrush(colourBlendedValue),
                                 x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);

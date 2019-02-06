@@ -25,13 +25,17 @@ namespace ImageMosaicService
         public MasterImageColourResponse GetMasterImageAverageColours(MasterImageColourRequest request)
         {
             var imageProcessing = new ImageProcessing();
-            Color[,] colorMap;
+            MosaicTileColour[,] colorMap;
             using (var source = new Bitmap(request.Master.FilePath))
             {
                 colorMap = imageProcessing.CreateMap(source);
             }
 
-            var colorList = colorMap.ToList();
+            List<Color> colorList = new List<Color>();
+            foreach (var c in colorMap)
+            {
+                colorList.Add(c.AverageWhole);
+            }
             var hexColorList = colorList.Select(x => x.ToArgb());
             var response = new MasterImageColourResponse() { };
             response.AverageTileARGB.AddRange(hexColorList);
