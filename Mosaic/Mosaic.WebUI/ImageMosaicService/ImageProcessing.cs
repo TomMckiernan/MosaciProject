@@ -97,20 +97,14 @@ namespace ImageMosaicService
                     var halfX = xstart + (tileWidth / 2);
                     var halfY = ystart + (tileHeight / 2);
 
-                    var xend = xstart + tileWidth;
-                    var yend = ystart + tileHeight;
+                    var tileColour = new MosaicTileColour();
 
-                    colorMap[x, y] = new MosaicTileColour();
-                    //
-                    colorMap[x, y].AverageTL = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth / 2, tileHeight / 2), img, quality);
-                    //
-                    colorMap[x, y].AverageTR = getAverageTileColor(new Rectangle(halfX, ystart, tileWidth / 2, tileHeight / 2), img, quality);
-                    //
-                    colorMap[x, y].AverageBL = getAverageTileColor(new Rectangle(xstart, halfY, tileWidth / 2, tileHeight / 2), img, quality);
-                    //
-                    colorMap[x, y].AverageBR = getAverageTileColor(new Rectangle(halfX, halfY, tileWidth / 2, tileHeight / 2), img, quality);
-
-                    colorMap[x, y].AverageWhole = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth, tileHeight), img, quality);
+                    tileColour.AverageTL = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth / 2, tileHeight / 2), img, quality);
+                    tileColour.AverageTR = getAverageTileColor(new Rectangle(halfX, ystart, tileWidth / 2, tileHeight / 2), img, quality);
+                    tileColour.AverageBL = getAverageTileColor(new Rectangle(xstart, halfY, tileWidth / 2, tileHeight / 2), img, quality);
+                    tileColour.AverageBR = getAverageTileColor(new Rectangle(halfX, halfY, tileWidth / 2, tileHeight / 2), img, quality);
+                    tileColour.AverageWhole = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth, tileHeight), img, quality);
+                    colorMap[x, y] = tileColour;
                 }
             }
             return colorMap;
