@@ -145,7 +145,6 @@ namespace ImageMosaicService
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
             ImageInfo info;
-            Rectangle destRect, srcRect;
 
             var imageSq = new List<MosaicTile>();
 
@@ -175,37 +174,54 @@ namespace ImageMosaicService
                     //    }
                     //}
 
-                    using (Image source = Image.FromFile(info.Path))
-                    {
-                        // Gets current x, y coords of mosaic images, and stores image to be replaced by
-                        imageSq.Add(new MosaicTile()
-                        {
-                            X = x,
-                            Y = y,
-                            Image = info.Path
-                        });
-
-                        // Draws stored image for coord x, y for given height and width
-                        destRect = new Rectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
-                        srcRect = new Rectangle(0, 0, source.Width, source.Height);
-
-                        g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
-                        if (colourBlended)
-                        {
-                            var tileAvgColour = colorMap[x, y].AverageWhole;
-                            var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                            g.FillRectangle(new SolidBrush(colourBlendedValue),
-                                x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
-                        }
-                    }
+                    RenderTile(colorMap, colourBlended, g, info, imageSq, x, y);
                 }
             }
 
+            //double count = 0;
+            //foreach (var dif in imageSq)
+            //{
+            //    count += dif.Difference;
+            //}
+            //var avg = count / imageSq.Count;
+            //0.053
             return new Mosaic()
             {
                 Image = newImg,
                 Tiles = imageSq
             };
+        }
+
+        private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, List<MosaicTile> imageSq, int x, int y)
+        {
+            Rectangle destRect, srcRect;
+
+            using (Image source = Image.FromFile(info.Path))
+            {
+                // Gets current x, y coords of mosaic images, and stores image to be replaced by
+                imageSq.Add(new MosaicTile()
+                {
+                    X = x,
+                    Y = y,
+                    Image = info.Path,
+                    Difference = info.Difference
+                    
+                });
+
+                // Draws stored image for coord x, y for given height and width
+                // Replace tileSize width and height with parameters to deal with quandrant tiles
+                destRect = new Rectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                srcRect = new Rectangle(0, 0, source.Width, source.Height);
+
+                g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+                if (colourBlended)
+                {
+                    var tileAvgColour = colorMap[x, y].AverageWhole;
+                    var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
+                    g.FillRectangle(new SolidBrush(colourBlendedValue),
+                        x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                }
+            }
         }
 
         private int GetBestImageIndexRandom(Color color, int x, int y)
@@ -261,6 +277,7 @@ namespace ImageMosaicService
             var randomIndex = bestIndexes.ElementAt(new Random().Next(0, bestIndexes.Count -1)).Key;
 
             library[randomIndex].Data.Add(new Point(x, y));
+            library[randomIndex].Difference = bestIndexes.GetValueOrDefault(randomIndex);
             return randomIndex;
         }
     
@@ -302,6 +319,7 @@ namespace ImageMosaicService
             }
 
             library[bestIndex].Data.Add(new Point(x, y));
+            library[bestIndex].Difference = bestPercent;
             return bestIndex;
         }
 
