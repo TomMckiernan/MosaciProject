@@ -13,7 +13,7 @@ namespace ImageMosaicService
         private Size tileSize;
         private List<ImageInfo> library;
 
-        enum Target
+        public enum Target
         {
             Whole,
             TL,
@@ -86,6 +86,28 @@ namespace ImageMosaicService
             return Color.FromArgb(255, (int)(r / p), (int)(g / p), (int)(b / p));
         }
 
+        public Rectangle CreateQuadrantRectangle(int x, int y, int width, int height, Target target)
+        {
+            var widthHalf = width / 2;
+            var heightHalf = height / 2;
+
+            switch (target)
+            {
+                case Target.Whole:
+                    return new Rectangle(x, y, width, height);
+                case Target.TL:
+                    return new Rectangle(x, y, widthHalf, heightHalf);
+                case Target.TR:
+                    return new Rectangle(x + widthHalf, y, widthHalf, heightHalf);
+                case Target.BL:
+                    return new Rectangle(x, y + heightHalf, widthHalf, heightHalf);
+                case Target.BR:
+                    return new Rectangle(x + widthHalf, y + heightHalf, widthHalf, heightHalf);
+                default:
+                    return new Rectangle();
+            }
+        }
+
         public MosaicTileColour[,] CreateMap(Bitmap img)
         {
             int horizontalTiles = (int)img.Width / tileSize.Width;
@@ -103,18 +125,14 @@ namespace ImageMosaicService
                 {
                     var xstart = tileWidth * x;
                     var ystart = tileHeight * y;
-
-                    var halfX = xstart + (tileWidth / 2);
-                    var halfY = ystart + (tileHeight / 2);
-
                     var tileColour = new MosaicTileColour();
 
                     // These are the opertaions to perform if we want to subdivide tile
-                    tileColour.AverageTL = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth / 2, tileHeight / 2), img, quality);
-                    tileColour.AverageTR = getAverageTileColor(new Rectangle(halfX, ystart, tileWidth / 2, tileHeight / 2), img, quality);
-                    tileColour.AverageBL = getAverageTileColor(new Rectangle(xstart, halfY, tileWidth / 2, tileHeight / 2), img, quality);
-                    tileColour.AverageBR = getAverageTileColor(new Rectangle(halfX, halfY, tileWidth / 2, tileHeight / 2), img, quality);
-                    tileColour.AverageWhole = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth, tileHeight), img, quality);
+                    tileColour.AverageTL = getAverageTileColor(CreateQuadrantRectangle(xstart, ystart, tileWidth, tileHeight, Target.TL), img, quality);
+                    tileColour.AverageTR = getAverageTileColor(CreateQuadrantRectangle(xstart, ystart, tileWidth, tileHeight, Target.TR), img, quality);
+                    tileColour.AverageBL = getAverageTileColor(CreateQuadrantRectangle(xstart, ystart, tileWidth, tileHeight, Target.BL), img, quality);
+                    tileColour.AverageBR = getAverageTileColor(CreateQuadrantRectangle(xstart, ystart, tileWidth, tileHeight, Target.BR), img, quality);
+                    tileColour.AverageWhole = getAverageTileColor(CreateQuadrantRectangle(xstart, ystart, tileWidth, tileHeight, Target.Whole), img, quality);
                     colorMap[x, y] = tileColour;
                 }
             }
@@ -174,19 +192,18 @@ namespace ImageMosaicService
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
                         count++;
+                        RenderTile(colorMap, colourBlended, g, infoTL, imageSq, x, y, Target.TL);
+                        RenderTile(colorMap, colourBlended, g, infoTR, imageSq, x, y, Target.TR);
+                        RenderTile(colorMap, colourBlended, g, infoBL, imageSq, x, y, Target.BL);
+                        RenderTile(colorMap, colourBlended, g, infoBR, imageSq, x, y, Target.BR);
                     }
-
-                    RenderTile(colorMap, colourBlended, g, info, imageSq, x, y, tileSize.Width, tileSize.Height);
+                    else
+                    {
+                        RenderTile(colorMap, colourBlended, g, info, imageSq, x, y, Target.Whole);
+                    }
                 }
             }
 
-            //double count = 0;
-            //foreach (var dif in imageSq)
-            //{
-            //    count += dif.Difference;
-            //}
-            //var avg = count / imageSq.Count;
-            //0.35
             return new Mosaic()
             {
                 Image = newImg,
@@ -194,8 +211,9 @@ namespace ImageMosaicService
             };
         }
 
+        // Pass target into method
         private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, List<MosaicTile> imageSq, 
-                                int x, int y, int width, int height)
+                                int x, int y, Target target)
         {
             Rectangle destRect, srcRect;
 
@@ -207,12 +225,11 @@ namespace ImageMosaicService
                     X = x,
                     Y = y,
                     Image = info.Path,
-                    Difference = info.Difference
-                    
+                    Difference = info.Difference                    
                 });
 
                 // Draws stored image for coord x, y for given height and width
-                destRect = new Rectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
                 srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
                 g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
@@ -220,7 +237,7 @@ namespace ImageMosaicService
                 {
                     var tileAvgColour = colorMap[x, y].AverageWhole;
                     var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                    g.FillRectangle(new SolidBrush(colourBlendedValue), x * width, y * height, width, height);
+                    g.FillRectangle(new SolidBrush(colourBlendedValue), x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
                 }
             }
         }
@@ -305,13 +322,13 @@ namespace ImageMosaicService
                 switch (target)
                 {
                     case Target.TL:
-                        return GetLibraryTileQuadrantDifference(color.AverageTL, library[i].AverageTL);
+                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageTL);
                     case Target.TR:
-                        return GetLibraryTileQuadrantDifference(color.AverageTR, library[i].AverageTR);
+                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageTR);
                     case Target.BL:
-                        return GetLibraryTileQuadrantDifference(color.AverageBL, library[i].AverageBL);
+                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageBL);
                     case Target.BR:
-                        return GetLibraryTileQuadrantDifference(color.AverageBR, library[i].AverageBR);
+                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageBR);
                     default:
                         return GetLibraryTileDifference(color, i);
                 }
