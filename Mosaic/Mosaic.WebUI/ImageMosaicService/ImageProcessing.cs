@@ -156,14 +156,7 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    if (random)
-                    {
-                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
-                    }
-                    else
-                    {
-                        info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
-                    }
+                    info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random)];
                     //if (info.Difference > 1.0)
                     //{
                     //    infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
@@ -218,7 +211,9 @@ namespace ImageMosaicService
             }
         }
 
-        private int GetBestImageIndexRandom(MosaicTileColour color, int x, int y)
+        // Passes the colour value for the current tile being analysed
+        // Uses library which contains the average colour for all of the tile images
+        private int GetBestImageIndex(MosaicTileColour color, int x, int y, bool random)
         {
             double bestPercent = double.MaxValue;
             var bestIndexes = new Dictionary<int, double>();
@@ -267,55 +262,23 @@ namespace ImageMosaicService
                 bestIndexes.Remove(-1);
             }
 
-            // Randomly select one of the best fit indexes 
-            var randomIndex = bestIndexes.ElementAt(new Random().Next(0, bestIndexes.Count -1)).Key;
+            int index;
 
-            library[randomIndex].Data.Add(new Point(x, y));
-            library[randomIndex].Difference = bestIndexes.GetValueOrDefault(randomIndex);
-            return randomIndex;
-        }
-    
-        // Passes the colour value for the current tile being analysed
-        // Uses library which contains the average colour for all of the tile images
-        private int GetBestImageIndex(MosaicTileColour color, int x, int y)
-        {
-            double bestPercent = double.MaxValue;
-            int bestIndex = 0;
-            const byte offset = 7;
-            double difference;
-
-            for (int i = 0; i < library.Count(); i++)
+            if (random)
             {
-                if (library[i] != null)
-                {
-                    difference = GetLibraryTileDifference(color, i);
-
-                    if (difference < bestPercent)
-                    {
-                        Point point = new Point();
-
-                        if (library[i].Data.Count > 0 && library[i].Data[0] != null)
-                        {
-                            point = (Point)library[i].Data[0];
-                        }
-                        if (point.IsEmpty)
-                        {
-                            bestPercent = difference;
-                            bestIndex = i;
-                        }
-                        else if (point.X + offset <= x && point.Y + offset > y && point.Y - offset < y)
-                        {
-                            bestPercent = difference;
-                            bestIndex = i;
-                        }
-                    }
-                }               
+                // Randomly select one of the best fit indexes 
+                index = bestIndexes.ElementAt(new Random().Next(0, bestIndexes.Count - 1)).Key;
+            }
+            else
+            {
+                var min = bestIndexes.Values.Min();
+                index = bestIndexes.FirstOrDefault(v => v.Value == min).Key;
             }
 
-            library[bestIndex].Data.Add(new Point(x, y));
-            library[bestIndex].Difference = bestPercent;
-            return bestIndex;
-        }
+            library[index].Data.Add(new Point(x, y));
+            library[index].Difference = bestIndexes.GetValueOrDefault(index);
+            return index;
+        } 
 
         private double GetLibraryTileDifference(MosaicTileColour color, int i)
         {
