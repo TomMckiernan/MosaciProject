@@ -87,6 +87,7 @@ namespace ImageMosaicService
             int tileWidth = (img.Width - img.Width % horizontalTiles) / horizontalTiles;
             int tileHeight = (img.Height - img.Height % verticalTiles) / verticalTiles;
 
+            // Explore option of making this a parallel for loop
             for (int x = 0; x < horizontalTiles; x++)
             {
                 for (int y = 0; y < verticalTiles; y++)
@@ -145,7 +146,7 @@ namespace ImageMosaicService
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
-            ImageInfo info;
+            ImageInfo info, infoTL, infoTR, infoBL, infoBR;
 
             var imageSq = new List<MosaicTile>();
 
@@ -163,29 +164,22 @@ namespace ImageMosaicService
                     {
                         info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
                     }
-
-                    // Determine if the index found is within threshold
-                    // if not call GetBestImageIndex but for four quadrants
-                    //if (false)
+                    //if (info.Difference > 1.0)
                     //{
-                    //    using (var source = new Bitmap(img))
-                    //    {
-                    //        var colorMap = imageProcessing.CreateMap(source);
-                    //        mosaic = imageProcessing.Render(source, colorMap, imageInfos, random, colourBlended);
-                    //    }
+                    //    infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
                     //}
 
-                    RenderTile(colorMap, colourBlended, g, info, imageSq, x, y);
+                    RenderTile(colorMap, colourBlended, g, info, imageSq, x, y, tileSize.Width, tileSize.Height);
                 }
             }
 
-            //double count = 0;
-            //foreach (var dif in imageSq)
-            //{
-            //    count += dif.Difference;
-            //}
-            //var avg = count / imageSq.Count;
-            //0.053
+            double count = 0;
+            foreach (var dif in imageSq)
+            {
+                count += dif.Difference;
+            }
+            var avg = count / imageSq.Count;
+            //0.35
             return new Mosaic()
             {
                 Image = newImg,
@@ -193,7 +187,8 @@ namespace ImageMosaicService
             };
         }
 
-        private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, List<MosaicTile> imageSq, int x, int y)
+        private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, List<MosaicTile> imageSq, 
+                                int x, int y, int width, int height)
         {
             Rectangle destRect, srcRect;
 
@@ -210,7 +205,6 @@ namespace ImageMosaicService
                 });
 
                 // Draws stored image for coord x, y for given height and width
-                // Replace tileSize width and height with parameters to deal with quandrant tiles
                 destRect = new Rectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
                 srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
@@ -219,8 +213,7 @@ namespace ImageMosaicService
                 {
                     var tileAvgColour = colorMap[x, y].AverageWhole;
                     var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                    g.FillRectangle(new SolidBrush(colourBlendedValue),
-                        x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+                    g.FillRectangle(new SolidBrush(colourBlendedValue), x * width, y * height, width, height);
                 }
             }
         }
