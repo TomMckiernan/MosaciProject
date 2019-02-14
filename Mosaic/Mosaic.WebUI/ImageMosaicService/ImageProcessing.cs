@@ -185,13 +185,12 @@ namespace ImageMosaicService
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
                     info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
-                    if (info.Difference > 1.0)
+                    if (info.Difference > 0.7)
                     {
                         infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        count++;
                         RenderTile(colorMap, colourBlended, g, infoTL, imageSq, x, y, Target.TL);
                         RenderTile(colorMap, colourBlended, g, infoTR, imageSq, x, y, Target.TR);
                         RenderTile(colorMap, colourBlended, g, infoBL, imageSq, x, y, Target.BL);
