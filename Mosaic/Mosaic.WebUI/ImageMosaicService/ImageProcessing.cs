@@ -99,6 +99,7 @@ namespace ImageMosaicService
 
                     var tileColour = new MosaicTileColour();
 
+                    // These are the opertaions to perform if we want to subdivide tile
                     tileColour.AverageTL = getAverageTileColor(new Rectangle(xstart, ystart, tileWidth / 2, tileHeight / 2), img, quality);
                     tileColour.AverageTR = getAverageTileColor(new Rectangle(halfX, ystart, tileWidth / 2, tileHeight / 2), img, quality);
                     tileColour.AverageBL = getAverageTileColor(new Rectangle(xstart, halfY, tileWidth / 2, tileHeight / 2), img, quality);
@@ -346,6 +347,11 @@ namespace ImageMosaicService
             difference = r + g + b;
             difference /= 3 * 255;
             return difference;
+        }
+
+        private double GetLibraryTileQuadrantDifference()
+        {
+            return 0;
         }
     }
 }
