@@ -13,6 +13,15 @@ namespace ImageMosaicService
         private Size tileSize;
         private List<ImageInfo> library;
 
+        enum Target
+        {
+            Whole,
+            TL,
+            TR,
+            BL,
+            BR
+        }
+
         public ImageProcessing(int tileHeight = 10, int tileWidth = 10)
         {
             tileSize = new Size(tileHeight, tileWidth);
@@ -147,6 +156,7 @@ namespace ImageMosaicService
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
             ImageInfo info, infoTL, infoTR, infoBL, infoBR;
+            int count = 0;
 
             var imageSq = new List<MosaicTile>();
 
@@ -156,22 +166,26 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random)];
-                    //if (info.Difference > 1.0)
-                    //{
-                    //    infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
-                    //}
+                    info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
+                    if (info.Difference > 1.0)
+                    {
+                        infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
+                        infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
+                        infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
+                        infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
+                        count++;
+                    }
 
                     RenderTile(colorMap, colourBlended, g, info, imageSq, x, y, tileSize.Width, tileSize.Height);
                 }
             }
 
-            double count = 0;
-            foreach (var dif in imageSq)
-            {
-                count += dif.Difference;
-            }
-            var avg = count / imageSq.Count;
+            //double count = 0;
+            //foreach (var dif in imageSq)
+            //{
+            //    count += dif.Difference;
+            //}
+            //var avg = count / imageSq.Count;
             //0.35
             return new Mosaic()
             {
@@ -213,7 +227,7 @@ namespace ImageMosaicService
 
         // Passes the colour value for the current tile being analysed
         // Uses library which contains the average colour for all of the tile images
-        private int GetBestImageIndex(MosaicTileColour color, int x, int y, bool random)
+        private int GetBestImageIndex(MosaicTileColour color, int x, int y, bool random, Target target)
         {
             double bestPercent = double.MaxValue;
             var bestIndexes = new Dictionary<int, double>();
@@ -223,7 +237,7 @@ namespace ImageMosaicService
 
             for (int i = 0; i < library.Count(); i++)
             {
-                difference = GetLibraryTileDifference(color, i);
+                difference = GetDifferenceForTarget(color, i, target);
 
                 // as well as best diff store the 10th best diff and replace that item when necessary
                 if (difference < bestPercent)
@@ -278,7 +292,31 @@ namespace ImageMosaicService
             library[index].Data.Add(new Point(x, y));
             library[index].Difference = bestIndexes.GetValueOrDefault(index);
             return index;
-        } 
+        }
+
+        private double GetDifferenceForTarget(MosaicTileColour color, int i, Target target)
+        {
+            if (target == Target.Whole)
+            {
+                return GetLibraryTileDifference(color, i);
+            }
+            else
+            {
+                switch (target)
+                {
+                    case Target.TL:
+                        return GetLibraryTileQuadrantDifference(color.AverageTL, library[i].AverageTL);
+                    case Target.TR:
+                        return GetLibraryTileQuadrantDifference(color.AverageTR, library[i].AverageTR);
+                    case Target.BL:
+                        return GetLibraryTileQuadrantDifference(color.AverageBL, library[i].AverageBL);
+                    case Target.BR:
+                        return GetLibraryTileQuadrantDifference(color.AverageBR, library[i].AverageBR);
+                    default:
+                        return GetLibraryTileDifference(color, i);
+                }
+            }
+        }
 
         private double GetLibraryTileDifference(MosaicTileColour color, int i)
         {
