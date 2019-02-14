@@ -157,11 +157,11 @@ namespace ImageMosaicService
                 {
                     if (random)
                     {
-                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y].AverageWhole, x, y)];
+                        info = imageInfos[GetBestImageIndexRandom(colorMap[x, y], x, y)];
                     }
                     else
                     {
-                        info = imageInfos[GetBestImageIndex(colorMap[x, y].AverageWhole, x, y)];
+                        info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y)];
                     }
 
                     // Determine if the index found is within threshold
@@ -225,7 +225,7 @@ namespace ImageMosaicService
             }
         }
 
-        private int GetBestImageIndexRandom(Color color, int x, int y)
+        private int GetBestImageIndexRandom(MosaicTileColour color, int x, int y)
         {
             double bestPercent = double.MaxValue;
             var bestIndexes = new Dictionary<int, double>();
@@ -284,7 +284,7 @@ namespace ImageMosaicService
     
         // Passes the colour value for the current tile being analysed
         // Uses library which contains the average colour for all of the tile images
-        private int GetBestImageIndex(Color color, int x, int y)
+        private int GetBestImageIndex(MosaicTileColour color, int x, int y)
         {
             double bestPercent = double.MaxValue;
             int bestIndex = 0;
@@ -324,34 +324,32 @@ namespace ImageMosaicService
             return bestIndex;
         }
 
-        private double GetLibraryTileDifference(Color color, int i)
+        private double GetLibraryTileDifference(MosaicTileColour color, int i)
+        {
+            var differenceTL = GetLibraryTileQuadrantDifference(color.AverageTL, library[i].AverageTL);
+            var differenceTR = GetLibraryTileQuadrantDifference(color.AverageTR, library[i].AverageTR);
+            var differenceBL = GetLibraryTileQuadrantDifference(color.AverageBL, library[i].AverageBL);
+            var differenceBR = GetLibraryTileQuadrantDifference(color.AverageBR, library[i].AverageBR);
+
+            return differenceTL + differenceTR + differenceBL + differenceBR;
+        }
+
+        private double GetLibraryTileQuadrantDifference(Color color, Color quadrantColor)
         {
             int r, g, b;
-            Color[] passColor;
             double difference;
 
-            passColor = new Color[4];
-            passColor[0] = library[i].AverageTL;
-            passColor[1] = library[i].AverageTR;
-            passColor[2] = library[i].AverageBL;
-            passColor[3] = library[i].AverageBR;
+            r = quadrantColor.R;
+            g = quadrantColor.G;
+            b = quadrantColor.B;
 
-            r = passColor[0].R + passColor[1].R + passColor[2].R + passColor[3].R;
-            g = passColor[0].G + passColor[1].G + passColor[2].G + passColor[3].G;
-            b = passColor[0].B + passColor[1].B + passColor[2].B + passColor[3].B;
-
-            r = Math.Abs(color.R - (r / 4));
-            g = Math.Abs(color.G - (g / 4));
-            b = Math.Abs(color.B - (b / 4));
+            r = Math.Abs(color.R - r);
+            g = Math.Abs(color.G - g);
+            b = Math.Abs(color.B - b);
 
             difference = r + g + b;
             difference /= 3 * 255;
             return difference;
-        }
-
-        private double GetLibraryTileQuadrantDifference()
-        {
-            return 0;
         }
     }
 }
