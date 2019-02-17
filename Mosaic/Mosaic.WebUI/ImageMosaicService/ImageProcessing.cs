@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ImageMosaicService
 {
@@ -117,7 +118,7 @@ namespace ImageMosaicService
 
             int tileWidth = (img.Width - img.Width % horizontalTiles) / horizontalTiles;
             int tileHeight = (img.Height - img.Height % verticalTiles) / verticalTiles;
-
+        
             // Explore option of making this a parallel for loop
             for (int x = 0; x < horizontalTiles; x++)
             {
@@ -173,18 +174,32 @@ namespace ImageMosaicService
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
-            ImageInfo info, infoTL, infoTR, infoBL, infoBR;
+            ImageInfo infoTL, infoTR, infoBL, infoBR;
+
+            var info = new ImageInfo[colorMap.GetLength(0), colorMap.GetLength(1)];
 
             var imageSq = new List<MosaicTile>();
 
-            // Getting stuck in an extremely large loop here - bottleneck
-            // For dog test example it is a 120 * 160 loop
+            // A basic matrix multiplication.
+            // Parallelize the outer loop to partition the source array by rows.
+   
+            // Find best image for each tile
             for (int x = 0; x < colorMap.GetLength(0); x++)
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
-                    if (enhanced && info.Difference > 0.32)
+                    info[x, y] = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
+                }
+            }
+
+            // Getting stuck in an extremely large loop here - bottleneck
+            // For dog test example it is a 120 * 160 loop
+            // Render the image to represent each tile
+            for (int x = 0; x < colorMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < colorMap.GetLength(1); y++)
+                {
+                    if (enhanced && info[x, y].Difference > 0.32)
                     {
                         infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
@@ -197,16 +212,17 @@ namespace ImageMosaicService
                     }
                     else
                     {
-                        RenderTile(colorMap, colourBlended, g, info, imageSq, x, y, Target.Whole);
+                        RenderTile(colorMap, colourBlended, g, info[x, y], imageSq, x, y, Target.Whole);
                     }
                 }
             }
-            double count = 0;
-            foreach (var dif in imageSq)
-            {
-                count += dif.Difference;
-            }
-            var avg = count / imageSq.Count;
+
+            //double count = 0;
+            //foreach (var dif in imageSq)
+            //{
+            //    count += dif.Difference;
+            //}
+            //var avg = count / imageSq.Count;
 
             return new Mosaic()
             {
