@@ -170,7 +170,7 @@ namespace ImageMosaicService
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
 
             var g = Graphics.FromImage(newImg);
-            var b = new SolidBrush(Color.White);
+            var b = new SolidBrush(Color.Black);
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
@@ -189,8 +189,24 @@ namespace ImageMosaicService
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
                     info[x, y] = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
+                    // Gets current x, y coords of mosaic images, and stores image to be replaced by
+                    imageSq.Add(new MosaicTile()
+                    {
+                        X = x,
+                        Y = y,
+                        Image = info[x, y].Path,
+                        Difference = info[x, y].Difference
+                    });
                 }
             }
+
+            double count = 0;
+            foreach (var dif in imageSq)
+            {
+                count += dif.Difference;
+            }
+            var threshold = count / imageSq.Count;
+
 
             // Getting stuck in an extremely large loop here - bottleneck
             // For dog test example it is a 120 * 160 loop
@@ -217,12 +233,6 @@ namespace ImageMosaicService
                 }
             }
 
-            //double count = 0;
-            //foreach (var dif in imageSq)
-            //{
-            //    count += dif.Difference;
-            //}
-            //var avg = count / imageSq.Count;
 
             return new Mosaic()
             {
@@ -238,16 +248,7 @@ namespace ImageMosaicService
             Rectangle destRect, srcRect;
 
             using (Image source = Image.FromFile(info.Path))
-            {
-                // Gets current x, y coords of mosaic images, and stores image to be replaced by
-                imageSq.Add(new MosaicTile()
-                {
-                    X = x,
-                    Y = y,
-                    Image = info.Path,
-                    Difference = info.Difference                    
-                });
-
+            {            
                 // Draws stored image for coord x, y for given height and width
                 destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
                 srcRect = new Rectangle(0, 0, source.Width, source.Height);
