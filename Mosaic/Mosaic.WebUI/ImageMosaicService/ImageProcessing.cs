@@ -163,7 +163,7 @@ namespace ImageMosaicService
             return Color.FromArgb(255, (int)(r / pixelCount), (int)(g / pixelCount), (int)(b / pixelCount));
         }
 
-        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false)
+        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false, bool enhanced = false)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
@@ -174,7 +174,6 @@ namespace ImageMosaicService
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
             ImageInfo info, infoTL, infoTR, infoBL, infoBR;
-            int count = 0;
 
             var imageSq = new List<MosaicTile>();
 
@@ -185,7 +184,7 @@ namespace ImageMosaicService
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
                     info = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
-                    if (info.Difference > 0.7)
+                    if (enhanced && info.Difference > 0.32)
                     {
                         infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
@@ -202,6 +201,12 @@ namespace ImageMosaicService
                     }
                 }
             }
+            double count = 0;
+            foreach (var dif in imageSq)
+            {
+                count += dif.Difference;
+            }
+            var avg = count / imageSq.Count;
 
             return new Mosaic()
             {
