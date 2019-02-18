@@ -26,7 +26,10 @@ namespace ImageMosaicService
                    
                 if(info != null)
                 {
-                    imageInfos.Add(info);
+                    lock (imageInfos)
+                    {
+                        imageInfos.Add(info);
+                    }
                 }
             });
 

@@ -28,19 +28,19 @@ namespace ImageMosaicService
             tileSize = new Size(tileHeight, tileWidth);
         }
 
-        public Bitmap Resize(string srcFile)
+        public Bitmap Resize(string srcFile, int height = 119, int width = 119)
         {
             if (!File.Exists(srcFile))
                 return null;
 
             using (var scrBitmap = Bitmap.FromFile(srcFile))
             {
-                var b = new Bitmap(resizeHeight, resizeWidth);
+                var b = new Bitmap(height, width);
                 
                 using (var g = Graphics.FromImage((Image)b))
                 {
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.DrawImage(scrBitmap, 0, 0, resizeHeight, resizeWidth);
+                    g.DrawImage(scrBitmap, 0, 0, height, width);
                     g.Dispose();
                 }
 
@@ -208,6 +208,27 @@ namespace ImageMosaicService
             var threshold = count / imageSq.Count;
 
 
+            // In parallel resize all of the unique file paths in imageSq
+            // Create set for all unique
+            var selectedFiles = imageSq.Select(x => x.Image).Distinct().ToList();
+            var resizeFiles = new List<Tuple<string, Bitmap>>();
+            Parallel.ForEach(selectedFiles , f =>
+            {
+                var resizedBmp = Resize(f, tileSize.Height, tileSize.Width);
+                if (resizedBmp != null)
+                {
+                    lock(resizeFiles)
+                    {
+                        resizeFiles.Add(new Tuple<string, Bitmap>(f, resizedBmp));
+                    }
+                }
+            }); // Parallel.For
+
+            foreach (var image in imageSq)
+            {
+                image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
+            }
+
             // Getting stuck in an extremely large loop here - bottleneck
             // For dog test example it is a 120 * 160 loop
             // Render the image to represent each tile
@@ -247,13 +268,14 @@ namespace ImageMosaicService
         {
             Rectangle destRect, srcRect;
 
-            using (Image source = Image.FromFile(info.Path))
+            using (Bitmap source = imageSq.Where(i => i.Image == info.Path).Select(b => b.Bitmap).First())
             {            
                 // Draws stored image for coord x, y for given height and width
                 destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
                 srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
                 g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+                source.Dispose();
                 if (colourBlended)
                 {
                     var tileAvgColour = colorMap[x, y].AverageWhole;
