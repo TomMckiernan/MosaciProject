@@ -224,10 +224,16 @@ namespace ImageMosaicService
                 }
             }); // Parallel.For
 
-            foreach (var image in imageSq)
-            {
-                image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
-            }
+            //var to = 0;
+            //foreach (var i in resizeFiles) 
+            //{
+            //    to += i.Item2.Width;
+            //}
+
+            //foreach (var image in imageSq)
+            //{
+            //    image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
+            //}
 
             // Getting stuck in an extremely large loop here - bottleneck
             // For dog test example it is a 120 * 160 loop
@@ -242,18 +248,23 @@ namespace ImageMosaicService
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        RenderTile(colorMap, colourBlended, g, infoTL, imageSq, x, y, Target.TL);
-                        RenderTile(colorMap, colourBlended, g, infoTR, imageSq, x, y, Target.TR);
-                        RenderTile(colorMap, colourBlended, g, infoBL, imageSq, x, y, Target.BL);
-                        RenderTile(colorMap, colourBlended, g, infoBR, imageSq, x, y, Target.BR);
+                        RenderTile(colorMap, colourBlended, g, infoTL, imageSq, x, y, Target.TL, resizeFiles);
+                        RenderTile(colorMap, colourBlended, g, infoTR, imageSq, x, y, Target.TR, resizeFiles);
+                        RenderTile(colorMap, colourBlended, g, infoBL, imageSq, x, y, Target.BL, resizeFiles);
+                        RenderTile(colorMap, colourBlended, g, infoBR, imageSq, x, y, Target.BR, resizeFiles);
                     }
                     else
                     {
-                        RenderTile(colorMap, colourBlended, g, info[x, y], imageSq, x, y, Target.Whole);
+                        RenderTile(colorMap, colourBlended, g, info[x, y], imageSq, x, y, Target.Whole, resizeFiles);
                     }
                 }
             }
 
+            var bi = resizeFiles.Select(x => x.Item2).ToList();
+            foreach (var bs in bi)
+            {
+                bs.Dispose();
+            }
 
             return new Mosaic()
             {
@@ -264,24 +275,37 @@ namespace ImageMosaicService
 
         // Pass target into method
         private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, List<MosaicTile> imageSq, 
-                                int x, int y, Target target)
+                                int x, int y, Target target, List<Tuple<string, Bitmap>> resizeFiles)
         {
             Rectangle destRect, srcRect;
 
-            using (Bitmap source = imageSq.Where(i => i.Image == info.Path).Select(b => b.Bitmap).First())
-            {            
-                // Draws stored image for coord x, y for given height and width
-                destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
-                srcRect = new Rectangle(0, 0, source.Width, source.Height);
+            //// using disposes the bitmap that source points to so only works once
+            //using (Bitmap source = resizeFiles.Where(i => i.Item1 == info.Path).Select(b => b.Item2).First())
+            //{            
+            //    // Draws stored image for coord x, y for given height and width
+            //    destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
+            //    srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
-                g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
-                source.Dispose();
-                if (colourBlended)
-                {
-                    var tileAvgColour = colorMap[x, y].AverageWhole;
-                    var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                    g.FillRectangle(new SolidBrush(colourBlendedValue), x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
-                }
+            //    g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+            //    if (colourBlended)
+            //    {
+            //        var tileAvgColour = colorMap[x, y].AverageWhole;
+            //        var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
+            //        g.FillRectangle(new SolidBrush(colourBlendedValue), x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
+            //    }
+            //}
+
+            var source = resizeFiles.Where(i => i.Item1 == info.Path).Select(b => b.Item2).First();
+            // Draws stored image for coord x, y for given height and width
+            destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
+            srcRect = new Rectangle(0, 0, source.Width, source.Height);
+
+            g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+            if (colourBlended)
+            {
+                var tileAvgColour = colorMap[x, y].AverageWhole;
+                var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
+                g.FillRectangle(new SolidBrush(colourBlendedValue), x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height);
             }
         }
 
