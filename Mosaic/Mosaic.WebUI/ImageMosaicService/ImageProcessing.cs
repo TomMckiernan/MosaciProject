@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using Utility;
 
 namespace ImageMosaicService
 {
@@ -180,9 +181,6 @@ namespace ImageMosaicService
 
             var imageSq = new List<MosaicTile>();
 
-            // A basic matrix multiplication.
-            // Parallelize the outer loop to partition the source array by rows.
-   
             // Find best image for each tile
             for (int x = 0; x < colorMap.GetLength(0); x++)
             {
@@ -229,8 +227,6 @@ namespace ImageMosaicService
                 image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
             }
 
-            // Getting stuck in an extremely large loop here - bottleneck
-            // For dog test example it is a 120 * 160 loop
             // Render the image to represent each tile
             for (int x = 0; x < colorMap.GetLength(0); x++)
             {
@@ -345,7 +341,6 @@ namespace ImageMosaicService
             }
 
             int index;
-
             if (random)
             {
                 // Randomly select one of the best fit indexes 
@@ -373,13 +368,13 @@ namespace ImageMosaicService
                 switch (target)
                 {
                     case Target.TL:
-                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageTL);
+                        return color.AverageWhole.GetDifference(library[i].AverageTL);
                     case Target.TR:
-                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageTR);
+                        return color.AverageWhole.GetDifference(library[i].AverageTR);
                     case Target.BL:
-                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageBL);
+                        return color.AverageWhole.GetDifference(library[i].AverageBL);
                     case Target.BR:
-                        return GetLibraryTileQuadrantDifference(color.AverageWhole, library[i].AverageBR);
+                        return color.AverageWhole.GetDifference(library[i].AverageBR);
                     default:
                         return GetLibraryTileDifference(color, i);
                 }
@@ -388,30 +383,12 @@ namespace ImageMosaicService
 
         private double GetLibraryTileDifference(MosaicTileColour color, int i)
         {
-            var differenceTL = GetLibraryTileQuadrantDifference(color.AverageTL, library[i].AverageTL);
-            var differenceTR = GetLibraryTileQuadrantDifference(color.AverageTR, library[i].AverageTR);
-            var differenceBL = GetLibraryTileQuadrantDifference(color.AverageBL, library[i].AverageBL);
-            var differenceBR = GetLibraryTileQuadrantDifference(color.AverageBR, library[i].AverageBR);
+            var differenceTL = color.AverageTL.GetDifference(library[i].AverageTL);
+            var differenceTR = color.AverageTR.GetDifference(library[i].AverageTR);
+            var differenceBL = color.AverageBL.GetDifference(library[i].AverageBL);
+            var differenceBR = color.AverageBR.GetDifference(library[i].AverageBR);
 
             return differenceTL + differenceTR + differenceBL + differenceBR;
-        }
-
-        private double GetLibraryTileQuadrantDifference(Color color, Color quadrantColor)
-        {
-            int r, g, b;
-            double difference;
-
-            r = quadrantColor.R;
-            g = quadrantColor.G;
-            b = quadrantColor.B;
-
-            r = Math.Abs(color.R - r);
-            g = Math.Abs(color.G - g);
-            b = Math.Abs(color.B - b);
-
-            difference = r + g + b;
-            difference /= 3 * 255;
-            return difference;
-        }
+        }       
     }
 }

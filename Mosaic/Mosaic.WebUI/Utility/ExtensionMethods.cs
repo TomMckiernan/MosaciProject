@@ -30,5 +30,23 @@ namespace Utility
             }
             return list;
         }
+
+        public static double GetDifference(this Color color, Color otherColor)
+        {
+            int r, g, b;
+            double difference;
+
+            r = otherColor.R;
+            g = otherColor.G;
+            b = otherColor.B;
+
+            r = Math.Abs(color.R - r);
+            g = Math.Abs(color.G - g);
+            b = Math.Abs(color.B - b);
+
+            difference = r + g + b;
+            difference /= 3 * 255;
+            return difference;
+        }
     }
 }
