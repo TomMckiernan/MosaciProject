@@ -66,5 +66,23 @@ namespace UtilityTests
             var colorList = colorArray.ToList();
             Assert.AreEqual(4, colorList.Count);
         }
+
+        [TestMethod]
+        public void ColorDifferenceBetweenSameColorIsZero()
+        {
+            var color = Color.White;
+            var otherColor = Color.White;
+            var difference = color.GetDifference(otherColor);
+            Assert.AreEqual(0, difference);
+        }
+
+        [TestMethod]
+        public void ColorDifferenceBetweenBalckAndWhiteIsOne()
+        {
+            var color = Color.White;
+            var otherColor = Color.Black;
+            var difference = color.GetDifference(otherColor);
+            Assert.AreEqual(1, difference);
+        }
     }
 }

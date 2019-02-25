@@ -76,6 +76,56 @@ namespace ImageMosaicTest
             }
         }
 
+        [TestMethod]
+        public void CanCreateTLQuadrantDestinationRectangle()
+        {
+            var rectangle = imageProcessing.CreateQuadrantRectangle(100, 100, 100, 100, ImageProcessing.Target.TL);
+            Assert.AreEqual(100, rectangle.X);
+            Assert.AreEqual(100, rectangle.Y);
+            Assert.AreEqual(50, rectangle.Height);
+            Assert.AreEqual(50, rectangle.Width);
+        }
+
+        [TestMethod]
+        public void CanCreateTRQuadrantDestinationRectangle()
+        {
+            var rectangle = imageProcessing.CreateQuadrantRectangle(100, 100, 100, 100, ImageProcessing.Target.TR);
+            Assert.AreEqual(150, rectangle.X);
+            Assert.AreEqual(100, rectangle.Y);
+            Assert.AreEqual(50, rectangle.Height);
+            Assert.AreEqual(50, rectangle.Width);
+        }
+
+        [TestMethod]
+        public void CanCreateBLQuadrantDestinationRectangle()
+        {
+            var rectangle = imageProcessing.CreateQuadrantRectangle(100, 100, 100, 100, ImageProcessing.Target.BL);
+            Assert.AreEqual(100, rectangle.X);
+            Assert.AreEqual(150, rectangle.Y);
+            Assert.AreEqual(50, rectangle.Height);
+            Assert.AreEqual(50, rectangle.Width);
+        }
+
+        [TestMethod]
+        public void CanCreateBRQuadrantDestinationRectangle()
+        {
+            var rectangle = imageProcessing.CreateQuadrantRectangle(100, 100, 100, 100, ImageProcessing.Target.BR);
+            Assert.AreEqual(150, rectangle.X);
+            Assert.AreEqual(150, rectangle.Y);
+            Assert.AreEqual(50, rectangle.Height);
+            Assert.AreEqual(50, rectangle.Width);
+        }
+
+        [TestMethod]
+        public void CanCreateWholeQuadrantDestinationRectangle()
+        {
+            var rectangle = imageProcessing.CreateQuadrantRectangle(100, 100, 100, 100, ImageProcessing.Target.Whole);
+            Assert.AreEqual(100, rectangle.X);
+            Assert.AreEqual(100, rectangle.Y);
+            Assert.AreEqual(100, rectangle.Height);
+            Assert.AreEqual(100, rectangle.Width);
+        }
+
         // Move these into a separate file, to act as end to end tests
         // Will need to call implementation in ImageFileIndex service
         //############################################################

@@ -98,9 +98,9 @@ namespace Infrastructure
             return response;
         }
 
-        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended)
+        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced)
         {
-            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended };
+            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended, Enhanced = enhanced };
             request.Tiles.AddRange(tiles);
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;

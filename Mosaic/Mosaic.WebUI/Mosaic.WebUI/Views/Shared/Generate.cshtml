@@ -61,9 +61,10 @@
             <ul>
                 <li>Watch how to get the best result</li>
                 <li>Add pictures with colors similar to the colors found in your master image.
-                <li>Tile Images which match the colours will be displayed, future feature will include randomness</li>
+                <li>Speed of generation is dependant upon: the number of images in the library, the size of images in the library 
+                    and the number of tiles in the mosaic being generated</li>
                 <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
-                <li>Check to make sure the square auto crop looks good. If not, click it to crop and rotate manually.</li>
+                <li>At this moment in time enhnaced generation can significantly increase generation time</li>
             </ul>
 
             <!-- Rounded switch -->
@@ -72,6 +73,14 @@
             </h3>
             <label class="switch">
                 <input id="colour_blended" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+
+            <h3>
+                Enhanced Generation
+            </h3>
+            <label class="switch">
+                <input id="enhanced_mosaic" type="checkbox">
                 <span class="slider round"></span>
             </label>
 
@@ -89,14 +98,13 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended) {
-            debugger;
+        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended },
+                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended, enhanced: enhanced },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -108,6 +116,7 @@
                     $('#generate_mosaic').attr("disabled", false);
                     $('#generate_random_mosaic').attr("disabled", false);
                     $('#colour_blended').attr("disabled", false);
+                    $('#enhanced_mosaic').attr("disabled", false);
                     $('#view_mosaic').attr("disabled", false);
                 }
             });
@@ -126,7 +135,8 @@
             $('#generate_random_mosaic').attr("disabled", true)
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended);
+            var enhanced = getEnhanced();
+            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced);
         });
 
         $("#generate_random_mosaic").click(function () {
@@ -134,7 +144,8 @@
             $('#generate_mosaic').attr("disabled", true)
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended);
+            var enhanced = getEnhanced();
+            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced);
         });
 
         var getColourBlended = function () {
@@ -145,6 +156,16 @@
             }
             colourBlendedToggle.attr("disabled", true);
             return colourBlendedGeneration;
+        }
+
+        var getEnhanced = function () {
+            var enhancedToggle = $('#enhanced_mosaic');
+            var enhancedGeneration = false;
+            if (enhancedToggle.is(":checked")) {
+                enhancedGeneration = true;
+            }
+            enhancedToggle.attr("disabled", true);
+            return enhancedGeneration;
         }
 
         $("#view_master").click(function () {
