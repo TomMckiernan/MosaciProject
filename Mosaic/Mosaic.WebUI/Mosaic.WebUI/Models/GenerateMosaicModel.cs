@@ -36,7 +36,7 @@ namespace Mosaic.WebUI.Models
                 PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, State);
                 if (readColours)
                 {
-                    ColoursModel = new GenerateMosaicColoursModel(client, project);
+                    ColoursModel = GenerateColoursModel(client, project);
                 }
             }
         }
@@ -63,6 +63,12 @@ namespace Mosaic.WebUI.Models
             }
 
             return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
+        }
+
+        public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project)
+        {
+            var result = new GenerateMosaicColoursModel(client, project);
+            return result;
         }
 
         //Return project response

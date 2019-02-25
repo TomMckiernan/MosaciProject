@@ -106,7 +106,7 @@ namespace Infrastructure
             return response;
         }
 
-        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file)
+        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width)
         {
             var request = new MasterImageColourRequest() { Master = file };
             var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request);

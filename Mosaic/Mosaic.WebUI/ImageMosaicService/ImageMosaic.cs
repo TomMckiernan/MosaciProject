@@ -22,9 +22,9 @@ namespace ImageMosaicService
             return new ImageMosaicResponse() { Location = location };
         }
 
-        public MasterImageColourResponse GetMasterImageAverageColours(MasterImageColourRequest request)
+        public MasterImageColourResponse GetMasterImageAverageColours(MasterImageColourRequest request, int height = 10, int width = 10)
         {
-            var imageProcessing = new ImageProcessing();
+            var imageProcessing = new ImageProcessing(height, width);
             MosaicTileColour[,] colorMap;
             using (var source = new Bitmap(request.Master.FilePath))
             {
