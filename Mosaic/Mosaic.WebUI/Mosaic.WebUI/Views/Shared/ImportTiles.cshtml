@@ -27,6 +27,7 @@
             <th>FileName</th>
             <th>FilePath</th>
             <th>Average Colour</th>
+            <th>Standard Colour</th>
             <th>Last Write Time</th>
         </tr>
     </thead>
@@ -35,7 +36,7 @@
             <th>ID</th>
             <th>FileName</th>
             <th>FilePath</th>
-            <th>Average Colour</th>
+            <th>Standard Colour</th>
             <th>Last Write Time</th>
         </tr>
     </tfoot>
@@ -154,6 +155,7 @@
                     { "data": "fileName" },
                     { "data": "filePath" },
                     { "data": "averageColour" },
+                    { "data": "standardColour" },
                     { "data": "lastWriteTime" }
                 ],
                 "columnDefs": [
@@ -173,6 +175,7 @@
                 ],
                 "createdRow": function (row, data, index) {
                     $('td', row).eq(2).css('background-color', data.averageColour);
+                    $('td', row).eq(3).css('background-color', data.standardColour);
                 }
             });
         }

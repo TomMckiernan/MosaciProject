@@ -13,6 +13,7 @@ namespace Mosaic.WebUI.Models
         public string FileName { get; set; }
         public string FilePath { get; set; }
         public string AverageColour { get; set; }
+        public string StandardColour{ get; set; }
         public string LastWriteTime { get; set; }
 
         public TileTableModel(ImageFileIndexStructure imageFile)
@@ -23,7 +24,9 @@ namespace Mosaic.WebUI.Models
             LastWriteTime = imageFile.LastWriteTime;
             if (imageFile.Data != null)
             {
-                AverageColour = Color.FromArgb(imageFile.Data.AverageWhole).ToHex();
+                var colour = Color.FromArgb(imageFile.Data.AverageWhole);
+                AverageColour = colour.ToHex();
+                StandardColour = new FileColourModel().FindClosestColour(colour).ToHex();
             }
         }
     }
