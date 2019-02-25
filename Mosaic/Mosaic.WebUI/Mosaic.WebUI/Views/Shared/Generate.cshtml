@@ -189,6 +189,11 @@
             $(".btn:first-child").val($(this).text());
             setSeparation(parseInt($(this).text()));
             drawResize();
+            $.event.trigger({
+                type: "myTrigger",
+                message: "myTrigger fired.",
+                time: new Date()
+            });
         });
 
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {

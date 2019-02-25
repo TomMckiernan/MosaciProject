@@ -23,7 +23,7 @@ namespace Mosaic.WebUI.Models
         public Tuple<string, ProjectStructure.Types.State> PartialModel {get; set;}
 
         // To bool values are for the purpose of testing
-        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true)
+        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true, int height = 10, int width = 10)
         {
             var project = ProjectErrorCheck(client, projectId);
             if (String.IsNullOrEmpty(project.Error))
@@ -36,7 +36,7 @@ namespace Mosaic.WebUI.Models
                 PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, State);
                 if (readColours)
                 {
-                    ColoursModel = GenerateColoursModel(client, project);
+                    ColoursModel = GenerateColoursModel(client, project, height, width);
                 }
             }
         }
@@ -65,9 +65,9 @@ namespace Mosaic.WebUI.Models
             return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
         }
 
-        public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project)
+        public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project, int height, int width)
         {
-            var result = new GenerateMosaicColoursModel(client, project);
+            var result = new GenerateMosaicColoursModel(client, project, height, width);
             return result;
         }
 

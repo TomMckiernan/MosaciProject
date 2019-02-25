@@ -17,7 +17,7 @@ namespace Mosaic.WebUI.Models
             {
                 Color.Red, Color.OrangeRed, Color.Orange, Color.Gold, Color.Yellow, Color.YellowGreen,
                 Color.Green, Color.Teal, Color.Blue, Color.BlueViolet, Color.Violet, Color.MediumVioletRed,
-                Color.Black, Color.DarkGray, Color.Gray, Color.Silver, Color.White
+                Color.Black, Color.DarkGray, Color.Silver, Color.White
             };        
         }
 

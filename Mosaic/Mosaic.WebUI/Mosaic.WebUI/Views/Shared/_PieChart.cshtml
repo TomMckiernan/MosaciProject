@@ -39,6 +39,15 @@
 
         myCanvas = document.getElementById("myMasterCanvas");
         createPieChart(myCanvas, masterData, masterColours);
+
+        $(document).on("myTrigger", function (evt) {
+            evt.preventDefault();
+            // ajax request
+
+            // Recall create pie chart;
+            debugger;
+            alert("here");
+        });
     });
 </script>
 
