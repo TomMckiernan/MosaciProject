@@ -40,5 +40,20 @@ namespace Mosaic.WebUI.Controllers
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(response.Error);
         }
+
+        [HttpPost]
+        public ActionResult UpdateColourAnalysis(string Id, int height, int width)
+        {
+            // Generate the mosaic passing the project id and whether to randomise tile selection
+            var model = new GenerateMosaicModel();
+            model.ReadProjectData(client, Id, true, height, width);
+            if (model.ColoursModel != null)
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(model.ColoursModel);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json("Error in generating colour model");
+        }
     }
 }

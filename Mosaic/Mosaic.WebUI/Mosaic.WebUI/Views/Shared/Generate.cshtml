@@ -189,10 +189,11 @@
             $(".btn:first-child").val($(this).text());
             setSeparation(parseInt($(this).text()));
             drawResize();
+            var size = parseInt($(this).text());
             $.event.trigger({
                 type: "myTrigger",
-                message: "myTrigger fired.",
-                time: new Date()
+                size: size,
+                user: "1"
             });
         });
 

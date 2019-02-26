@@ -109,7 +109,7 @@ namespace Infrastructure
         public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width)
         {
             var request = new MasterImageColourRequest() { Master = file };
-            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request);
+            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request, height, width);
             return response;
         }
 

@@ -32,22 +32,38 @@
         var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
 
         var myCanvas = document.getElementById("myCanvas");
-        createPieChart(myCanvas, tilesData, tilesColours);
+        var tilePieChart = createPieChart(myCanvas, tilesData, tilesColours);
 
         var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
         var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
-
-        myCanvas = document.getElementById("myMasterCanvas");
-        createPieChart(myCanvas, masterData, masterColours);
+        debugger;
+        var myMasterCanvas = document.getElementById("myMasterCanvas");
+        var masterPieChart = createPieChart(myMasterCanvas, masterData, masterColours);
 
         $(document).on("myTrigger", function (evt) {
             evt.preventDefault();
             // ajax request
-
+            var t = updateColourAnalysis(evt.size, evt.size);
             // Recall create pie chart;
-            debugger;
-            alert("here");
         });
+
+        var updateColourAnalysis = function (height, width) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateColourAnalysis", "Generate")',
+                dataType: 'json',
+                cache: false,
+                data: { id: "@Model.ProjectId", height: height, width: width },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    masterPieChart.data = JSON.parse(response.jsonMasterImageColours);
+                    masterPieChart.colors = JSON.parse(response.jsonMasterImageHexColours);
+                    masterPieChart.draw();
+                },
+            });
+        }
     });
 </script>
 
