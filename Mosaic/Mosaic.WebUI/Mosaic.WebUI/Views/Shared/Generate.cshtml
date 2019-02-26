@@ -49,7 +49,7 @@
                 Tile images added
             </h3>
             <h3>
-                <span style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
+                <span id="library_suitability" style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
                 match between colours found in master image and the colours found in tile images
             </h3>
             <button id="generate_mosaic" type="button" class="btn btn-primary">
@@ -61,8 +61,10 @@
             <ul>
                 <li>Watch how to get the best result</li>
                 <li>Add pictures with colors similar to the colors found in your master image.
-                <li>Speed of generation is dependant upon: the number of images in the library, the size of images in the library 
-                    and the number of tiles in the mosaic being generated</li>
+                <li>
+                    Speed of generation is dependant upon: the number of images in the library, the size of images in the library
+                    and the number of tiles in the mosaic being generated
+                </li>
                 <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
                 <li>At this moment in time enhnaced generation can significantly increase generation time</li>
             </ul>
@@ -85,6 +87,10 @@
             </label>
 
             @Html.Partial("_PieChart", Model)
+
+            <h3>
+                Select missing colours
+            </h3>
 
         </div>
     </div>
@@ -191,10 +197,14 @@
             drawResize();
             var size = parseInt($(this).text());
             $.event.trigger({
-                type: "myTrigger",
-                size: size,
-                user: "1"
+                type: "customChartRedraw",
+                size: size
             });
+        });
+
+        $(document).on("customLibrarySuitability", function (evt) {
+            evt.preventDefault();
+            $("#library_suitability").text(evt.suitability + "%");
         });
 
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {

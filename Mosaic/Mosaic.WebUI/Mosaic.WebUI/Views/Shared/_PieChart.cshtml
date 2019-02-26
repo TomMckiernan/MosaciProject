@@ -36,15 +36,13 @@
 
         var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
         var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
-        debugger;
+
         var myMasterCanvas = document.getElementById("myMasterCanvas");
         var masterPieChart = createPieChart(myMasterCanvas, masterData, masterColours);
 
-        $(document).on("myTrigger", function (evt) {
+        $(document).on("customChartRedraw", function (evt) {
             evt.preventDefault();
-            // ajax request
-            var t = updateColourAnalysis(evt.size, evt.size);
-            // Recall create pie chart;
+            updateColourAnalysis(evt.size, evt.size);
         });
 
         var updateColourAnalysis = function (height, width) {
@@ -61,6 +59,10 @@
                     masterPieChart.data = JSON.parse(response.jsonMasterImageColours);
                     masterPieChart.colors = JSON.parse(response.jsonMasterImageHexColours);
                     masterPieChart.draw();
+                    $.event.trigger({
+                        type: "customLibrarySuitability",
+                        suitability: response.librarySuitability
+                    });
                 },
             });
         }
