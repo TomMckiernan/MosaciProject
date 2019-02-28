@@ -68,6 +68,18 @@
                 </label>
             </div>
             <div class="container options-container generate-container row">
+                <h3>
+                    Edge Detection
+                </h3>
+                <label class="switch pad-bottem">
+                    <input id="edge_detection" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <div class="slidecontainer pad-bottem">
+                    <input type="range" min="1" max="100" value="50" class="range" id="myRange">
+                </div>
+            </div>
+            <div class="container options-container generate-container row">
                 <button id="generate_mosaic" type="button" class="btn btn-primary btn-pad">
                     Generate
                 </button>
@@ -88,17 +100,6 @@
 
                 @Html.Partial("_PieChart", Model)
             </div>
-
-            <ul>
-                <li>Watch how to get the best result</li>
-                <li>Add pictures with colors similar to the colors found in your master image.
-                <li>
-                    Speed of generation is dependant upon: the number of images in the library, the size of images in the library
-                    and the number of tiles in the mosaic being generated
-                </li>
-            </ul>
-
-
             <h3>
                 Select missing colours
             </h3>
@@ -202,8 +203,8 @@
         });
 
         $(".dropdown-menu").on('click', 'li', function () {
-            $(".btn:first-child").text("Tile Size : " + $(this).text());
-            $(".btn:first-child").val($(this).text());
+            $(".tile-size-button:first-child").text("Tile Size : " + $(this).text());
+            $(".tile-size-button:first-child").val($(this).text());      
             setSeparation(parseInt($(this).text()));
             drawResize();
             var size = parseInt($(this).text());
