@@ -19,31 +19,55 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row tile-size-row">
-                <div class="select-tile-size btn-group">
-                    <button type="button" class="btn btn-primary tile-size-button">Action</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li class="option-1">10</li>
-                        <li class="option-2">20</li>
-                        <li class="option-3">30</li>
-                        <li class="option-4">40</li>
-                    </ul>
+            <div class="container options-container">
+                <h3>
+                    Select Tile Size
+                </h3>
+                <div class="row tile-size-row">
+                    <div class="select-tile-size btn-group">
+                        <button type="button" class="btn btn-primary tile-size-button">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="option-1">10</li>
+                            <li class="option-2">20</li>
+                            <li class="option-3">30</li>
+                            <li class="option-4">40</li>
+                        </ul>
+                    </div>
                 </div>
+                <h3>
+                    View Images
+                </h3>
+                <button id="view_master" type="button" class="btn btn-primary">
+                    View Master
+                </button>
+                <button id="view_mosaic" type="button" class="btn btn-primary">
+                    View Mosaic
+                </button>
+                <button id="toggle_grid" type="button" class="btn btn-primary">
+                    Toggle Grid
+                </button>
+                <!-- Rounded switch -->
+                <h3>
+                    Colour Blended Generation
+                </h3>
+                <label class="switch">
+                    <input id="colour_blended" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+
+                <h3>
+                    Enhanced Generation
+                </h3>
+                <label class="switch">
+                    <input id="enhanced_mosaic" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
             </div>
 
-            <button id="view_master" type="button" class="btn btn-primary">
-                View Master
-            </button>
-            <button id="view_mosaic" type="button" class="btn btn-primary">
-                View Mosaic
-            </button>
-            <button id="toggle_grid" type="button" class="btn btn-primary">
-                Toggle Grid
-            </button>
             <h3>
                 <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
                 Tile images added
@@ -65,26 +89,7 @@
                     Speed of generation is dependant upon: the number of images in the library, the size of images in the library
                     and the number of tiles in the mosaic being generated
                 </li>
-                <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
-                <li>At this moment in time enhnaced generation can significantly increase generation time</li>
             </ul>
-
-            <!-- Rounded switch -->
-            <h3>
-                Colour Blended Generation
-            </h3>
-            <label class="switch">
-                <input id="colour_blended" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-
-            <h3>
-                Enhanced Generation
-            </h3>
-            <label class="switch">
-                <input id="enhanced_mosaic" type="checkbox">
-                <span class="slider round"></span>
-            </label>
 
             @Html.Partial("_PieChart", Model)
 

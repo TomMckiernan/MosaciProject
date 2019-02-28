@@ -219,7 +219,7 @@ body {
     border-bottom-color: #eeeeee;
     border-left-color: #eeeeee;
     border-right-color: #eeeeee;
-    border-top-color: #eeeeee
+    border-top-color: #eeeeee;
 }
     .navbar-light li {
         cursor: default;
@@ -314,3 +314,12 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+.options-container {
+    background-color: #eeeeee;
+    width: 100% !important;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
