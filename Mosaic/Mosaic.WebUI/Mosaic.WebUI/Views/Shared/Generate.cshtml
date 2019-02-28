@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="container options-container">
+            <div class="container options-container row">
                 <h3>
                     Select Tile Size
                 </h3>
@@ -62,26 +62,33 @@
                 <h3>
                     Enhanced Generation
                 </h3>
-                <label class="switch">
+                <label class="switch pad-bottem">
                     <input id="enhanced_mosaic" type="checkbox">
                     <span class="slider round"></span>
                 </label>
             </div>
+            <div class="container options-container generate-container row">
+                <button id="generate_mosaic" type="button" class="btn btn-primary btn-pad">
+                    Generate
+                </button>
+                <button id="generate_random_mosaic" type="button" class="btn btn-primary btn-pad">
+                    Randomise
+                </button>
+            </div>
 
-            <h3>
-                <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
-                Tile images added
-            </h3>
-            <h3>
-                <span id="library_suitability" style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
-                match between colours found in master image and the colours found in tile images
-            </h3>
-            <button id="generate_mosaic" type="button" class="btn btn-primary">
-                Generate
-            </button>
-            <button id="generate_random_mosaic" type="button" class="btn btn-primary">
-                Randomise
-            </button>
+            <div class="container options-container generate-container row">
+                <h3>
+                    <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
+                    Tile images added
+                </h3>
+                <h3>
+                    <span id="library_suitability" style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
+                    match between colours found in master image and the colours found in tile images
+                </h3>
+
+                @Html.Partial("_PieChart", Model)
+            </div>
+
             <ul>
                 <li>Watch how to get the best result</li>
                 <li>Add pictures with colors similar to the colors found in your master image.
@@ -91,7 +98,6 @@
                 </li>
             </ul>
 
-            @Html.Partial("_PieChart", Model)
 
             <h3>
                 Select missing colours

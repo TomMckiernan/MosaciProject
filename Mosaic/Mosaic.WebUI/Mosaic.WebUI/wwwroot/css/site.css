@@ -323,3 +323,17 @@ input:checked + .slider:before {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
+
+.pad-bottem {
+    margin-bottom : 10px;
+}
+
+.generate-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.btn-pad {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
