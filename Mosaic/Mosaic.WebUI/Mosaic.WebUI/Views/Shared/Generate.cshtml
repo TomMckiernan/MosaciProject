@@ -47,6 +47,9 @@
                 <button id="view_mosaic" type="button" class="btn btn-primary">
                     View Mosaic
                 </button>
+                <button id="view_edges" type="button" class="btn btn-primary">
+                    View Edges
+                </button>
                 <button id="toggle_grid" type="button" class="btn btn-primary">
                     Toggle Grid
                 </button>
@@ -79,7 +82,7 @@
                     <input id="edge_detection" type="checkbox">
                     <span class="slider round"></span>
                 </label>
-                <button id="view_edges" type="button" class="btn btn-primary btn-float-right">
+                <button id="preview_edges" type="button" class="btn btn-primary btn-float-right">
                     Preview
                 </button>
                 <div class="slidecontainer pad-bottem">
@@ -138,16 +141,29 @@
                     newMosaicLocation = response;
                 },
                 complete: function () {
-                    $('#generate_mosaic').attr("disabled", false);
-                    $('#generate_random_mosaic').attr("disabled", false);
-                    $('#colour_blended').attr("disabled", false);
-                    $('#enhanced_mosaic').attr("disabled", false);
-                    $('#view_mosaic').attr("disabled", false);
-                    $('#view_edges').attr("disabled", false);
+                    enableButtons();
                 }
             });
         }
 
+        var generateMosaic = function (id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PreviewEdges", "Generate")',
+                dataType: 'json',
+                cache: false,
+                data: { id: id },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    im.src = response + "?rnd=" + Math.random();
+                },
+                complete: function () {
+                    enableButtons();
+                }
+            });
+        }
         var initialiseTileSize = function () {
             var firstOption = $('.dropdown-menu li:nth(0)')[0];
             var tileSizeButton = $(".tile-size-button");
@@ -159,6 +175,7 @@
         $("#generate_mosaic").click(function () {
             $(this).attr("disabled", true);
             $('#generate_random_mosaic').attr("disabled", true)
+            $('#preview_edges').attr("disabled", true)
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced();
@@ -168,10 +185,18 @@
         $("#generate_random_mosaic").click(function () {
             $(this).attr("disabled", true);
             $('#generate_mosaic').attr("disabled", true)
+            $('#preview_edges').attr("disabled", true)
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced();
             generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced);
+        });
+
+        $("#preview_edges").click(function () {
+            $(this).attr("disabled", true);
+            $('#generate_mosaic').attr("disabled", true)
+            $('#generate_random_mosaic').attr("disabled", true)
+            previewEdges("@Model.ProjectId");
         });
 
         var getColourBlended = function () {
@@ -192,6 +217,15 @@
             }
             enhancedToggle.attr("disabled", true);
             return enhancedGeneration;
+        }
+
+        var enableButtons = function () {
+            $('#generate_mosaic').attr("disabled", false);
+            $('#generate_random_mosaic').attr("disabled", false);
+            $('#colour_blended').attr("disabled", false);
+            $('#enhanced_mosaic').attr("disabled", false);
+            $('#view_mosaic').attr("disabled", false);
+            $('#preview_edges').attr("disabled", false);
         }
 
         $("#view_master").click(function () {

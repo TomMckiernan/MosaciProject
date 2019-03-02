@@ -44,7 +44,7 @@ namespace Mosaic.WebUI.Controllers
         [HttpPost]
         public ActionResult UpdateColourAnalysis(string Id, int height, int width)
         {
-            // Generate the mosaic passing the project id and whether to randomise tile selection
+            // Generate the mosaic model so enable update to the colour analysis of library
             var model = new GenerateMosaicModel();
             model.ReadProjectData(client, Id, true, height, width);
             if (model.ColoursModel != null)
@@ -54,6 +54,30 @@ namespace Mosaic.WebUI.Controllers
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json("Error in generating colour model");
+        }
+
+
+        [HttpPost]
+        public ActionResult PreviewEdges(string id, bool random, int tileWidth, int tileHeight, bool colourBlended, bool enhanced)
+        {
+            // Generate the mosaic passing the project id and whether to randomise tile selection
+            var model = new GenerateMosaicModel();
+            var response = model.Generate(client, id, random, tileWidth, tileHeight, colourBlended, enhanced);
+            if (String.IsNullOrEmpty(response.Error))
+            {
+                // copy generated image to root directory to allow it display
+                var image = new ViewImageModel();
+                image.CopyImage(response.Location);
+                // update project status and store location
+                var insertResponse = new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
+                if (String.IsNullOrEmpty(insertResponse.Error))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return Json(image.ImagePath);
+                }
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(response.Error);
         }
     }
 }
