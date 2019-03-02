@@ -367,3 +367,7 @@ input:checked + .slider:before {
         background: #4CAF50;
         cursor: pointer;
     }
+
+.btn-float-right {
+    float: right;
+}
