@@ -58,11 +58,11 @@ namespace Mosaic.WebUI.Controllers
 
 
         [HttpPost]
-        public ActionResult PreviewEdges(string id, bool random, int tileWidth, int tileHeight, bool colourBlended, bool enhanced)
+        public ActionResult PreviewEdges(string id)
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
             var model = new GenerateMosaicModel();
-            var response = model.Generate(client, id, random, tileWidth, tileHeight, colourBlended, enhanced);
+            var response = model.PreviewEdges(client, id);
             if (String.IsNullOrEmpty(response.Error))
             {
                 // copy generated image to root directory to allow it display

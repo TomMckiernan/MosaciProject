@@ -65,6 +65,11 @@ namespace Mosaic.WebUI.Models
             return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
         }
 
+        public ImageMosaicResponse PreviewEdges(IMakerClient client, string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project, int height, int width)
         {
             var result = new GenerateMosaicColoursModel(client, project, height, width);

@@ -146,7 +146,7 @@
             });
         }
 
-        var generateMosaic = function (id) {
+        var previewEdges = function (id) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("PreviewEdges", "Generate")',
