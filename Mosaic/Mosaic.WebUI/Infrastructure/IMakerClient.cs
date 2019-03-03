@@ -36,5 +36,7 @@ namespace Infrastructure
         ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced);
 
         MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width);
+
+        EdgeDetectionResponse PreviewEdges(string id);
     }
 }

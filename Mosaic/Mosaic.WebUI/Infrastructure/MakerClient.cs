@@ -113,5 +113,11 @@ namespace Infrastructure
             return response;
         }
 
+        public EdgeDetectionResponse PreviewEdges(string id)
+        {
+            var request = new EdgeDetectionRequest() { Id = id };
+            var response = new EdgeDetectionService.EdgeDetection().PreviewEdges(request);
+            return response;
+        }
     }
 }
