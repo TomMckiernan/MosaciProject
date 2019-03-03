@@ -31,6 +31,8 @@ namespace Infrastructure
 
         ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
 
+        ProjectResponse InsertEdgeFile(string id, string edgeLocation, List<PixelCoordinates> edges);
+
         ProjectResponse DeleteProject(string id);
 
         ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced);

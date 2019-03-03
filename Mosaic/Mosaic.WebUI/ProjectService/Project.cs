@@ -63,5 +63,10 @@ namespace ProjectService
         {
             return new MongoProject().Delete(database, request);
         }
+
+        public ProjectResponse InsertEdgeFile(ProjectInsertEdgeFileRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

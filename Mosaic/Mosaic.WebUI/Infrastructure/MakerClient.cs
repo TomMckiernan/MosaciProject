@@ -91,6 +91,13 @@ namespace Infrastructure
             return response;
         }
 
+        public ProjectResponse InsertEdgeFile(string id, string edgeLocation, List<PixelCoordinates> edges)
+        {
+            var request = new ProjectInsertEdgeFileRequest() { Id = id, Location = edgeLocation };
+            var response = new ProjectService.Project().InsertEdgeFile(request);
+            return response;
+        }
+
         public ProjectResponse DeleteProject(string id)
         {
             var request = new ProjectRequest() { Id = id };

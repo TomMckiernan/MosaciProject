@@ -12,6 +12,7 @@ namespace Mosaic.WebUI.Controllers
     public class GenerateController : Controller
     {
         IMakerClient client = new MakerClient();
+        string EDGE_IMAGE_LOCATION = "wwwroot\\images\\edges\\";
 
         public IActionResult Index()
         {
@@ -66,7 +67,7 @@ namespace Mosaic.WebUI.Controllers
             if (String.IsNullOrEmpty(response.Error))
             {
                 // copy generated image to root directory to allow it display
-                var image = new ViewImageModel();
+                var image = new ViewImageModel(EDGE_IMAGE_LOCATION);
                 image.CopyImage(response.Location);
                 // update project status and store location
                 var insertResponse = new MosaicFileModel().InsertMosaicFile(client, id, image.ImagePath);
