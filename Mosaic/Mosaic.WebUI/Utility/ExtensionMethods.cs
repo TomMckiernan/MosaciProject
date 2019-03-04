@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -47,6 +48,12 @@ namespace Utility
             difference = r + g + b;
             difference /= 3 * 255;
             return difference;
+        }
+
+        public static PixelCoordinates toPixelCoordinate(this BsonValue value)
+        {
+            var coord = BsonSerializer.Deserialize<PixelCoordinates>(value.ToJson());
+            return coord;
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Utility;
 
 namespace ProjectService
 {
@@ -192,7 +193,7 @@ namespace ProjectService
             return stringList;
         }
 
-        private IEnumerable<string> ReadEdges(IMongoDatabase db, string id)
+        private IEnumerable<PixelCoordinates> ReadEdges(IMongoDatabase db, string id)
         {
             var collection = db.GetCollection<BsonDocument>("Project");
 
@@ -200,10 +201,10 @@ namespace ProjectService
             var response = collection.Find(x => x["_id"].Equals(id)).Project(fields).FirstOrDefault();
             if (response == null)
             {
-                return new List<string>();
+                return new List<PixelCoordinates>();
             }
             var edges = response["Edges"].AsBsonArray.ToList();
-            var edgesList = edges.Select(i => i.ToString);
+            var edgesList = edges.Select(i => i.toPixelCoordinate());
             return edgesList;
         }
 

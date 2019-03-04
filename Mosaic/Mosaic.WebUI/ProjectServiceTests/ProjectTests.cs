@@ -188,6 +188,7 @@ namespace ProjectServiceTests
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.EdgeLocation, readResponse.Project.EdgeLocation);
+            Assert.AreEqual(2, readResponse.Project.Edges.Count);
             Assert.AreEqual(insertResponse.Project.Edges, readResponse.Project.Edges);
         }
 
