@@ -24,7 +24,7 @@ namespace ProjectService
             return new ProjectResponse() { Project = request };
         }
 
-        public ProjectResponse Read(IMongoDatabase db, ProjectRequest request)
+        public ProjectResponse Read(IMongoDatabase db, ProjectRequest request, bool edgesNeeded = false)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
 
@@ -38,7 +38,7 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
 
-            response = UpdateReadOnlyProperties(db, response);
+            response = UpdateReadOnlyProperties(db, response, edgesNeeded);
             return new ProjectResponse() { Project = response };
         }
 
@@ -48,10 +48,12 @@ namespace ProjectService
     
             var response = collection.Find(x => true).ToList();
 
-            var responseUpdated = response.Select(x => UpdateReadOnlyProperties(db, x));
+            // This just gets the read only properties i.e tiles and edges
+            // Not needed in this request
+            //var responseUpdated = response.Select(x => UpdateReadOnlyProperties(db, x));
 
             var result = new ProjectMultipleResponse();
-            result.Projects.AddRange(responseUpdated);
+            result.Projects.AddRange(response);
             return result;
         }
 
@@ -208,18 +210,22 @@ namespace ProjectService
             return edgesList;
         }
 
-        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response)
+        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response, bool edgesNeeded = false)
         {
             var smallFileIds = ReadSmallFieldIds(db, response.Id);
             if (smallFileIds != null && smallFileIds.Count() > 0)
             {
                 response.SmallFileIds.AddRange(smallFileIds);
             }
-            var edges = ReadEdges(db, response.Id);
-            if (edges != null && edges.Count() > 0)
+            if (edgesNeeded)
             {
-                response.Edges.AddRange(edges);
+                var edges = ReadEdges(db, response.Id);
+                if (edges != null && edges.Count() > 0)
+                {
+                    response.Edges.AddRange(edges);
+                }
             }
+           
             return response;
         }
     }

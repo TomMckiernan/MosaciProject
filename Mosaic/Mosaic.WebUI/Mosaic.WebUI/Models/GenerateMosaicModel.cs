@@ -16,8 +16,10 @@ namespace Mosaic.WebUI.Models
         public int TileImageCount { get; set; }
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
-        public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
+        public string EdgeLocation { get; set; }
         public string JSMasterLocation { get { return GetJSMasterLocation(); } }
+        public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
+        public string JSEdgeLocation { get { return GetJSEdgeLocation(); } }
         public ProjectStructure.Types.State State { get; set; }
         public GenerateMosaicColoursModel ColoursModel { get; set; }
         public Tuple<string, ProjectStructure.Types.State> PartialModel {get; set;}
@@ -33,6 +35,7 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
+                EdgeLocation = project.Project.EdgeLocation;
                 PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, State);
                 if (readColours)
                 {
@@ -119,6 +122,11 @@ namespace Mosaic.WebUI.Models
         private string GetJSMosaicLocation()
         {
             return MosaicLocation.Replace(@"\", @"\\");
+        }
+
+        private string GetJSEdgeLocation()
+        {
+            return EdgeLocation.Replace(@"\", @"\\");
         }
     }
 }

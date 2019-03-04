@@ -163,7 +163,7 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
-        public void ReadAllProjectsReturnsAllProjectsIncludingSmallFileIds()
+        public void ReadAllProjectsReturnsAllProjectsNotIncludingSmallFileIds()
         {
             var createResponse1 = service.CreateProject();
             var createResponse2 = service.CreateProject();
@@ -175,8 +175,8 @@ namespace ProjectServiceTests
             var readResponse2 = readAllResponse.Projects.Where(x => x.Id.Equals(insertResponse2.Project.Id)).First();
 
             Assert.AreEqual(2, readAllResponse.Projects.Count);
-            Assert.AreEqual(insertResponse1.Project.SmallFileIds, readResponse1.SmallFileIds);
-            Assert.AreEqual(insertResponse2.Project.SmallFileIds, readResponse2.SmallFileIds);
+            //Assert.AreEqual(insertResponse1.Project.SmallFileIds, readResponse1.SmallFileIds);
+            //Assert.AreEqual(insertResponse2.Project.SmallFileIds, readResponse2.SmallFileIds);
         }
 
         [TestMethod]

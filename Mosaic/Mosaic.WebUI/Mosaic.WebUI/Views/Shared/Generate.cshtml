@@ -161,6 +161,7 @@
                 },
                 complete: function () {
                     enableButtons();
+                    $('#view_edges').attr("disabled", false);
                 }
             });
         }
@@ -237,7 +238,7 @@
         });
 
         $("#view_edges").click(function () {
-            im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
+            im.src = "@Model.JSEdgeLocation" + "?rnd=" + Math.random();
         });
 
         $("#toggle_grid").click(function () {
@@ -271,6 +272,10 @@
         else {
             im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
             $('#view_mosaic').attr("disabled", true)
+        }
+
+        if ("@Model.EdgeLocation" == "") {
+            $('#view_edges').attr("disabled", true)
         }
 
         var newMosaicLocation = "";
