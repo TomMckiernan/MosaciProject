@@ -15,6 +15,7 @@ namespace Mosaic.WebUITests.Models
     {
         public string masterPath = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUITests\\images\\master\\";
         public string mosaicPath = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUITests\\images\\project\\";
+        public string edgePath = "C:\\Users\\Tom_m\\OneDrive\\Documents\\MosaicProject\\Mosaic\\Mosaic.WebUI\\Mosaic.WebUITests\\images\\edges\\";
 
         Mock<IMakerClient> MockMakerClient;
 
@@ -120,6 +121,46 @@ namespace Mosaic.WebUITests.Models
             var model = new DeleteProjectModel(masterPath, mosaicPath);
             model.DeleteProject(MockMakerClient.Object, ObjectId.GenerateNewId().ToString());
             Assert.IsFalse(File.Exists(mosaicLocation));
+        }
+
+        [TestMethod]
+        public void DeleteEdgeImageReturnErrorIfImageDoesNotExist()
+        {
+            var project = new ProjectStructure()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                TimeOfCreation = DateTime.Now.ToString(),
+                Progress = ProjectStructure.Types.State.Completed,
+                EdgeLocation = "//InvalidLocation"
+            };
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse { Project = project });
+            MockMakerClient.Setup(x => x.DeleteProject(It.IsAny<string>())).Returns(new ProjectResponse { Error = "Error" });
+
+            var model = new DeleteProjectModel();
+            model.DeleteProject(MockMakerClient.Object, ObjectId.GenerateNewId().ToString());
+            Assert.IsFalse(String.IsNullOrEmpty(model.Error));
+        }
+
+        [TestMethod]
+        public void DeleteEdgeWillDeleteLocalMosaicFileIfExists()
+        {
+            var edgeLocation = edgePath + "Edge.txt";
+            // Closes the file after creating it
+            File.Create(edgeLocation).Dispose();
+
+            var project = new ProjectStructure()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                TimeOfCreation = DateTime.Now.ToString(),
+                Progress = ProjectStructure.Types.State.Completed,
+                EdgeLocation = edgeLocation
+            };
+            MockMakerClient.Setup(x => x.ReadProject(It.IsAny<string>())).Returns(new ProjectResponse { Project = project });
+            MockMakerClient.Setup(x => x.DeleteProject(It.IsAny<string>())).Returns(new ProjectResponse { Error = "Error" });
+
+            var model = new DeleteProjectModel(masterPath, mosaicPath, edgePath);
+            model.DeleteProject(MockMakerClient.Object, ObjectId.GenerateNewId().ToString());
+            Assert.IsFalse(File.Exists(edgeLocation));
         }
 
         [TestMethod]
