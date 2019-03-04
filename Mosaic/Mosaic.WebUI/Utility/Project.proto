@@ -28,10 +28,10 @@ message ProjectInsertEdgeFileRequest {
 }
 
 message ProjectStructure {
-    string id                     = 1;
-	string TimeOfCreation         = 2;
-	string LargeFileId            = 3;
-	repeated string SmallFileIds  = 4;
+    string id                       = 1;
+	string TimeOfCreation           = 2;
+	string LargeFileId              = 3;
+	repeated string SmallFileIds    = 4;
     enum State {
       CREATED = 0;
       SMALLADDED = 1;
@@ -40,9 +40,11 @@ message ProjectStructure {
       DELETED = 4;
 	  UNKNOWN = 5;
     }
-    State Progress                = 5;
-	string MasterLocation         = 6;
-	string MosaicLocation         = 7;
+    State Progress                  = 5;
+	string MasterLocation           = 6;
+	string MosaicLocation           = 7;
+	string EdgeLocation             = 8;
+	repeated PixelCoordinates edges = 9;
 }
 
 message ProjectResponse {

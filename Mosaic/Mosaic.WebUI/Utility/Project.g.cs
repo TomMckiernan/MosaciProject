@@ -30,17 +30,18 @@ public static partial class ProjectReflection {
           "amVjdEluc2VydE1vc2FpY0ZpbGVSZXF1ZXN0EgoKAmlkGAEgASgJEhAKCExv",
           "Y2F0aW9uGAIgASgJIl4KHFByb2plY3RJbnNlcnRFZGdlRmlsZVJlcXVlc3QS",
           "CgoCaWQYASABKAkSEAoITG9jYXRpb24YAiABKAkSIAoFZWRnZXMYAyADKAsy",
-          "ES5QaXhlbENvb3JkaW5hdGVzIpsCChBQcm9qZWN0U3RydWN0dXJlEgoKAmlk",
+          "ES5QaXhlbENvb3JkaW5hdGVzItMCChBQcm9qZWN0U3RydWN0dXJlEgoKAmlk",
           "GAEgASgJEhYKDlRpbWVPZkNyZWF0aW9uGAIgASgJEhMKC0xhcmdlRmlsZUlk",
           "GAMgASgJEhQKDFNtYWxsRmlsZUlkcxgEIAMoCRIpCghQcm9ncmVzcxgFIAEo",
           "DjIXLlByb2plY3RTdHJ1Y3R1cmUuU3RhdGUSFgoOTWFzdGVyTG9jYXRpb24Y",
-          "BiABKAkSFgoOTW9zYWljTG9jYXRpb24YByABKAkiXQoFU3RhdGUSCwoHQ1JF",
-          "QVRFRBAAEg4KClNNQUxMQURERUQQARIOCgpMQVJHRUFEREVEEAISDQoJQ09N",
-          "UExFVEVEEAMSCwoHREVMRVRFRBAEEgsKB1VOS05PV04QBSJECg9Qcm9qZWN0",
-          "UmVzcG9uc2USIgoHUHJvamVjdBgBIAEoCzIRLlByb2plY3RTdHJ1Y3R1cmUS",
-          "DQoFRXJyb3IYAiABKAkiTQoXUHJvamVjdE11bHRpcGxlUmVzcG9uc2USIwoI",
-          "UHJvamVjdHMYASADKAsyES5Qcm9qZWN0U3RydWN0dXJlEg0KBUVycm9yGAIg",
-          "ASgJYgZwcm90bzM="));
+          "BiABKAkSFgoOTW9zYWljTG9jYXRpb24YByABKAkSFAoMRWRnZUxvY2F0aW9u",
+          "GAggASgJEiAKBWVkZ2VzGAkgAygLMhEuUGl4ZWxDb29yZGluYXRlcyJdCgVT",
+          "dGF0ZRILCgdDUkVBVEVEEAASDgoKU01BTExBRERFRBABEg4KCkxBUkdFQURE",
+          "RUQQAhINCglDT01QTEVURUQQAxILCgdERUxFVEVEEAQSCwoHVU5LTk9XThAF",
+          "IkQKD1Byb2plY3RSZXNwb25zZRIiCgdQcm9qZWN0GAEgASgLMhEuUHJvamVj",
+          "dFN0cnVjdHVyZRINCgVFcnJvchgCIAEoCSJNChdQcm9qZWN0TXVsdGlwbGVS",
+          "ZXNwb25zZRIjCghQcm9qZWN0cxgBIAMoCzIRLlByb2plY3RTdHJ1Y3R1cmUS",
+          "DQoFRXJyb3IYAiABKAliBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EdgeDetectionReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -49,7 +50,7 @@ public static partial class ProjectReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId", "Location" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertMosaicFileRequest), global::ProjectInsertMosaicFileRequest.Parser, new[]{ "Id", "Location" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertEdgeFileRequest), global::ProjectInsertEdgeFileRequest.Parser, new[]{ "Id", "Location", "Edges" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MasterLocation", "MosaicLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MasterLocation", "MosaicLocation", "EdgeLocation", "Edges" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectResponse), global::ProjectResponse.Parser, new[]{ "Project", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectMultipleResponse), global::ProjectMultipleResponse.Parser, new[]{ "Projects", "Error" }, null, null, null)
         }));
@@ -887,6 +888,8 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     progress_ = other.progress_;
     masterLocation_ = other.masterLocation_;
     mosaicLocation_ = other.mosaicLocation_;
+    edgeLocation_ = other.edgeLocation_;
+    edges_ = other.edges_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -971,6 +974,27 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
   }
 
+  /// <summary>Field number for the "EdgeLocation" field.</summary>
+  public const int EdgeLocationFieldNumber = 8;
+  private string edgeLocation_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string EdgeLocation {
+    get { return edgeLocation_; }
+    set {
+      edgeLocation_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "edges" field.</summary>
+  public const int EdgesFieldNumber = 9;
+  private static readonly pb::FieldCodec<global::PixelCoordinates> _repeated_edges_codec
+      = pb::FieldCodec.ForMessage(74, global::PixelCoordinates.Parser);
+  private readonly pbc::RepeatedField<global::PixelCoordinates> edges_ = new pbc::RepeatedField<global::PixelCoordinates>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::PixelCoordinates> Edges {
+    get { return edges_; }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ProjectStructure);
@@ -991,6 +1015,8 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (Progress != other.Progress) return false;
     if (MasterLocation != other.MasterLocation) return false;
     if (MosaicLocation != other.MosaicLocation) return false;
+    if (EdgeLocation != other.EdgeLocation) return false;
+    if(!edges_.Equals(other.edges_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1004,6 +1030,8 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (Progress != 0) hash ^= Progress.GetHashCode();
     if (MasterLocation.Length != 0) hash ^= MasterLocation.GetHashCode();
     if (MosaicLocation.Length != 0) hash ^= MosaicLocation.GetHashCode();
+    if (EdgeLocation.Length != 0) hash ^= EdgeLocation.GetHashCode();
+    hash ^= edges_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1042,6 +1070,11 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       output.WriteRawTag(58);
       output.WriteString(MosaicLocation);
     }
+    if (EdgeLocation.Length != 0) {
+      output.WriteRawTag(66);
+      output.WriteString(EdgeLocation);
+    }
+    edges_.WriteTo(output, _repeated_edges_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1069,6 +1102,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (MosaicLocation.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(MosaicLocation);
     }
+    if (EdgeLocation.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(EdgeLocation);
+    }
+    size += edges_.CalculateSize(_repeated_edges_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -1099,6 +1136,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (other.MosaicLocation.Length != 0) {
       MosaicLocation = other.MosaicLocation;
     }
+    if (other.EdgeLocation.Length != 0) {
+      EdgeLocation = other.EdgeLocation;
+    }
+    edges_.Add(other.edges_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1136,6 +1177,14 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
         }
         case 58: {
           MosaicLocation = input.ReadString();
+          break;
+        }
+        case 66: {
+          EdgeLocation = input.ReadString();
+          break;
+        }
+        case 74: {
+          edges_.AddEntriesFrom(input, _repeated_edges_codec);
           break;
         }
       }

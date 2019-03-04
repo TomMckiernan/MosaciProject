@@ -37,7 +37,7 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
 
-            response = UpdateSmallImageIds(db, response);
+            response = UpdateReadOnlyProperties(db, response);
             return new ProjectResponse() { Project = response };
         }
 
@@ -47,7 +47,7 @@ namespace ProjectService
     
             var response = collection.Find(x => true).ToList();
 
-            var responseUpdated = response.Select(x => UpdateSmallImageIds(db, x));
+            var responseUpdated = response.Select(x => UpdateReadOnlyProperties(db, x));
 
             var result = new ProjectMultipleResponse();
             result.Projects.AddRange(responseUpdated);
@@ -126,7 +126,7 @@ namespace ProjectService
 
             if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location))
             {
-                return new ProjectResponse() { Error = "Location cannot be null or empty" };
+                return new ProjectResponse() { Error = "Id or Location cannot be null or empty" };
             }
 
             var update = Builders<ProjectStructure>.Update.Set(x => x.MosaicLocation, request.Location)
@@ -134,6 +134,31 @@ namespace ProjectService
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
 
             return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, MosaicLocation = request.Location } };
+        }
+
+        public ProjectResponse InsertEdgeFile(IMongoDatabase db, ProjectInsertEdgeFileRequest request)
+        {
+            var collection = db.GetCollection<ProjectStructure>("Project");
+
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location) || request.Edges == null)
+            {
+                return new ProjectResponse() { Error = "Id, Location or edges cannot be null or empty" };
+            }
+
+            // Reads the projects with specified id in the db
+            var readRequest = new ProjectRequest() { Id = request.Id };
+            var project = Read(db, readRequest).Project;
+            // Clear the current list of edges and replace with new edges
+            project.Edges.Clear();
+            project.Edges.AddRange(request.Edges);
+            var update = Builders<ProjectStructure>.Update.Set(x => x.Edges, project.Edges)
+                .Set(x => x.EdgeLocation, request.Location);       
+            var updateResponse = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+
+            var response = new ProjectStructure() { Id = request.Id, EdgeLocation = request.Location };
+            response.Edges.AddRange(request.Edges);
+
+            return new ProjectResponse() { Project = response };
         }
 
         public ProjectResponse Delete(IMongoDatabase db, ProjectRequest request)
@@ -167,12 +192,32 @@ namespace ProjectService
             return stringList;
         }
 
-        private ProjectStructure UpdateSmallImageIds(IMongoDatabase db, ProjectStructure response)
+        private IEnumerable<string> ReadEdges(IMongoDatabase db, string id)
+        {
+            var collection = db.GetCollection<BsonDocument>("Project");
+
+            var fields = Builders<BsonDocument>.Projection.Include(p => p["Edges"]);
+            var response = collection.Find(x => x["_id"].Equals(id)).Project(fields).FirstOrDefault();
+            if (response == null)
+            {
+                return new List<string>();
+            }
+            var edges = response["Edges"].AsBsonArray.ToList();
+            var edgesList = edges.Select(i => i.ToString);
+            return edgesList;
+        }
+
+        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response)
         {
             var smallFileIds = ReadSmallFieldIds(db, response.Id);
             if (smallFileIds != null && smallFileIds.Count() > 0)
             {
                 response.SmallFileIds.AddRange(smallFileIds);
+            }
+            var edges = ReadEdges(db, response.Id);
+            if (edges != null && edges.Count() > 0)
+            {
+                response.Edges.AddRange(edges);
             }
             return response;
         }

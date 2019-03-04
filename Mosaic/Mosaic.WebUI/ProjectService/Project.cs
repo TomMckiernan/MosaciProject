@@ -22,6 +22,7 @@ namespace ProjectService
                     // deals with it being a read only property
                     cm.AutoMap();
                     cm.MapProperty(m => m.SmallFileIds);
+                    cm.MapProperty(m => m.Edges);
                 });
             }
 
@@ -66,7 +67,7 @@ namespace ProjectService
 
         public ProjectResponse InsertEdgeFile(ProjectInsertEdgeFileRequest request)
         {
-            throw new NotImplementedException();
+            return new MongoProject().InsertEdgeFile(database, request);
         }
     }
 }
