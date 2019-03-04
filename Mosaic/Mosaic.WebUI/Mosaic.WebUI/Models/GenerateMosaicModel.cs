@@ -73,8 +73,16 @@ namespace Mosaic.WebUI.Models
             {
                 return new EdgeDetectionResponse() { Error = project.Error };
             }
-            
-            return client.PreviewEdges(id);
+
+            //  Get the image file index structure for the master image
+            var masterFileId = project.Project.LargeFileId;
+            var masterFile = client.ReadImageFile(masterFileId);
+            if (!String.IsNullOrEmpty(masterFile.Error))
+            {
+                return new EdgeDetectionResponse() { Error = "Master image cannot be read" };
+            }
+
+            return client.PreviewEdges(id, masterFile.File);
         }
 
         public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project, int height, int width)

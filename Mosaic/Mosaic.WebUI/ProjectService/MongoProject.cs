@@ -199,7 +199,7 @@ namespace ProjectService
 
             var fields = Builders<BsonDocument>.Projection.Include(p => p["Edges"]);
             var response = collection.Find(x => x["_id"].Equals(id)).Project(fields).FirstOrDefault();
-            if (response == null)
+            if (response == null || !response.Contains("Edges"))
             {
                 return new List<PixelCoordinates>();
             }

@@ -94,6 +94,7 @@ namespace Infrastructure
         public ProjectResponse InsertEdgeFile(string id, string edgeLocation, List<PixelCoordinates> edges)
         {
             var request = new ProjectInsertEdgeFileRequest() { Id = id, Location = edgeLocation };
+            request.Edges.AddRange(edges);
             var response = new ProjectService.Project().InsertEdgeFile(request);
             return response;
         }
@@ -120,9 +121,9 @@ namespace Infrastructure
             return response;
         }
 
-        public EdgeDetectionResponse PreviewEdges(string id)
+        public EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master)
         {
-            var request = new EdgeDetectionRequest() { Id = id };
+            var request = new EdgeDetectionRequest() { Id = id, Master = master};
             var response = new EdgeDetectionService.EdgeDetection().PreviewEdges(request);
             return response;
         }
