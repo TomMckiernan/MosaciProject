@@ -39,6 +39,6 @@ namespace Infrastructure
 
         MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width);
 
-        EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master);
+        EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master, int threshold);
     }
 }

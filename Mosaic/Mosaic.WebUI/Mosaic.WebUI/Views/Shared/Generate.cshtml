@@ -71,7 +71,7 @@
                     <span class="slider round"></span>
                 </label>
                 <div class="slidecontainer pad-bottem">
-                    <input type="range" min="1" max="100" value="50" class="range" id="myRange">
+                    <input type="range" min="1" max="100" value="50" class="range" id="enhanced_threshold">
                 </div>
             </div>
             <div class="container options-container generate-container row">
@@ -86,7 +86,7 @@
                     Preview
                 </button>
                 <div class="slidecontainer pad-bottem">
-                    <input type="range" min="1" max="100" value="50" class="range" id="myRange">
+                    <input type="range" min="1" max="255" value="128" class="range" id="edge_threshold">
                 </div>
             </div>
             <div class="container options-container generate-container row">
@@ -146,13 +146,13 @@
             });
         }
 
-        var previewEdges = function (id) {
+        var previewEdges = function (id, threshold) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("PreviewEdges", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id },
+                data: { id: id, threshold: threshold },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -175,8 +175,8 @@
 
         $("#generate_mosaic").click(function () {
             $(this).attr("disabled", true);
-            $('#generate_random_mosaic').attr("disabled", true)
-            $('#preview_edges').attr("disabled", true)
+            $('#generate_random_mosaic').attr("disabled", true);
+            $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced();
@@ -185,8 +185,8 @@
 
         $("#generate_random_mosaic").click(function () {
             $(this).attr("disabled", true);
-            $('#generate_mosaic').attr("disabled", true)
-            $('#preview_edges').attr("disabled", true)
+            $('#generate_mosaic').attr("disabled", true);
+            $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced();
@@ -195,9 +195,12 @@
 
         $("#preview_edges").click(function () {
             $(this).attr("disabled", true);
-            $('#generate_mosaic').attr("disabled", true)
-            $('#generate_random_mosaic').attr("disabled", true)
-            previewEdges("@Model.ProjectId");
+            $('#generate_mosaic').attr("disabled", true);
+            $('#generate_random_mosaic').attr("disabled", true);
+            // Ensure value is limited between 1 and 255
+            var threshold = $('#edge_threshold').val();
+            var limitedThreshold = Math.min(Math.max(parseInt(threshold), 1), 255);
+            previewEdges("@Model.ProjectId", limitedThreshold);
         });
 
         var getColourBlended = function () {

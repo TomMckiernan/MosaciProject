@@ -26,7 +26,7 @@ namespace EdgeDetectionService
 
             // Apply Threshold to edge detected image
             // Edges are white pixels with value 255 otherwise black with value 0
-            Threshold thresholdFilter = new Threshold(110);
+            Threshold thresholdFilter = new Threshold(Threshold);
             Bitmap thresholdImage = thresholdFilter.Apply(edgeImage);
 
             // Render Image

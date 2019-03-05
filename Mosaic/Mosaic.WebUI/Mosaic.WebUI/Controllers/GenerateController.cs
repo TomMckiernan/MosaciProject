@@ -59,10 +59,10 @@ namespace Mosaic.WebUI.Controllers
 
 
         [HttpPost]
-        public ActionResult PreviewEdges(string id)
+        public ActionResult PreviewEdges(string id, int threshold)
         {
             var model = new GenerateMosaicModel();
-            var response = model.PreviewEdges(client, id);
+            var response = model.PreviewEdges(client, id, threshold);
             if (String.IsNullOrEmpty(response.Error))
             {
                 // copy generated image to root directory to allow it display

@@ -4,6 +4,7 @@ import "ImageFileIndex.proto";
 message EdgeDetectionRequest {
     string id                        = 1;
     ImageFileIndexStructure Master   = 2;
+	int32 threshold                  = 3;
 }
 
 message EdgeDetectionResponse {

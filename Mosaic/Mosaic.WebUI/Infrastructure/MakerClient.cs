@@ -121,9 +121,9 @@ namespace Infrastructure
             return response;
         }
 
-        public EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master)
+        public EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master, int threshold)
         {
-            var request = new EdgeDetectionRequest() { Id = id, Master = master};
+            var request = new EdgeDetectionRequest() { Id = id, Master = master, Threshold = threshold};
             var response = new EdgeDetectionService.EdgeDetection().PreviewEdges(request);
             return response;
         }

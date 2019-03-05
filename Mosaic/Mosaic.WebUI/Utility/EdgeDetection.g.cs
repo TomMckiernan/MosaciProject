@@ -22,16 +22,17 @@ public static partial class EdgeDetectionReflection {
   static EdgeDetectionReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChNFZGdlRGV0ZWN0aW9uLnByb3RvGhRJbWFnZUZpbGVJbmRleC5wcm90byJM",
+          "ChNFZGdlRGV0ZWN0aW9uLnByb3RvGhRJbWFnZUZpbGVJbmRleC5wcm90byJf",
           "ChRFZGdlRGV0ZWN0aW9uUmVxdWVzdBIKCgJpZBgBIAEoCRIoCgZNYXN0ZXIY",
-          "AiABKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZSJaChVFZGdlRGV0ZWN0",
-          "aW9uUmVzcG9uc2USIAoFZWRnZXMYASADKAsyES5QaXhlbENvb3JkaW5hdGVz",
-          "EhAKCGxvY2F0aW9uGAIgASgJEg0KBUVycm9yGAMgASgJIigKEFBpeGVsQ29v",
-          "cmRpbmF0ZXMSCQoBeBgBIAEoBRIJCgF5GAIgASgFYgZwcm90bzM="));
+          "AiABKAsyGC5JbWFnZUZpbGVJbmRleFN0cnVjdHVyZRIRCgl0aHJlc2hvbGQY",
+          "AyABKAUiWgoVRWRnZURldGVjdGlvblJlc3BvbnNlEiAKBWVkZ2VzGAEgAygL",
+          "MhEuUGl4ZWxDb29yZGluYXRlcxIQCghsb2NhdGlvbhgCIAEoCRINCgVFcnJv",
+          "chgDIAEoCSIoChBQaXhlbENvb3JkaW5hdGVzEgkKAXgYASABKAUSCQoBeRgC",
+          "IAEoBWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::EdgeDetectionRequest), global::EdgeDetectionRequest.Parser, new[]{ "Id", "Master" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::EdgeDetectionRequest), global::EdgeDetectionRequest.Parser, new[]{ "Id", "Master", "Threshold" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::EdgeDetectionResponse), global::EdgeDetectionResponse.Parser, new[]{ "Edges", "Location", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PixelCoordinates), global::PixelCoordinates.Parser, new[]{ "X", "Y" }, null, null, null)
         }));
@@ -67,6 +68,7 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
   public EdgeDetectionRequest(EdgeDetectionRequest other) : this() {
     id_ = other.id_;
     master_ = other.master_ != null ? other.master_.Clone() : null;
+    threshold_ = other.threshold_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -97,6 +99,17 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
     }
   }
 
+  /// <summary>Field number for the "threshold" field.</summary>
+  public const int ThresholdFieldNumber = 3;
+  private int threshold_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int Threshold {
+    get { return threshold_; }
+    set {
+      threshold_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as EdgeDetectionRequest);
@@ -112,6 +125,7 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
     }
     if (Id != other.Id) return false;
     if (!object.Equals(Master, other.Master)) return false;
+    if (Threshold != other.Threshold) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -120,6 +134,7 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
     int hash = 1;
     if (Id.Length != 0) hash ^= Id.GetHashCode();
     if (master_ != null) hash ^= Master.GetHashCode();
+    if (Threshold != 0) hash ^= Threshold.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -141,6 +156,10 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
       output.WriteRawTag(18);
       output.WriteMessage(Master);
     }
+    if (Threshold != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(Threshold);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -154,6 +173,9 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
     }
     if (master_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Master);
+    }
+    if (Threshold != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Threshold);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -175,6 +197,9 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
       }
       Master.MergeFrom(other.Master);
     }
+    if (other.Threshold != 0) {
+      Threshold = other.Threshold;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -195,6 +220,10 @@ public sealed partial class EdgeDetectionRequest : pb::IMessage<EdgeDetectionReq
             master_ = new global::ImageFileIndexStructure();
           }
           input.ReadMessage(master_);
+          break;
+        }
+        case 24: {
+          Threshold = input.ReadInt32();
           break;
         }
       }

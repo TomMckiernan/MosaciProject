@@ -68,13 +68,17 @@ namespace Mosaic.WebUI.Models
             return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
         }
 
-        public EdgeDetectionResponse PreviewEdges(IMakerClient client, string id)
+        public EdgeDetectionResponse PreviewEdges(IMakerClient client, string id, int threshold)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
             if (!String.IsNullOrEmpty(project.Error))
             {
                 return new EdgeDetectionResponse() { Error = project.Error };
+            }
+            if (threshold < 1 || threshold > 255)
+            {
+                return new EdgeDetectionResponse() { Error = "Threshold must be in valid range" };
             }
 
             //  Get the image file index structure for the master image
@@ -85,7 +89,7 @@ namespace Mosaic.WebUI.Models
                 return new EdgeDetectionResponse() { Error = "Master image cannot be read" };
             }
 
-            return client.PreviewEdges(id, masterFile.File);
+            return client.PreviewEdges(id, masterFile.File, threshold);
         }
 
         public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project, int height, int width)
