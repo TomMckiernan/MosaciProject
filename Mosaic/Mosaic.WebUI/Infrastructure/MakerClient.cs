@@ -126,5 +126,12 @@ namespace Infrastructure
             var response = new EdgeDetectionService.EdgeDetection().PreviewEdges(request);
             return response;
         }
+
+        public EdgeDetectionResponse GetEdgeCoordinates(string id, ImageFileIndexStructure master, int threshold)
+        {
+            var request = new EdgeDetectionRequest() { Id = id, Master = master, Threshold = threshold };
+            var response = new EdgeDetectionService.EdgeDetection().GetEdgeCoordinates(request);
+            return response;
+        }
     }
 }

@@ -17,5 +17,15 @@ namespace EdgeDetectionService
             response.Edges.AddRange(edges.Edges);
             return response;
         }
+
+        public EdgeDetectionResponse GetEdgeCoordinates(EdgeDetectionRequest request)
+        {
+            var edgeImageGenerator = new EdgeImageGenerator();
+            var edges = edgeImageGenerator.Generate(request.Master.FilePath, request.Threshold);
+            edges.Image.Dispose();
+            var response = new EdgeDetectionResponse() { Location = "Not Saved" };
+            response.Edges.AddRange(edges.Edges);
+            return response;
+        }
     }
 }

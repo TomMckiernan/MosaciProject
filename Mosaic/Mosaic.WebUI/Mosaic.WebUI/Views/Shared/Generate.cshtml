@@ -126,13 +126,16 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced) {
+        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended, enhanced: enhanced },
+                data: {
+                    id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended,
+                    enhanced: enhanced, edgeDetection: edgeDetection, edgeDetectionThreshold, edgeDetectionThreshold
+                },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -166,6 +169,7 @@
                 }
             });
         }
+
         var initialiseTileSize = function () {
             var firstOption = $('.dropdown-menu li:nth(0)')[0];
             var tileSizeButton = $(".tile-size-button");
@@ -180,8 +184,10 @@
             $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            var enhanced = getEnhanced();
-            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced);
+            var enhanced = getEnhanced(true);
+            var edgeDetection = getEdgeDetection(true);
+            var edgeDetectionThreshold = getEdgeDetectionThreshold();
+            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
         });
 
         $("#generate_random_mosaic").click(function () {
@@ -190,8 +196,10 @@
             $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            var enhanced = getEnhanced();
-            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced);
+            var enhanced = getEnhanced(true);
+            var edgeDetection = getEdgeDetection(true);
+            var edgeDetectionThreshold = getEdgeDetectionThreshold();
+            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
         });
 
         $("#preview_edges").click(function () {
@@ -199,7 +207,7 @@
             $('#generate_mosaic').attr("disabled", true);
             $('#generate_random_mosaic').attr("disabled", true);
             // Ensure value is limited between 1 and 255
-            var threshold = $('#edge_threshold').val();
+            var threshold = getEdgeDetectionThreshold();
             var limitedThreshold = Math.min(Math.max(parseInt(threshold), 1), 255);
             previewEdges("@Model.ProjectId", limitedThreshold);
         });
@@ -214,14 +222,35 @@
             return colourBlendedGeneration;
         }
 
-        var getEnhanced = function () {
+        // Gets state of enhanced generation toggle
+        var getEnhanced = function (disable) {
             var enhancedToggle = $('#enhanced_mosaic');
             var enhancedGeneration = false;
             if (enhancedToggle.is(":checked")) {
                 enhancedGeneration = true;
             }
-            enhancedToggle.attr("disabled", true);
+            if (disable) {
+                enhancedToggle.attr("disabled", true);
+            }
             return enhancedGeneration;
+        }
+
+        // Gets state of edge detection toggle
+        var getEdgeDetection = function (disable) {
+            var enhancedToggle = $('#edge_detection');
+            var enhancedGeneration = false;
+            if (enhancedToggle.is(":checked")) {
+                enhancedGeneration = true;
+            }
+            if (disable) {
+                enhancedToggle.attr("disabled", true);
+            }
+            return enhancedGeneration;
+        }
+
+        // Gets value of edge detection threshold slider
+        var getEdgeDetectionThreshold = function () {
+            return $('#edge_threshold').val();
         }
 
         var enableButtons = function () {
@@ -229,6 +258,7 @@
             $('#generate_random_mosaic').attr("disabled", false);
             $('#colour_blended').attr("disabled", false);
             $('#enhanced_mosaic').attr("disabled", false);
+            $('#edge_detection').attr("disabled", false);
             $('#preview_edges').attr("disabled", false);
         }
 
@@ -265,11 +295,15 @@
         });
 
         $("#edge_detection").click(function () {
-            debugger;
+            if (getEnhanced(false)) {
+                $('#enhanced_mosaic').prop("checked", false);
+            }
         });
 
         $("#enhanced_mosaic").click(function () {
-            debugger;
+            if (getEdgeDetection(false)) {
+                $('#edge_detection').prop("checked", false);
+            }
         });
         
         $(document).on("customLibrarySuitability", function (evt) {

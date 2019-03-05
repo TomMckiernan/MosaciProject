@@ -44,7 +44,8 @@ namespace Mosaic.WebUI.Models
             }
         }
 
-        public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, bool enhanced = false)
+        public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, 
+            bool enhanced = false, bool edgeDetection = false, int edgeDetectionThreshold = 110)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
@@ -60,9 +61,17 @@ namespace Mosaic.WebUI.Models
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
             var masterFile = client.ReadImageFile(masterFileId);
+
             if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error))
             {
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
+            }
+
+            var edges = new List<PixelCoordinates>();
+            // Get the edge coordinates if option set
+            if (edgeDetection)
+            {
+                edges = client.GetEdgeCoordinates(id, masterFile.File, edgeDetectionThreshold).Edges.ToList();
             }
 
             return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);

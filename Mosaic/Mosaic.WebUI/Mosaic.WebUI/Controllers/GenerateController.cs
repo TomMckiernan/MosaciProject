@@ -20,11 +20,11 @@ namespace Mosaic.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateMosaic(string id, bool random, int tileWidth, int tileHeight, bool colourBlended, bool enhanced)
+        public ActionResult GenerateMosaic(string id, bool random, int tileWidth, int tileHeight, bool colourBlended, bool enhanced, bool edgeDetection, int edgeDetectionThreshold)
         {
             // Generate the mosaic passing the project id and whether to randomise tile selection
             var model = new GenerateMosaicModel();
-            var response = model.Generate(client, id, random, tileWidth, tileHeight, colourBlended, enhanced);
+            var response = model.Generate(client, id, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
             if (String.IsNullOrEmpty(response.Error))
             {
                 // copy generated image to root directory to allow it display

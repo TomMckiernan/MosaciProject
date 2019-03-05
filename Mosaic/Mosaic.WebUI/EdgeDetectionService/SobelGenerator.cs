@@ -47,7 +47,7 @@ namespace EdgeDetectionService
             {
                 for (int y = 0; y < newImg.Height; y++)
                 {
-                    if (newImg.GetPixel(x,y).R > Threshold)
+                    if (newImg.GetPixel(x,y).R >= Threshold)
                     {
                         edgeLocations.Add(new PixelCoordinates() { X = x, Y = y });
                     }
