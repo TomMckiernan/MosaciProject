@@ -142,6 +142,7 @@
                 },
                 complete: function () {
                     enableButtons();
+                    $('#view_mosaic').attr("disabled", false);
                 }
             });
         }
@@ -228,7 +229,6 @@
             $('#generate_random_mosaic').attr("disabled", false);
             $('#colour_blended').attr("disabled", false);
             $('#enhanced_mosaic').attr("disabled", false);
-            $('#view_mosaic').attr("disabled", false);
             $('#preview_edges').attr("disabled", false);
         }
 
@@ -264,6 +264,14 @@
             });
         });
 
+        $("#edge_detection").click(function () {
+            debugger;
+        });
+
+        $("#enhanced_mosaic").click(function () {
+            debugger;
+        });
+        
         $(document).on("customLibrarySuitability", function (evt) {
             evt.preventDefault();
             $("#library_suitability").text(evt.suitability + "%");
