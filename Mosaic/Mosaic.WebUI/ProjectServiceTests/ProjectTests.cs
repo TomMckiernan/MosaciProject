@@ -39,7 +39,6 @@ namespace ProjectServiceTests
         {
             var edges = new List<PixelCoordinates>() { new PixelCoordinates() { X = 0, Y = 0}, new PixelCoordinates() { X = 1, Y = 1 } };
             var insertRequest = new ProjectInsertEdgeFileRequest() { Id = id, Location = "//EdgeLocation//test.jpg" };
-            insertRequest.Edges.AddRange(edges);
             return service.InsertEdgeFile(insertRequest);
         }
 
@@ -47,7 +46,6 @@ namespace ProjectServiceTests
         {
             var edges = new List<PixelCoordinates>() { new PixelCoordinates() { X = 5, Y = 5 }};
             var insertRequest = new ProjectInsertEdgeFileRequest() { Id = id, Location = "//EdgeLocation//test2.jpg" };
-            insertRequest.Edges.AddRange(edges);
             return service.InsertEdgeFile(insertRequest);
         }
 
@@ -180,7 +178,7 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
-        public void InsertEdgeFileInsertsLocationAndEdgesListIntoProject()
+        public void InsertEdgeFileInsertsLocationIntoProject()
         {
             var createResponse = service.CreateProject();
             // Insert edge file and edges into project
@@ -188,12 +186,10 @@ namespace ProjectServiceTests
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse.Project.EdgeLocation, readResponse.Project.EdgeLocation);
-            Assert.AreEqual(2, readResponse.Project.Edges.Count);
-            Assert.AreEqual(insertResponse.Project.Edges, readResponse.Project.Edges);
         }
 
         [TestMethod]
-        public void InsertEdgeFileRemovesAllCurrentEdgesBeforeUpdating()
+        public void InsertEdgeFileUpdateLocationIfOneAlreadyExists()
         {
             var createResponse = service.CreateProject();
             // Insert edge file and edges into project
@@ -202,8 +198,6 @@ namespace ProjectServiceTests
             var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
 
             Assert.AreEqual(insertResponse2.Project.EdgeLocation, readResponse.Project.EdgeLocation);
-            Assert.AreEqual(1, readResponse.Project.Edges.Count);
-            Assert.AreEqual(insertResponse2.Project.Edges, readResponse.Project.Edges);
         }
 
         [TestCleanup]

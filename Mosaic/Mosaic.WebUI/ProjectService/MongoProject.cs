@@ -24,7 +24,7 @@ namespace ProjectService
             return new ProjectResponse() { Project = request };
         }
 
-        public ProjectResponse Read(IMongoDatabase db, ProjectRequest request, bool edgesNeeded = false)
+        public ProjectResponse Read(IMongoDatabase db, ProjectRequest request)
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
 
@@ -38,7 +38,7 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
 
-            response = UpdateReadOnlyProperties(db, response, edgesNeeded);
+            response = UpdateReadOnlyProperties(db, response);
             return new ProjectResponse() { Project = response };
         }
 
@@ -143,25 +143,15 @@ namespace ProjectService
         {
             var collection = db.GetCollection<ProjectStructure>("Project");
 
-            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location) || request.Edges == null)
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location))
             {
                 return new ProjectResponse() { Error = "Id, Location or edges cannot be null or empty" };
             }
 
-            // Reads the projects with specified id in the db
-            var readRequest = new ProjectRequest() { Id = request.Id };
-            var project = Read(db, readRequest).Project;
-            // Clear the current list of edges and replace with new edges
-            project.Edges.Clear();
-            project.Edges.AddRange(request.Edges);
-            var update = Builders<ProjectStructure>.Update.Set(x => x.Edges, project.Edges)
-                .Set(x => x.EdgeLocation, request.Location);       
-            var updateResponse = collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+            var update = Builders<ProjectStructure>.Update.Set(x => x.EdgeLocation, request.Location);
+            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
 
-            var response = new ProjectStructure() { Id = request.Id, EdgeLocation = request.Location };
-            response.Edges.AddRange(request.Edges);
-
-            return new ProjectResponse() { Project = response };
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, EdgeLocation = request.Location } };
         }
 
         public ProjectResponse Delete(IMongoDatabase db, ProjectRequest request)
@@ -210,20 +200,12 @@ namespace ProjectService
             return edgesList;
         }
 
-        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response, bool edgesNeeded = false)
+        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response)
         {
             var smallFileIds = ReadSmallFieldIds(db, response.Id);
             if (smallFileIds != null && smallFileIds.Count() > 0)
             {
                 response.SmallFileIds.AddRange(smallFileIds);
-            }
-            if (edgesNeeded)
-            {
-                var edges = ReadEdges(db, response.Id);
-                if (edges != null && edges.Count() > 0)
-                {
-                    response.Edges.AddRange(edges);
-                }
             }
            
             return response;

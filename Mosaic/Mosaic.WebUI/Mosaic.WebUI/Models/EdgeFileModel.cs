@@ -8,9 +8,9 @@ namespace Mosaic.WebUI.Models
 {
     public class EdgeFileModel
     {
-        public ProjectResponse InsertEdgeFile(IMakerClient client, string id, string edgeLocation, List<PixelCoordinates> edges)
+        public ProjectResponse InsertEdgeFile(IMakerClient client, string id, string edgeLocation)
         {
-            var response = client.InsertEdgeFile(id, edgeLocation, edges);
+            var response = client.InsertEdgeFile(id, edgeLocation);
             return response;
         }
     }

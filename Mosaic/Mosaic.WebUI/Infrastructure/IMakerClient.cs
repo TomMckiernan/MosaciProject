@@ -31,7 +31,7 @@ namespace Infrastructure
 
         ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
 
-        ProjectResponse InsertEdgeFile(string id, string edgeLocation, List<PixelCoordinates> edges);
+        ProjectResponse InsertEdgeFile(string id, string edgeLocation);
 
         ProjectResponse DeleteProject(string id);
 

@@ -22,7 +22,6 @@ namespace ProjectService
                     // deals with it being a read only property
                     cm.AutoMap();
                     cm.MapProperty(m => m.SmallFileIds);
-                    cm.MapProperty(m => m.Edges);
                 });
             }
 

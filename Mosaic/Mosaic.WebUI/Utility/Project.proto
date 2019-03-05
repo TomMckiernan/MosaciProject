@@ -1,5 +1,4 @@
 ﻿syntax = "proto3";
-import "EdgeDetection.proto";
 
 message ProjectRequest {
     string id                     = 1;
@@ -24,7 +23,6 @@ message ProjectInsertMosaicFileRequest {
 message ProjectInsertEdgeFileRequest {
     string id                        = 1;
 	string Location                  = 2;
-	repeated PixelCoordinates edges  = 3;
 }
 
 message ProjectStructure {
@@ -44,7 +42,6 @@ message ProjectStructure {
 	string MasterLocation           = 6;
 	string MosaicLocation           = 7;
 	string EdgeLocation             = 8;
-	repeated PixelCoordinates edges = 9;
 }
 
 message ProjectResponse {

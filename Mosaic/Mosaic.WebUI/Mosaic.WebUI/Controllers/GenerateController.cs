@@ -69,7 +69,7 @@ namespace Mosaic.WebUI.Controllers
                 var image = new ViewImageModel(EDGE_IMAGE_LOCATION);
                 image.CopyImage(response.Location);
                 // update project status and store location
-                var insertResponse = new EdgeFileModel().InsertEdgeFile(client, id, image.ImagePath, response.Edges.ToList());
+                var insertResponse = new EdgeFileModel().InsertEdgeFile(client, id, image.ImagePath);
                 if (String.IsNullOrEmpty(insertResponse.Error))
                 {
                     Response.StatusCode = (int)HttpStatusCode.OK;
