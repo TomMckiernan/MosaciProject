@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Utility;
+using System.Drawing.Imaging;
 
 namespace ImageMosaicService
 {
@@ -240,18 +241,35 @@ namespace ImageMosaicService
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        RenderTile(colorMap, colourBlended, g, infoTL, ref imageSq, x, y, Target.TL);
-                        RenderTile(colorMap, colourBlended, g, infoTR, ref imageSq, x, y, Target.TR);
-                        RenderTile(colorMap, colourBlended, g, infoBL, ref imageSq, x, y, Target.BL);
-                        RenderTile(colorMap, colourBlended, g, infoBR, ref imageSq, x, y, Target.BR);
+                        RenderTile(colorMap, g, infoTL, ref imageSq, x, y, Target.TL);
+                        RenderTile(colorMap, g, infoTR, ref imageSq, x, y, Target.TR);
+                        RenderTile(colorMap, g, infoBL, ref imageSq, x, y, Target.BL);
+                        RenderTile(colorMap, g, infoBR, ref imageSq, x, y, Target.BR);
                     }
                     else
                     {
-                        RenderTile(colorMap, colourBlended, g, info[x, y], ref imageSq, x, y, Target.Whole);
+                        RenderTile(colorMap, g, info[x, y], ref imageSq, x, y, Target.Whole);
                     }
                 }
             }
 
+            if (colourBlended)
+            {
+                var cm = new ColorMatrix();
+                cm.Matrix33 = 0.5f;
+
+                var ia = new ImageAttributes();
+                ia.SetColorMatrix(cm);
+
+                g.DrawImage(img,
+                    // target
+                    new Rectangle(0, 0, newImg.Width, newImg.Height),
+                    // source
+                    0, 0, img.Width, img.Height,
+                    GraphicsUnit.Pixel,
+                    ia);
+            }
+            
             // Dispose of all resized bitmaps used for rendering
             foreach (var bitmap in resizeFiles.Select(x => x.Item2))
             {
@@ -266,7 +284,7 @@ namespace ImageMosaicService
         }
 
         // Pass target into method
-        private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, ref List<MosaicTile> imageSq, 
+        private void RenderTile(MosaicTileColour[,] colorMap, Graphics g, ImageInfo info, ref List<MosaicTile> imageSq, 
                                 int x, int y, Target target)
         {
             Rectangle destRect, srcRect;
@@ -282,13 +300,7 @@ namespace ImageMosaicService
             destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
             srcRect = new Rectangle(0, 0, source.Width, source.Height);
 
-            g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
-            if (colourBlended)
-            {
-                var tileAvgColour = colorMap[x, y].AverageWhole;
-                var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                g.FillRectangle(new SolidBrush(colourBlendedValue), destRect.X, destRect.Y, destRect.Width, destRect.Height);
-            }            
+            g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);         
         }
 
         // Passes the colour value for the current tile being analysed
