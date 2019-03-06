@@ -40,7 +40,9 @@ namespace ImageMosaicService
                 
                 using (var g = Graphics.FromImage((Image)b))
                 {
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                     g.DrawImage(scrBitmap, 0, 0, height, width);
                     g.Dispose();
                 }
@@ -165,7 +167,7 @@ namespace ImageMosaicService
             return Color.FromArgb(255, (int)(r / pixelCount), (int)(g / pixelCount), (int)(b / pixelCount));
         }
 
-        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false, bool enhanced = false)
+        public Mosaic Render(Bitmap source, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false, bool enhanced = false)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
@@ -173,7 +175,7 @@ namespace ImageMosaicService
             var g = Graphics.FromImage(newImg);
             var b = new SolidBrush(Color.Black);
 
-            g.FillRectangle(b, 0, 0, img.Width, img.Height);
+            g.FillRectangle(b, 0, 0, source.Width, source.Height);
 
             ImageInfo infoTL, infoTR, infoBL, infoBR;
 
@@ -238,14 +240,14 @@ namespace ImageMosaicService
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        RenderTile(colorMap, colourBlended, g, infoTL, ref imageSq, x, y, Target.TL);
-                        RenderTile(colorMap, colourBlended, g, infoTR, ref imageSq, x, y, Target.TR);
-                        RenderTile(colorMap, colourBlended, g, infoBL, ref imageSq, x, y, Target.BL);
-                        RenderTile(colorMap, colourBlended, g, infoBR, ref imageSq, x, y, Target.BR);
+                        RenderTile(colorMap, colourBlended, g, infoTL, ref imageSq, x, y, Target.TL, source);
+                        RenderTile(colorMap, colourBlended, g, infoTR, ref imageSq, x, y, Target.TR, source);
+                        RenderTile(colorMap, colourBlended, g, infoBL, ref imageSq, x, y, Target.BL, source);
+                        RenderTile(colorMap, colourBlended, g, infoBR, ref imageSq, x, y, Target.BR, source);
                     }
                     else
                     {
-                        RenderTile(colorMap, colourBlended, g, info[x, y], ref imageSq, x, y, Target.Whole);
+                        RenderTile(colorMap, colourBlended, g, info[x, y], ref imageSq, x, y, Target.Whole, source);
                     }
                 }
             }
@@ -265,27 +267,34 @@ namespace ImageMosaicService
 
         // Pass target into method
         private void RenderTile(MosaicTileColour[,] colorMap, bool colourBlended, Graphics g, ImageInfo info, ref List<MosaicTile> imageSq, 
-                                int x, int y, Target target)
+                                int x, int y, Target target, Bitmap source)
         {
             Rectangle destRect, srcRect;
 
-            Bitmap source = imageSq.Where(i => i.Image == info.Path).Select(b => b.Bitmap).FirstOrDefault();
+            // Get the chosen tile to be rendered
+            Bitmap tile = imageSq.Where(i => i.Image == info.Path).Select(b => b.Bitmap).FirstOrDefault();
             // If file has not been resized create new bitmap and add to list to ensure it is disposed
-            if (source == null)
+            if (tile == null)
             {
-                source = new Bitmap(Image.FromFile(info.Path));
-                imageSq.Add(new MosaicTile() { Image = info.Path, Bitmap = source });
+                tile = new Bitmap(Image.FromFile(info.Path));
+                imageSq.Add(new MosaicTile() { Image = info.Path, Bitmap = tile });
             }           
             // Draws stored image for coord x, y for given height and width
             destRect = CreateQuadrantRectangle(x * tileSize.Width, y * tileSize.Height, tileSize.Width, tileSize.Height, target);
-            srcRect = new Rectangle(0, 0, source.Width, source.Height);
+            srcRect = new Rectangle(0, 0, tile.Width, tile.Height);
 
-            g.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+            g.DrawImage(tile, destRect, srcRect, GraphicsUnit.Pixel);
             if (colourBlended)
             {
-                var tileAvgColour = colorMap[x, y].AverageWhole;
-                var colourBlendedValue = Color.FromArgb(128, tileAvgColour.R, tileAvgColour.G, tileAvgColour.B);
-                g.FillRectangle(new SolidBrush(colourBlendedValue), destRect.X, destRect.Y, destRect.Width, destRect.Height);
+                // loop through each pixel in tile and colour blend it with master image
+                for (int px = destRect.X; px < destRect.Width; px++)
+                {
+                    for (int py = destRect.Y; py < destRect.Height; py++)
+                    {
+                        var colourBlendedValue = Color.FromArgb(128, source.GetPixel(px,py).R, source.GetPixel(px, py).G, source.GetPixel(px, py).B);
+                        g.FillRectangle(new SolidBrush(colourBlendedValue), px, py, 1, 1);
+                    }
+                }                
             }            
         }
 
