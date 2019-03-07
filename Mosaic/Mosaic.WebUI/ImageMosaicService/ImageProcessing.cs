@@ -202,6 +202,7 @@ namespace ImageMosaicService
                 }
             }
 
+            // Could call method to add new elements for thise below diff threshold
             double count = 0;
             foreach (var dif in imageSq)
             {
@@ -226,6 +227,7 @@ namespace ImageMosaicService
                 }
             }); // Parallel.For
 
+            // Store the resize version of the image instead of the original tile image
             foreach (var image in imageSq)
             {
                 image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
@@ -238,18 +240,19 @@ namespace ImageMosaicService
                 {
                     if (enhanced && info[x, y].Difference > 0.32)
                     {
+                        // Get the correct image info from list of image infos
                         infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
                         infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
                         infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
                         infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        RenderTile(colorMap, g, infoTL, ref imageSq, x, y, Target.TL);
-                        RenderTile(colorMap, g, infoTR, ref imageSq, x, y, Target.TR);
-                        RenderTile(colorMap, g, infoBL, ref imageSq, x, y, Target.BL);
-                        RenderTile(colorMap, g, infoBR, ref imageSq, x, y, Target.BR);
+                        RenderTile(g, infoTL, ref imageSq, x, y, Target.TL);
+                        RenderTile(g, infoTR, ref imageSq, x, y, Target.TR);
+                        RenderTile(g, infoBL, ref imageSq, x, y, Target.BL);
+                        RenderTile(g, infoBR, ref imageSq, x, y, Target.BR);
                     }
                     else
                     {
-                        RenderTile(colorMap, g, info[x, y], ref imageSq, x, y, Target.Whole);
+                        RenderTile(g, info[x, y], ref imageSq, x, y, Target.Whole);
                     }
                 }
             }
@@ -285,8 +288,7 @@ namespace ImageMosaicService
         }
 
         // Pass target into method
-        private void RenderTile(MosaicTileColour[,] colorMap, Graphics g, ImageInfo info, ref List<MosaicTile> imageSq, 
-                                int x, int y, Target target)
+        private void RenderTile(Graphics g, ImageInfo info, ref List<MosaicTile> imageSq, int x, int y, Target target)
         {
             Rectangle destRect, srcRect;
 

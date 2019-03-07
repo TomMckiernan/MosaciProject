@@ -37,7 +37,7 @@ namespace ImageMosaicService
             using (var source = new Bitmap(masterImage))
             {
                 var colorMap = imageProcessing.CreateMap(source);
-                mosaic = imageProcessing.Render(source, colorMap, imageInfos, random, colourBlended, enhanced);
+                mosaic = imageProcessing.Render(source, colorMap, imageInfos, random, colourBlended, enhanced, edgeDetection, edges);
             }
 
             return mosaic;
