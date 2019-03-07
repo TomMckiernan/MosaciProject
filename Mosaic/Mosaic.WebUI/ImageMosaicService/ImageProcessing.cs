@@ -192,13 +192,7 @@ namespace ImageMosaicService
                 {
                     info[x, y] = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
                     // Gets current x, y coords of mosaic images, and stores image to be replaced by
-                    imageSq.Add(new MosaicTile()
-                    {
-                        X = x,
-                        Y = y,
-                        Image = info[x, y].Path,
-                        Difference = info[x, y].Difference
-                    });
+                    imageSq.Add(new MosaicTile(info[x, y], x, y));
                 }
             }
 
@@ -210,7 +204,22 @@ namespace ImageMosaicService
             }
             var threshold = count / imageSq.Count;
 
-
+            //// Recalculate the items in imageSq
+            //if (enhanced)
+            //{
+            //    foreach (var sq in imageSq)
+            //    {
+            //        if (sq.Difference > 0.5)
+            //        {
+            //            sq.InQuadrants = true;
+            //            sq.TLMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)], sq.X,sq.Y);
+            //            sq.TRMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)], sq.X, sq.Y);
+            //            sq.BLMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)], sq.X, sq.Y);
+            //            sq.BRMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)], sq.X, sq.Y);
+            //        }
+            //    }
+            //}
+            
             // In parallel resize all of the unique file paths in imageSq
             // Create set for all unique
             var selectedFiles = imageSq.Select(x => x.Image).Distinct().ToList();
