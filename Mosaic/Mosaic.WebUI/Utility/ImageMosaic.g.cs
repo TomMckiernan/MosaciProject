@@ -22,20 +22,22 @@ public static partial class ImageMosaicReflection {
   static ImageMosaicReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8i0wEK",
-          "EkltYWdlTW9zYWljUmVxdWVzdBIKCgJJZBgBIAEoCRInCgVUaWxlcxgCIAMo",
-          "CzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJlEigKBk1hc3RlchgDIAEoCzIY",
-          "LkltYWdlRmlsZUluZGV4U3RydWN0dXJlEg4KBlJhbmRvbRgEIAEoCBIRCgl0",
-          "aWxlV2lkdGgYBSABKAUSEgoKdGlsZUhlaWdodBgGIAEoBRIVCg1Db2xvdXJC",
-          "bGVuZGVkGAcgASgIEhAKCEVuaGFuY2VkGAggASgIIjYKE0ltYWdlTW9zYWlj",
-          "UmVzcG9uc2USEAoIbG9jYXRpb24YASABKAkSDQoFRXJyb3IYAiABKAkiRAoY",
-          "TWFzdGVySW1hZ2VDb2xvdXJSZXF1ZXN0EigKBk1hc3RlchgBIAEoCzIYLklt",
-          "YWdlRmlsZUluZGV4U3RydWN0dXJlIjQKGU1hc3RlckltYWdlQ29sb3VyUmVz",
-          "cG9uc2USFwoPQXZlcmFnZVRpbGVBUkdCGAEgAygFYgZwcm90bzM="));
+          "ChFJbWFnZU1vc2FpYy5wcm90bxoUSW1hZ2VGaWxlSW5kZXgucHJvdG8aE0Vk",
+          "Z2VEZXRlY3Rpb24ucHJvdG8ijAIKEkltYWdlTW9zYWljUmVxdWVzdBIKCgJJ",
+          "ZBgBIAEoCRInCgVUaWxlcxgCIAMoCzIYLkltYWdlRmlsZUluZGV4U3RydWN0",
+          "dXJlEigKBk1hc3RlchgDIAEoCzIYLkltYWdlRmlsZUluZGV4U3RydWN0dXJl",
+          "Eg4KBlJhbmRvbRgEIAEoCBIRCgl0aWxlV2lkdGgYBSABKAUSEgoKdGlsZUhl",
+          "aWdodBgGIAEoBRIVCg1Db2xvdXJCbGVuZGVkGAcgASgIEhAKCEVuaGFuY2Vk",
+          "GAggASgIEhUKDUVkZ2VEZXRlY3Rpb24YCSABKAgSIAoFZWRnZXMYCiADKAsy",
+          "ES5QaXhlbENvb3JkaW5hdGVzIjYKE0ltYWdlTW9zYWljUmVzcG9uc2USEAoI",
+          "bG9jYXRpb24YASABKAkSDQoFRXJyb3IYAiABKAkiRAoYTWFzdGVySW1hZ2VD",
+          "b2xvdXJSZXF1ZXN0EigKBk1hc3RlchgBIAEoCzIYLkltYWdlRmlsZUluZGV4",
+          "U3RydWN0dXJlIjQKGU1hc3RlckltYWdlQ29sb3VyUmVzcG9uc2USFwoPQXZl",
+          "cmFnZVRpbGVBUkdCGAEgAygFYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::ImageFileIndexReflection.Descriptor, global::EdgeDetectionReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random", "TileWidth", "TileHeight", "ColourBlended", "Enhanced" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicRequest), global::ImageMosaicRequest.Parser, new[]{ "Id", "Tiles", "Master", "Random", "TileWidth", "TileHeight", "ColourBlended", "Enhanced", "EdgeDetection", "Edges" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ImageMosaicResponse), global::ImageMosaicResponse.Parser, new[]{ "Location", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourRequest), global::MasterImageColourRequest.Parser, new[]{ "Master" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MasterImageColourResponse), global::MasterImageColourResponse.Parser, new[]{ "AverageTileARGB" }, null, null, null)
@@ -78,6 +80,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     tileHeight_ = other.tileHeight_;
     colourBlended_ = other.colourBlended_;
     enhanced_ = other.enhanced_;
+    edgeDetection_ = other.edgeDetection_;
+    edges_ = other.edges_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -173,6 +177,27 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     }
   }
 
+  /// <summary>Field number for the "EdgeDetection" field.</summary>
+  public const int EdgeDetectionFieldNumber = 9;
+  private bool edgeDetection_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool EdgeDetection {
+    get { return edgeDetection_; }
+    set {
+      edgeDetection_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "edges" field.</summary>
+  public const int EdgesFieldNumber = 10;
+  private static readonly pb::FieldCodec<global::PixelCoordinates> _repeated_edges_codec
+      = pb::FieldCodec.ForMessage(82, global::PixelCoordinates.Parser);
+  private readonly pbc::RepeatedField<global::PixelCoordinates> edges_ = new pbc::RepeatedField<global::PixelCoordinates>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::PixelCoordinates> Edges {
+    get { return edges_; }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ImageMosaicRequest);
@@ -194,6 +219,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (TileHeight != other.TileHeight) return false;
     if (ColourBlended != other.ColourBlended) return false;
     if (Enhanced != other.Enhanced) return false;
+    if (EdgeDetection != other.EdgeDetection) return false;
+    if(!edges_.Equals(other.edges_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -208,6 +235,8 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (TileHeight != 0) hash ^= TileHeight.GetHashCode();
     if (ColourBlended != false) hash ^= ColourBlended.GetHashCode();
     if (Enhanced != false) hash ^= Enhanced.GetHashCode();
+    if (EdgeDetection != false) hash ^= EdgeDetection.GetHashCode();
+    hash ^= edges_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -250,6 +279,11 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
       output.WriteRawTag(64);
       output.WriteBool(Enhanced);
     }
+    if (EdgeDetection != false) {
+      output.WriteRawTag(72);
+      output.WriteBool(EdgeDetection);
+    }
+    edges_.WriteTo(output, _repeated_edges_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -280,6 +314,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (Enhanced != false) {
       size += 1 + 1;
     }
+    if (EdgeDetection != false) {
+      size += 1 + 1;
+    }
+    size += edges_.CalculateSize(_repeated_edges_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -316,6 +354,10 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
     if (other.Enhanced != false) {
       Enhanced = other.Enhanced;
     }
+    if (other.EdgeDetection != false) {
+      EdgeDetection = other.EdgeDetection;
+    }
+    edges_.Add(other.edges_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -360,6 +402,14 @@ public sealed partial class ImageMosaicRequest : pb::IMessage<ImageMosaicRequest
         }
         case 64: {
           Enhanced = input.ReadBool();
+          break;
+        }
+        case 72: {
+          EdgeDetection = input.ReadBool();
+          break;
+        }
+        case 82: {
+          edges_.AddEntriesFrom(input, _repeated_edges_codec);
           break;
         }
       }

@@ -45,7 +45,7 @@ namespace Mosaic.WebUI.Models
         }
 
         public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, 
-            bool enhanced = false, bool edgeDetection = false, int edgeDetectionThreshold = 110)
+            bool enhanced = false, bool edgeDetection = false, int threshold = 110)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
@@ -71,10 +71,14 @@ namespace Mosaic.WebUI.Models
             // Get the edge coordinates if option set
             if (edgeDetection)
             {
-                edges = client.GetEdgeCoordinates(id, masterFile.File, edgeDetectionThreshold).Edges.ToList();
+                if (!ThresholdErrorCheck(threshold))
+                {
+                    return new ImageMosaicResponse() { Error = "Threshold must be in valid range" };
+                }
+                edges = client.GetEdgeCoordinates(id, masterFile.File, threshold).Edges.ToList();
             }
 
-            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
+            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edges);
         }
 
         public EdgeDetectionResponse PreviewEdges(IMakerClient client, string id, int threshold)
@@ -85,7 +89,7 @@ namespace Mosaic.WebUI.Models
             {
                 return new EdgeDetectionResponse() { Error = project.Error };
             }
-            if (threshold < 1 || threshold > 255)
+            if (!ThresholdErrorCheck(threshold))
             {
                 return new EdgeDetectionResponse() { Error = "Threshold must be in valid range" };
             }
@@ -125,6 +129,15 @@ namespace Mosaic.WebUI.Models
                 project.Error = "Master or tile images not specified";
             }
             return project;
+        }
+
+        private bool ThresholdErrorCheck(int threshold)
+        {
+            if (threshold < 1 || threshold > 255)
+            {
+                return false;
+            }
+            return true;
         }
 
         private string GetJSMasterLocation()

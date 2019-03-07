@@ -168,7 +168,8 @@ namespace ImageMosaicService
             return Color.FromArgb(255, (int)(r / pixelCount), (int)(g / pixelCount), (int)(b / pixelCount));
         }
 
-        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool colourBlended = false, bool enhanced = false)
+        public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool 
+            colourBlended = false, bool enhanced = false, bool edgeDetection = false, List<PixelCoordinates> edges = null)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);

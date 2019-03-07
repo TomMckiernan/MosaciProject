@@ -105,6 +105,23 @@ namespace Mosaic.WebUITests.Models
         }
 
         [TestMethod]
+        public void GenerateReturnErrorIfEdgeDetectionTrueAndThresholdNotValid()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+            MockMakerClient.Setup(x => x.ReadAllImageFiles(It.IsAny<IList<string>>())).Returns(new ImageFileIndexResponse() { });
+            MockMakerClient.Setup(x => x.ReadImageFile(It.IsAny<string>())).Returns(new ImageFileResponse() { });
+
+            var response = model.Generate(MockMakerClient.Object, id, edgeDetection:true, threshold:0);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
         public void ReadProjectDataSetsAllProjectPropertiesCorrectly()
         {
             var id = ObjectId.GenerateNewId().ToString();

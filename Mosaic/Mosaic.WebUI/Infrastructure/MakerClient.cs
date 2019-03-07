@@ -105,10 +105,11 @@ namespace Infrastructure
             return response;
         }
 
-        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced)
+        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced, bool edgeDetection, List<PixelCoordinates> edges)
         {
-            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended, Enhanced = enhanced };
+            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended, Enhanced = enhanced, EdgeDetection = edgeDetection };
             request.Tiles.AddRange(tiles);
+            request.Edges.AddRange(edges);
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;
         }
