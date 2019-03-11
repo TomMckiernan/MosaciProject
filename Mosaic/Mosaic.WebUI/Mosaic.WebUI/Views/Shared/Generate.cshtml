@@ -36,6 +36,7 @@
                             <li class="option-3">30</li>
                             <li class="option-4">40</li>
                             <li class="option-5">50</li>
+                            <li class="option-6">60</li>
                         </ul>
                     </div>
                 </div>
@@ -172,7 +173,7 @@
         }
 
         var initialiseTileSize = function () {
-            var firstOption = $('.dropdown-menu li:nth(0)')[0];
+            var firstOption = $('.dropdown-menu li:nth(3)')[0];
             var tileSizeButton = $(".tile-size-button");
             $(tileSizeButton).text("Tile Size : " + $(firstOption).text());
             $(tileSizeButton).val($(firstOption).text());
