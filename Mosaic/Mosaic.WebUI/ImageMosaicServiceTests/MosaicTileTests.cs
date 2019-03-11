@@ -36,8 +36,7 @@ namespace ImageMosaicServiceTests
         [TestMethod]
         public void GetAverageReturnsDifferenceIfOneItemInList()
         {
-            var tile = new MosaicTile();
-            tile.Difference = 5;
+            var tile = new MosaicTile() { Difference = 5 };
             var mosaicTiles = new List<MosaicTile>() { tile };
             var result = mosaicTiles.GetAverage();
             Assert.AreEqual(tile.Difference, result);
@@ -46,13 +45,55 @@ namespace ImageMosaicServiceTests
         [TestMethod]
         public void GetAverageReturnsAverageOfDifferenceForBothItemsInList()
         {
-            var tile1 = new MosaicTile();
-            tile1.Difference = 2;
-            var tile2 = new MosaicTile();
-            tile2.Difference = 4;
+            var tile1 = new MosaicTile() { Difference = 2 };
+            var tile2 = new MosaicTile() { Difference = 4 };
             var mosaicTiles = new List<MosaicTile>() { tile1, tile2 };
             var result = mosaicTiles.GetAverage();
             Assert.AreEqual(3, result);
+        }
+
+        [TestMethod]
+        public void GetUniqueImagesReturnEmptyListIfListEmpty()
+        {
+            var mosaicTiles = new List<MosaicTile>();
+            var result = mosaicTiles.GetUniqueImages();
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        public void GetUniqueImagesReturnOneItemIfOneItemInList()
+        {
+            var tile = new MosaicTile() { Image = "test.png" };
+            var mosaicTiles = new List<MosaicTile>() { tile };
+            var result = mosaicTiles.GetUniqueImages();
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result.Contains(tile.Image));
+        }
+
+        [TestMethod]
+        public void GetUniqueImagesReturnAllUniqueQuadrantImages()
+        {
+            var TLTile = new MosaicTile() { Image = "testTL.png" };
+            var TRTile = new MosaicTile() { Image = "testTR.png" };
+            var BLTile = new MosaicTile() { Image = "testBL.png" };
+            var BRTile = new MosaicTile() { Image = "testBR.png" };
+            var tile = new MosaicTile() { Image = "test.png", InQuadrants = true ,TLTile = TLTile, TRTile = TRTile, BLTile = BLTile, BRTile = BRTile };
+            var mosaicTiles = new List<MosaicTile>() { tile };
+            var result = mosaicTiles.GetUniqueImages();
+            Assert.AreEqual(5, result.Count);
+        }
+
+        [TestMethod]
+        public void GetUniqueImagesReturnOneImageIfQuadrantsSameAsWhole()
+        {
+            var TLTile = new MosaicTile() { Image = "test.png" };
+            var TRTile = new MosaicTile() { Image = "test.png" };
+            var BLTile = new MosaicTile() { Image = "test.png" };
+            var BRTile = new MosaicTile() { Image = "test.png" };
+            var tile = new MosaicTile() { Image = "test.png", InQuadrants = true, TLTile = TLTile, TRTile = TRTile, BLTile = BLTile, BRTile = BRTile };
+            var mosaicTiles = new List<MosaicTile>() { tile };
+            var result = mosaicTiles.GetUniqueImages();
+            Assert.AreEqual(1, result.Count);
         }
     }
 }

@@ -220,7 +220,9 @@ namespace ImageMosaicService
 
             // In parallel resize all of the unique file paths in imageSq
             // Create set for all unique
-            var selectedFiles = imageSq.Select(x => x.Image).Distinct().ToList();
+
+            //Get unique set of files names within imageSq list including all List within objects
+            var selectedFiles = imageSq.GetUniqueImages();
             var resizeFiles = new List<Tuple<string, Bitmap>>();
             Parallel.ForEach(selectedFiles , f =>
             {
