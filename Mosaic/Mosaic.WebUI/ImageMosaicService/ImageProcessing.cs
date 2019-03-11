@@ -196,13 +196,8 @@ namespace ImageMosaicService
                 }
             }
 
-            // Could call method to add new elements for thise below diff threshold
-            double count = 0;
-            foreach (var dif in imageSq)
-            {
-                count += dif.Difference;
-            }
-            var threshold = count / imageSq.Count;
+            // Get the threshold to spilt the tiles at
+            var threshold = imageSq.GetAverage();
 
             //// Recalculate the items in imageSq
             //if (enhanced)

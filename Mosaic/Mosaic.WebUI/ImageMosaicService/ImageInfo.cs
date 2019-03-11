@@ -14,6 +14,11 @@ namespace ImageMosaicService
         public double Difference { get; set; }
         public string Path { get; set; }
         private ArrayList _data;
+        public ImageInfo TLInfo { get; set; }
+        public ImageInfo TRInfo { get; set; }
+        public ImageInfo BLInfo { get; set; }
+        public ImageInfo BRInfo { get; set; }
+
         public ArrayList Data
         {
             get

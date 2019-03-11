@@ -14,10 +14,10 @@ namespace ImageMosaicService
         public double Difference { get; set; }
         public Bitmap Bitmap { get; set; }
         public bool InQuadrants{ get; set; }
-        public MosaicTile TLMosiacTile { get; set; }
-        public MosaicTile TRMosiacTile { get; set; }
-        public MosaicTile BLMosiacTile { get; set; }
-        public MosaicTile BRMosiacTile { get; set; }
+        public MosaicTile TLTile { get; set; }
+        public MosaicTile TRTile { get; set; }
+        public MosaicTile BLTile { get; set; }
+        public MosaicTile BRTile { get; set; }
 
         public MosaicTile()
         {
