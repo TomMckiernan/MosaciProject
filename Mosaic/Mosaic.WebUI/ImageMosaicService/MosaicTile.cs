@@ -13,6 +13,7 @@ namespace ImageMosaicService
         public string Image { get; set; }
         public double Difference { get; set; }
         public Bitmap Bitmap { get; set; }
+        public bool IsEdge { get; set; }
         public bool InQuadrants{ get; set; }
         public MosaicTile TLTile { get; set; }
         public MosaicTile TRTile { get; set; }
@@ -21,7 +22,8 @@ namespace ImageMosaicService
 
         public MosaicTile()
         {
-
+            IsEdge = false;
+            InQuadrants = false;
         }
         public MosaicTile(ImageInfo info, int x, int y)
         {
@@ -29,6 +31,8 @@ namespace ImageMosaicService
             Y = y;
             Image = info.Path;
             Difference = info.Difference;
+            InQuadrants = false;
+            IsEdge = false;
         }
     }
 }

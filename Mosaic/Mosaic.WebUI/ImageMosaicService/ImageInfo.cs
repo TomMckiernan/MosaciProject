@@ -43,5 +43,19 @@ namespace ImageMosaicService
             this.Path = filePath;
             InQuadrants = false;
         }
+
+        // Copies contents of another instance except quadrant info
+        public ImageInfo(ImageInfo other)
+        {
+            AverageTL = other.AverageTL;
+            AverageTR = other.AverageTR;
+            AverageBL = other.AverageBL;
+            AverageBR = other.AverageBR;
+            AverageWhole = other.AverageWhole;
+            Difference = other.Difference;
+            Path = other.Path;
+            _data = other._data;
+            InQuadrants = other.InQuadrants;
+        }
     }
 }

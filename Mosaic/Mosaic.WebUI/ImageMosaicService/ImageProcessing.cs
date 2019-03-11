@@ -188,32 +188,40 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    info[x, y] = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)];
+                    info[x, y] = new ImageInfo(imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.Whole)]);
                     // Gets current x, y coords of mosaic images, and stores image to be replaced by
                     imageSq.Add(new MosaicTile(info[x, y], x, y));
                 }
+            }
+
+            // Set property of tile if tile is considered edge
+            if (edgeDetection)
+            {
+                imageSq = imageSq.CalculateEdgeTiles(edges, tileSize.Width, tileSize.Height);
             }
 
             // Get the threshold to spilt the tiles at
             var threshold = imageSq.GetAverage();
 
             //// Recalculate the items in imageSq
-            if (enhanced)
+            if (enhanced || edgeDetection)
             {
                 foreach (var sq in imageSq)
                 {
-                    if (sq.Difference > threshold)
+                    if ((enhanced && sq.Difference > threshold) || (edgeDetection && sq.IsEdge))
                     {
                         sq.InQuadrants = true;
-                        info[sq.X, sq.Y].InQuadrants = true;
-                        info[sq.X, sq.Y].TLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)];
-                        info[sq.X, sq.Y].TRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)];
-                        info[sq.X, sq.Y].BLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)];
-                        info[sq.X, sq.Y].BRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)];
-                        sq.TLTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)], sq.X, sq.Y);
-                        sq.TRTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)], sq.X, sq.Y);
-                        sq.BLTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)], sq.X, sq.Y);
-                        sq.BRTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)], sq.X, sq.Y);
+                        //info[sq.X, sq.Y].InQuadrants = true;
+                        var tileInfo = info[sq.X, sq.Y];
+                        tileInfo.InQuadrants = true;
+                        tileInfo.TLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)];
+                        tileInfo.TRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)];
+                        tileInfo.BLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)];
+                        tileInfo.BRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)];
+                        sq.TLTile = new MosaicTile(tileInfo.TLInfo, sq.X, sq.Y);
+                        sq.TRTile = new MosaicTile(tileInfo.TRInfo, sq.X, sq.Y);
+                        sq.BLTile = new MosaicTile(tileInfo.BLInfo, sq.X, sq.Y);
+                        sq.BRTile = new MosaicTile(tileInfo.BRInfo, sq.X, sq.Y);
                     }
                 }
             }
@@ -237,17 +245,14 @@ namespace ImageMosaicService
             }); // Parallel.For
 
             // Store the resize version of the image instead of the original tile image
-            foreach (var image in imageSq)
-            {
-                image.Bitmap = resizeFiles.Where(x => x.Item1 == image.Image).Select(y => y.Item2).First();
-            }
+            imageSq.StoreResizedBitmap(resizeFiles);
 
             // Render the image to represent each tile
             for (int x = 0; x < colorMap.GetLength(0); x++)
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    if (enhanced && info[x, y].InQuadrants)
+                    if (info[x, y].InQuadrants)
                     {
                         // Get the correct image info from list of image infos
                         RenderTile(g, info[x, y].TLInfo, ref imageSq, x, y, Target.TL);
@@ -265,7 +270,7 @@ namespace ImageMosaicService
             if (colourBlended)
             {
                 var cm = new ColorMatrix();
-                cm.Matrix33 = 0.5f;
+                cm.Matrix33 = 0.4f;
 
                 var ia = new ImageAttributes();
                 ia.SetColorMatrix(cm);
@@ -313,7 +318,7 @@ namespace ImageMosaicService
 
         // Passes the colour value for the current tile being analysed
         // Uses library which contains the average colour for all of the tile images
-        private int GetBestImageIndex(MosaicTileColour color, int x, int y, bool random, Target target)
+        private int GetBestImageIndex(MosaicTileColour tileColor, int x, int y, bool random, Target target)
         {
             double bestPercent = double.MaxValue;
             var bestIndexes = new Dictionary<int, double>();
@@ -323,7 +328,7 @@ namespace ImageMosaicService
 
             for (int i = 0; i < library.Count(); i++)
             {
-                difference = GetDifferenceForTarget(color, i, target);
+                difference = GetDifferenceForTarget(tileColor, i, target);
 
                 // as well as best diff store the 10th best diff and replace that item when necessary
                 if (difference < bestPercent)
@@ -379,26 +384,26 @@ namespace ImageMosaicService
             return index;
         }
 
-        private double GetDifferenceForTarget(MosaicTileColour color, int i, Target target)
+        private double GetDifferenceForTarget(MosaicTileColour tileColor, int i, Target target)
         {
             if (target == Target.Whole)
             {
-                return GetLibraryTileDifference(color, i);
+                return GetLibraryTileDifference(tileColor, i);
             }
             else
             {
                 switch (target)
                 {
                     case Target.TL:
-                        return color.AverageWhole.GetDifference(library[i].AverageTL);
+                        return tileColor.AverageWhole.GetDifference(library[i].AverageTL);
                     case Target.TR:
-                        return color.AverageWhole.GetDifference(library[i].AverageTR);
+                        return tileColor.AverageWhole.GetDifference(library[i].AverageTR);
                     case Target.BL:
-                        return color.AverageWhole.GetDifference(library[i].AverageBL);
+                        return tileColor.AverageWhole.GetDifference(library[i].AverageBL);
                     case Target.BR:
-                        return color.AverageWhole.GetDifference(library[i].AverageBR);
+                        return tileColor.AverageWhole.GetDifference(library[i].AverageBR);
                     default:
-                        return GetLibraryTileDifference(color, i);
+                        return GetLibraryTileDifference(tileColor, i);
                 }
             }
         }
