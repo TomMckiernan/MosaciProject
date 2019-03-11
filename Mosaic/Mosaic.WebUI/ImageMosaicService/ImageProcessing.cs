@@ -179,8 +179,6 @@ namespace ImageMosaicService
 
             g.FillRectangle(b, 0, 0, img.Width, img.Height);
 
-            ImageInfo infoTL, infoTR, infoBL, infoBR;
-
             var info = new ImageInfo[colorMap.GetLength(0), colorMap.GetLength(1)];
 
             var imageSq = new List<MosaicTile>();
@@ -200,21 +198,26 @@ namespace ImageMosaicService
             var threshold = imageSq.GetAverage();
 
             //// Recalculate the items in imageSq
-            //if (enhanced)
-            //{
-            //    foreach (var sq in imageSq)
-            //    {
-            //        if (sq.Difference > 0.5)
-            //        {
-            //            sq.InQuadrants = true;
-            //            sq.TLMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)], sq.X,sq.Y);
-            //            sq.TRMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)], sq.X, sq.Y);
-            //            sq.BLMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)], sq.X, sq.Y);
-            //            sq.BRMosiacTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)], sq.X, sq.Y);
-            //        }
-            //    }
-            //}
-            
+            if (enhanced)
+            {
+                foreach (var sq in imageSq)
+                {
+                    if (sq.Difference > threshold)
+                    {
+                        sq.InQuadrants = true;
+                        info[sq.X, sq.Y].InQuadrants = true;
+                        info[sq.X, sq.Y].TLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)];
+                        info[sq.X, sq.Y].TRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)];
+                        info[sq.X, sq.Y].BLInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)];
+                        info[sq.X, sq.Y].BRInfo = imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)];
+                        sq.TLTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TL)], sq.X, sq.Y);
+                        sq.TRTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.TR)], sq.X, sq.Y);
+                        sq.BLTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BL)], sq.X, sq.Y);
+                        sq.BRTile = new MosaicTile(imageInfos[GetBestImageIndex(colorMap[sq.X, sq.Y], sq.X, sq.Y, random, Target.BR)], sq.X, sq.Y);
+                    }
+                }
+            }
+
             // In parallel resize all of the unique file paths in imageSq
             // Create set for all unique
             var selectedFiles = imageSq.Select(x => x.Image).Distinct().ToList();
@@ -242,17 +245,13 @@ namespace ImageMosaicService
             {
                 for (int y = 0; y < colorMap.GetLength(1); y++)
                 {
-                    if (enhanced && info[x, y].Difference > 0.32)
+                    if (enhanced && info[x, y].InQuadrants)
                     {
                         // Get the correct image info from list of image infos
-                        infoTL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TL)];
-                        infoTR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.TR)];
-                        infoBL = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BL)];
-                        infoBR = imageInfos[GetBestImageIndex(colorMap[x, y], x, y, random, Target.BR)];
-                        RenderTile(g, infoTL, ref imageSq, x, y, Target.TL);
-                        RenderTile(g, infoTR, ref imageSq, x, y, Target.TR);
-                        RenderTile(g, infoBL, ref imageSq, x, y, Target.BL);
-                        RenderTile(g, infoBR, ref imageSq, x, y, Target.BR);
+                        RenderTile(g, info[x, y].TLInfo, ref imageSq, x, y, Target.TL);
+                        RenderTile(g, info[x, y].TRInfo, ref imageSq, x, y, Target.TR);
+                        RenderTile(g, info[x, y].BLInfo, ref imageSq, x, y, Target.BL);
+                        RenderTile(g, info[x, y].BRInfo, ref imageSq, x, y, Target.BR);
                     }
                     else
                     {

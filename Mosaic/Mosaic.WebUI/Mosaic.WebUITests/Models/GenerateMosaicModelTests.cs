@@ -122,6 +122,21 @@ namespace Mosaic.WebUITests.Models
         }
 
         [TestMethod]
+        public void GenerateReturnErrorIfEnhancedAndEdgeDetectionBothTrue()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            var response = model.Generate(MockMakerClient.Object, id, enhanced:true, edgeDetection: true, threshold: 0);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
         public void ReadProjectDataSetsAllProjectPropertiesCorrectly()
         {
             var id = ObjectId.GenerateNewId().ToString();

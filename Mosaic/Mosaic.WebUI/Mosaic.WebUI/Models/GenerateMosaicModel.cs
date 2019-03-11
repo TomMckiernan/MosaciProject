@@ -54,6 +54,11 @@ namespace Mosaic.WebUI.Models
                 return new ImageMosaicResponse() { Error = project.Error };
             }
 
+            if (enhanced && edgeDetection)
+            {
+                return new ImageMosaicResponse() { Error = "Enhance and edge detection are mutually exclusive" };
+            }
+
             //  Get all imagefileindexstructure files for the id
             var tileFilesId = project.Project.SmallFileIds.ToList();
             var tileFiles = client.ReadAllImageFiles(tileFilesId);

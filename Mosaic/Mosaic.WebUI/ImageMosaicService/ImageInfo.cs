@@ -14,6 +14,7 @@ namespace ImageMosaicService
         public double Difference { get; set; }
         public string Path { get; set; }
         private ArrayList _data;
+        public bool InQuadrants { get; set; }
         public ImageInfo TLInfo { get; set; }
         public ImageInfo TRInfo { get; set; }
         public ImageInfo BLInfo { get; set; }
@@ -40,6 +41,7 @@ namespace ImageMosaicService
         public ImageInfo(string filePath)
         {
             this.Path = filePath;
+            InQuadrants = false;
         }
     }
 }
