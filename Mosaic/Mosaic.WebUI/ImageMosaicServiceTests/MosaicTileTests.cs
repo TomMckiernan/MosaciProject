@@ -29,7 +29,7 @@ namespace ImageMosaicServiceTests
         public void GetAverageReturnsZeroIfListEmpty()
         {
             var mosaicTiles = new List<MosaicTile>();
-            var result = mosaicTiles.GetAverage();
+            var result = mosaicTiles.GetAverage(50);
             Assert.AreEqual(0, result);
         }
 
@@ -38,18 +38,30 @@ namespace ImageMosaicServiceTests
         {
             var tile = new MosaicTile() { Difference = 5 };
             var mosaicTiles = new List<MosaicTile>() { tile };
-            var result = mosaicTiles.GetAverage();
+            var result = mosaicTiles.GetAverage(50);
             Assert.AreEqual(tile.Difference, result);
         }
 
         [TestMethod]
-        public void GetAverageReturnsAverageOfDifferenceForBothItemsInList()
+        public void GetAverageReturnsMediumOfDifferenceForBothItemsInList()
         {
             var tile1 = new MosaicTile() { Difference = 2 };
             var tile2 = new MosaicTile() { Difference = 4 };
             var mosaicTiles = new List<MosaicTile>() { tile1, tile2 };
-            var result = mosaicTiles.GetAverage();
-            Assert.AreEqual(3, result);
+            var result = mosaicTiles.GetAverage(50);
+            Assert.AreEqual(4, result);
+        }
+
+        [TestMethod]
+        public void GetAverageReturnsFirstItemIfThresholdMinimum()
+        {
+            var tile1 = new MosaicTile() { Difference = 2 };
+            var tile2 = new MosaicTile() { Difference = 4 };
+            var tile3 = new MosaicTile() { Difference = 6 };
+
+            var mosaicTiles = new List<MosaicTile>() { tile1, tile2, tile3 };
+            var result = mosaicTiles.GetAverage(1);
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]

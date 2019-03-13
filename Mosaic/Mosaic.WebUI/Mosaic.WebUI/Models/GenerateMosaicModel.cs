@@ -45,7 +45,7 @@ namespace Mosaic.WebUI.Models
         }
 
         public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, 
-            bool enhanced = false, bool edgeDetection = false, int threshold = 110)
+            bool enhanced = false, int enhancedThreshold = 50, bool edgeDetection = false, int threshold = 110)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
@@ -72,6 +72,11 @@ namespace Mosaic.WebUI.Models
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
 
+            if (enhanced && !EnhancedThresholdErrorCheck(enhancedThreshold))
+            {
+                return new ImageMosaicResponse() { Error = "Threshold must be in valid range" };
+            }
+
             var edges = new List<PixelCoordinates>();
             // Get the edge coordinates if option set
             if (edgeDetection)
@@ -83,7 +88,7 @@ namespace Mosaic.WebUI.Models
                 edges = client.GetEdgeCoordinates(id, masterFile.File, threshold).Edges.ToList();
             }
 
-            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edges);
+            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced, enhancedThreshold, edgeDetection, edges);
         }
 
         public EdgeDetectionResponse PreviewEdges(IMakerClient client, string id, int threshold)
@@ -139,6 +144,15 @@ namespace Mosaic.WebUI.Models
         private bool ThresholdErrorCheck(int threshold)
         {
             if (threshold < 1 || threshold > 255)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool EnhancedThresholdErrorCheck(int enhancedThreshold)
+        {
+            if (enhancedThreshold < 1 || enhancedThreshold > 100)
             {
                 return false;
             }

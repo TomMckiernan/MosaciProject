@@ -8,15 +8,20 @@ namespace ImageMosaicService
 {
     public static class MosaicTileExtensions
     {
-        public static double GetAverage(this List<MosaicTile> mosaicTiles)
+        public static double GetAverage(this List<MosaicTile> mosaicTiles, int threshold)
         {
-            double count = 0;
-            foreach (var dif in mosaicTiles)
+            if (mosaicTiles.Count == 0)
             {
-                count += dif.Difference;
+                return 0;
             }
-            
-            return (mosaicTiles.Count == 0) ? count : count / mosaicTiles.Count;
+            var differences = mosaicTiles.Select(x => x.Difference).OrderBy(x => x).ToList();
+            var index = Convert.ToInt32(mosaicTiles.Count * ((double)threshold / 100));
+            if (index >= differences.Count)
+            {
+                index = differences.Count - 1;
+            }
+            var result = differences[index];
+            return result;
         }
 
         public static List<String> GetUniqueImages(this List<MosaicTile> mosaicTiles)

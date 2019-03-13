@@ -11,8 +11,9 @@ message ImageMosaicRequest {
 	int32 tileHeight                       = 6;
 	bool ColourBlended                     = 7;
 	bool Enhanced                          = 8;
-	bool EdgeDetection                     = 9;
-	repeated PixelCoordinates edges        = 10;
+	int32 EnhancedThreshold                = 9;
+	bool EdgeDetection                     = 10;
+	repeated PixelCoordinates edges        = 11;
 }
 
 message ImageMosaicResponse {

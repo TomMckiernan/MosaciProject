@@ -124,7 +124,7 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold) {
+        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced, enhancedThreshold, edgeDetection, edgeDetectionThreshold) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
@@ -132,7 +132,7 @@
                 cache: false,
                 data: {
                     id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended,
-                    enhanced: enhanced, edgeDetection: edgeDetection, edgeDetectionThreshold, edgeDetectionThreshold
+                    enhanced: enhanced, enhancedThreshold:enhancedThreshold, edgeDetection: edgeDetection, edgeDetectionThreshold, edgeDetectionThreshold
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
@@ -183,9 +183,10 @@
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced(true);
+            var enhancedThreshold = getEnhancedThreshold();
             var edgeDetection = getEdgeDetection(true);
             var edgeDetectionThreshold = getEdgeDetectionThreshold();
-            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
+            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced, enhancedThreshold, edgeDetection, edgeDetectionThreshold);
         });
 
         $("#generate_random_mosaic").click(function () {
@@ -195,9 +196,10 @@
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
             var enhanced = getEnhanced(true);
+            var enhancedThreshold = getEnhancedThreshold();
             var edgeDetection = getEdgeDetection(true);
             var edgeDetectionThreshold = getEdgeDetectionThreshold();
-            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
+            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced, enhancedThreshold, edgeDetection, edgeDetectionThreshold);
         });
 
         $("#preview_edges").click(function () {
@@ -244,6 +246,11 @@
                 enhancedToggle.attr("disabled", true);
             }
             return enhancedGeneration;
+        }
+
+        // Gets value of enhanced geneartion slider
+        var getEnhancedThreshold = function () {
+            return $('#enhanced_threshold').val();
         }
 
         // Gets value of edge detection threshold slider
