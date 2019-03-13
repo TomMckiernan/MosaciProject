@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Utility;
 
 namespace Mosaic.WebUI.Models
 {
@@ -15,7 +16,7 @@ namespace Mosaic.WebUI.Models
             PreDefinedColours = new List<Color>()
             {
                 Color.Red, Color.OrangeRed, Color.Orange, Color.Gold, Color.Yellow, Color.YellowGreen,
-                Color.Green, Color.Aqua, Color.Blue, Color.BlueViolet, Color.Violet, Color.MediumVioletRed,
+                Color.Green, Color.Teal, Color.Blue, Color.BlueViolet, Color.Violet, Color.MediumVioletRed,
                 Color.Black, Color.DarkGray, Color.Silver, Color.White
             };        
         }
@@ -24,6 +25,12 @@ namespace Mosaic.WebUI.Models
         public List<Color> FindClosestColour(List<Color> colours)
         {
             var bestFitColours = colours.Select(x => GetBestColour(x)).ToList();
+            return bestFitColours;
+        }
+
+        public Color FindClosestColour(Color colour)
+        {
+            var bestFitColours = GetBestColour(colour);
             return bestFitColours;
         }
 
@@ -36,7 +43,7 @@ namespace Mosaic.WebUI.Models
 
             for (int i = 0; i < PreDefinedColours.Count(); i++)
             {
-                difference = GetDifference(color, PreDefinedColours[i]);
+                difference = color.GetDifference(PreDefinedColours[i]);
                 if (difference < bestDifference)
                 {
                     bestDifference = difference;
@@ -45,19 +52,6 @@ namespace Mosaic.WebUI.Models
             }
 
             return bestColor;
-        }
-
-        private double GetDifference(Color colour, Color preDefinedColour)
-        {
-            double difference;
-
-            var r = Math.Abs(colour.R - preDefinedColour.R);
-            var g = Math.Abs(colour.G - preDefinedColour.G);
-            var b = Math.Abs(colour.B - preDefinedColour.B);
-
-            difference = r + g + b;
-            difference /= 3 * 255;
-            return difference;
         }
     }
 }

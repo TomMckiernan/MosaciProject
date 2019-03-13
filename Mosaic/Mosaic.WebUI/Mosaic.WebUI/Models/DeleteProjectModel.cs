@@ -11,12 +11,14 @@ namespace Mosaic.WebUI.Models
     {
         public string MasterImageFolder { get; set; }
         public string MosaicImageFolder { get; set; }
+        public string EdgeImageFolder { get; set; }
         public string Error { get; set; }
 
-        public DeleteProjectModel(string master = "wwwroot\\images\\master\\", string mosaic = "wwwroot\\images\\project\\")
+        public DeleteProjectModel(string master = "wwwroot\\images\\master\\", string mosaic = "wwwroot\\images\\project\\", string edge = "wwwroot\\images\\edges\\")
         {
             MasterImageFolder = Path.GetFullPath(master);
             MosaicImageFolder = Path.GetFullPath(mosaic);
+            EdgeImageFolder = Path.GetFullPath(edge);
         }
 
         public void DeleteProject(IMakerClient client, string id)
@@ -33,6 +35,10 @@ namespace Mosaic.WebUI.Models
                     if (!String.IsNullOrEmpty(project.Project.MosaicLocation))
                     {
                         DeleteMosaicImage(project.Project.MosaicLocation);
+                    }
+                    if (!String.IsNullOrEmpty(project.Project.EdgeLocation))
+                    {
+                        DeleteEdgeImage(project.Project.EdgeLocation);
                     }
                     var response = client.DeleteProject(id);
                     if (!String.IsNullOrEmpty(response.Error))
@@ -76,6 +82,20 @@ namespace Mosaic.WebUI.Models
             else
             {
                 Error = "Mosaic Image does not exist";
+            }
+        }
+
+        private void DeleteEdgeImage(string edgeLocation)
+        {
+            var edgeFile = Path.GetFileName(edgeLocation);
+            var edgePath = EdgeImageFolder + edgeFile;
+            if (File.Exists(edgePath))
+            {
+                File.Delete(edgePath);
+            }
+            else
+            {
+                Error = "Edge Image does not exist";
             }
         }
     }

@@ -91,6 +91,13 @@ namespace Infrastructure
             return response;
         }
 
+        public ProjectResponse InsertEdgeFile(string id, string edgeLocation)
+        {
+            var request = new ProjectInsertEdgeFileRequest() { Id = id, Location = edgeLocation };
+            var response = new ProjectService.Project().InsertEdgeFile(request);
+            return response;
+        }
+
         public ProjectResponse DeleteProject(string id)
         {
             var request = new ProjectRequest() { Id = id };
@@ -98,20 +105,34 @@ namespace Infrastructure
             return response;
         }
 
-        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced)
+        public ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced, bool edgeDetection, List<PixelCoordinates> edges)
         {
-            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended, Enhanced = enhanced };
+            var request = new ImageMosaicRequest() { Id = id, Master = master, Random = random, TileWidth = width, TileHeight = height, ColourBlended = colourBlended, Enhanced = enhanced, EdgeDetection = edgeDetection };
             request.Tiles.AddRange(tiles);
+            request.Edges.AddRange(edges);
             var response = new ImageMosaicService.ImageMosaic().Generate(request);
             return response;
         }
 
-        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file)
+        public MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width)
         {
             var request = new MasterImageColourRequest() { Master = file };
-            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request);
+            var response = new ImageMosaicService.ImageMosaic().GetMasterImageAverageColours(request, height, width);
             return response;
         }
 
+        public EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master, int threshold)
+        {
+            var request = new EdgeDetectionRequest() { Id = id, Master = master, Threshold = threshold};
+            var response = new EdgeDetectionService.EdgeDetection().PreviewEdges(request);
+            return response;
+        }
+
+        public EdgeDetectionResponse GetEdgeCoordinates(string id, ImageFileIndexStructure master, int threshold)
+        {
+            var request = new EdgeDetectionRequest() { Id = id, Master = master, Threshold = threshold };
+            var response = new EdgeDetectionService.EdgeDetection().GetEdgeCoordinates(request);
+            return response;
+        }
     }
 }

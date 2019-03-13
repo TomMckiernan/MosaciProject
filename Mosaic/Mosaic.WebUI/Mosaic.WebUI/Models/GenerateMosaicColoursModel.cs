@@ -24,18 +24,18 @@ namespace Mosaic.WebUI.Models
         {
         }
 
-        public GenerateMosaicColoursModel(IMakerClient client, ProjectResponse project)
+        public GenerateMosaicColoursModel(IMakerClient client, ProjectResponse project, int height, int width)
         {
-            ReadMasterColours(client, project);
+            ReadMasterColours(client, project, height, width);
             ReadTileColours(client, project);
             LibrarySuitability = CalulateLibrarySuitability();
         }
 
-        public void ReadMasterColours(IMakerClient client, ProjectResponse project)
+        public void ReadMasterColours(IMakerClient client, ProjectResponse project, int height, int width)
         {
             // Convert the ARGB values from master file into Color objects
             var master = client.ReadImageFile(project.Project.LargeFileId);
-            var masterARGB = client.ReadMasterFileColours(master.File);
+            var masterARGB = client.ReadMasterFileColours(master.File, height, width);
             var masterColours = masterARGB.AverageTileARGB.Select(x => Color.FromArgb(x)).ToList();
 
             // Find the closest standard Color object for each color in master file colours

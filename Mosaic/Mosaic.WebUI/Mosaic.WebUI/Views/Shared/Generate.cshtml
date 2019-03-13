@@ -19,73 +19,99 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row tile-size-row">
-                <div class="select-tile-size btn-group">
-                    <button type="button" class="btn btn-primary tile-size-button">Action</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li class="option-1">10</li>
-                        <li class="option-2">20</li>
-                        <li class="option-3">30</li>
-                        <li class="option-4">40</li>
-                    </ul>
+            <div class="container options-container row">
+                <h3>
+                    Select Tile Size
+                </h3>
+                <div class="row tile-size-row">
+                    <div class="select-tile-size btn-group">
+                        <button type="button" class="btn btn-primary tile-size-button">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="option-1">10</li>
+                            <li class="option-2">20</li>
+                            <li class="option-3">30</li>
+                            <li class="option-4">40</li>
+                            <li class="option-5">50</li>
+                            <li class="option-6">60</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3>
+                    View Images
+                </h3>
+                <button id="view_master" type="button" class="btn btn-primary">
+                    View Master
+                </button>
+                <button id="view_mosaic" type="button" class="btn btn-primary">
+                    View Mosaic
+                </button>
+                <button id="view_edges" type="button" class="btn btn-primary">
+                    View Edges
+                </button>
+                <button id="toggle_grid" type="button" class="btn btn-primary">
+                    Toggle Grid
+                </button>
+                <!-- Rounded switch -->
+                <h3>
+                    Colour Blended Generation
+                </h3>
+                <label class="switch">
+                    <input id="colour_blended" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="container options-container generate-container row">
+                <h3>
+                    Enhanced Generation
+                </h3>
+                <label class="switch pad-bottem">
+                    <input id="enhanced_mosaic" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <div class="slidecontainer pad-bottem">
+                    <input type="range" min="1" max="100" value="50" class="range" id="enhanced_threshold">
                 </div>
             </div>
+            <div class="container options-container generate-container row">
+                <h3>
+                    Edge Detection
+                </h3>
+                <label class="switch pad-bottem">
+                    <input id="edge_detection" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <button id="preview_edges" type="button" class="btn btn-primary btn-float-right">
+                    Preview
+                </button>
+                <div class="slidecontainer pad-bottem">
+                    <input type="range" min="1" max="255" value="128" class="range" id="edge_threshold">
+                </div>
+            </div>
+            <div class="container options-container generate-container row">
+                <button id="generate_mosaic" type="button" class="btn btn-primary btn-pad">
+                    Generate
+                </button>
+                <button id="generate_random_mosaic" type="button" class="btn btn-primary btn-pad">
+                    Randomise
+                </button>
+            </div>
 
-            <button id="view_master" type="button" class="btn btn-primary">
-                View Master
-            </button>
-            <button id="view_mosaic" type="button" class="btn btn-primary">
-                View Mosaic
-            </button>
-            <button id="toggle_grid" type="button" class="btn btn-primary">
-                Toggle Grid
-            </button>
-            <h3>
-                <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
-                Tile images added
-            </h3>
-            <h3>
-                <span style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
-                match between colours found in master image and the colours found in tile images
-            </h3>
-            <button id="generate_mosaic" type="button" class="btn btn-primary">
-                Generate
-            </button>
-            <button id="generate_random_mosaic" type="button" class="btn btn-primary">
-                Randomise
-            </button>
-            <ul>
-                <li>Watch how to get the best result</li>
-                <li>Add pictures with colors similar to the colors found in your master image.
-                <li>Speed of generation is dependant upon: the number of images in the library, the size of images in the library 
-                    and the number of tiles in the mosaic being generated</li>
-                <li>If the mosaic image generated is not to your liking you can go back and adjust your tile library</li>
-                <li>At this moment in time enhnaced generation can significantly increase generation time</li>
-            </ul>
+            <div class="container options-container generate-container row">
+                <h3>
+                    <span style="color:#d34615; font-size:2em;">@Model.TileImageCount</span>
+                    Tile images added
+                </h3>
+                <h3>
+                    <span id="library_suitability" style="color:#d34615; font-size:2em;">@Model.ColoursModel.LibrarySuitability.ToString()%</span>
+                    match between colours found in master image and the colours found in tile images
+                </h3>
 
-            <!-- Rounded switch -->
-            <h3>
-                Colour Blended Generation
-            </h3>
-            <label class="switch">
-                <input id="colour_blended" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-
-            <h3>
-                Enhanced Generation
-            </h3>
-            <label class="switch">
-                <input id="enhanced_mosaic" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-
-            @Html.Partial("_PieChart", Model)
-
+                @Html.Partial("_PieChart", Model)
+            </div>
         </div>
     </div>
     <div class="row">
@@ -98,13 +124,16 @@
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script>
     $(function () {
-        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced) {
+        var generateMosaic = function (id, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GenerateMosaic", "Generate")',
                 dataType: 'json',
                 cache: false,
-                data: { id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended, enhanced: enhanced },
+                data: {
+                    id: id, random: random, tileWidth: tileWidth, tileHeight: tileHeight, colourBlended: colourBlended,
+                    enhanced: enhanced, edgeDetection: edgeDetection, edgeDetectionThreshold, edgeDetectionThreshold
+                },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Invalid request");
                 },
@@ -113,17 +142,34 @@
                     newMosaicLocation = response;
                 },
                 complete: function () {
-                    $('#generate_mosaic').attr("disabled", false);
-                    $('#generate_random_mosaic').attr("disabled", false);
-                    $('#colour_blended').attr("disabled", false);
-                    $('#enhanced_mosaic').attr("disabled", false);
+                    enableButtons();
                     $('#view_mosaic').attr("disabled", false);
                 }
             });
         }
 
+        var previewEdges = function (id, threshold) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PreviewEdges", "Generate")',
+                dataType: 'json',
+                cache: false,
+                data: { id: id, threshold: threshold },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    im.src = response + "?rnd=" + Math.random();
+                },
+                complete: function () {
+                    enableButtons();
+                    $('#view_edges').attr("disabled", false);
+                }
+            });
+        }
+
         var initialiseTileSize = function () {
-            var firstOption = $('.dropdown-menu li:nth(0)')[0];
+            var firstOption = $('.dropdown-menu li:nth(3)')[0];
             var tileSizeButton = $(".tile-size-button");
             $(tileSizeButton).text("Tile Size : " + $(firstOption).text());
             $(tileSizeButton).val($(firstOption).text());
@@ -132,20 +178,36 @@
 
         $("#generate_mosaic").click(function () {
             $(this).attr("disabled", true);
-            $('#generate_random_mosaic').attr("disabled", true)
+            $('#generate_random_mosaic').attr("disabled", true);
+            $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            var enhanced = getEnhanced();
-            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced);
+            var enhanced = getEnhanced(true);
+            var edgeDetection = getEdgeDetection(true);
+            var edgeDetectionThreshold = getEdgeDetectionThreshold();
+            generateMosaic("@Model.ProjectId", false, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
         });
 
         $("#generate_random_mosaic").click(function () {
             $(this).attr("disabled", true);
-            $('#generate_mosaic').attr("disabled", true)
+            $('#generate_mosaic').attr("disabled", true);
+            $('#preview_edges').attr("disabled", true);
             var gridSize = getSeparation();
             var colourBlended = getColourBlended();
-            var enhanced = getEnhanced();
-            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced);
+            var enhanced = getEnhanced(true);
+            var edgeDetection = getEdgeDetection(true);
+            var edgeDetectionThreshold = getEdgeDetectionThreshold();
+            generateMosaic("@Model.ProjectId", true, gridSize, gridSize, colourBlended, enhanced, edgeDetection, edgeDetectionThreshold);
+        });
+
+        $("#preview_edges").click(function () {
+            $(this).attr("disabled", true);
+            $('#generate_mosaic').attr("disabled", true);
+            $('#generate_random_mosaic').attr("disabled", true);
+            // Ensure value is limited between 1 and 255
+            var threshold = getEdgeDetectionThreshold();
+            var limitedThreshold = Math.min(Math.max(parseInt(threshold), 1), 255);
+            previewEdges("@Model.ProjectId", limitedThreshold);
         });
 
         var getColourBlended = function () {
@@ -158,14 +220,44 @@
             return colourBlendedGeneration;
         }
 
-        var getEnhanced = function () {
+        // Gets state of enhanced generation toggle
+        var getEnhanced = function (disable) {
             var enhancedToggle = $('#enhanced_mosaic');
             var enhancedGeneration = false;
             if (enhancedToggle.is(":checked")) {
                 enhancedGeneration = true;
             }
-            enhancedToggle.attr("disabled", true);
+            if (disable) {
+                enhancedToggle.attr("disabled", true);
+            }
             return enhancedGeneration;
+        }
+
+        // Gets state of edge detection toggle
+        var getEdgeDetection = function (disable) {
+            var enhancedToggle = $('#edge_detection');
+            var enhancedGeneration = false;
+            if (enhancedToggle.is(":checked")) {
+                enhancedGeneration = true;
+            }
+            if (disable) {
+                enhancedToggle.attr("disabled", true);
+            }
+            return enhancedGeneration;
+        }
+
+        // Gets value of edge detection threshold slider
+        var getEdgeDetectionThreshold = function () {
+            return $('#edge_threshold').val();
+        }
+
+        var enableButtons = function () {
+            $('#generate_mosaic').attr("disabled", false);
+            $('#generate_random_mosaic').attr("disabled", false);
+            $('#colour_blended').attr("disabled", false);
+            $('#enhanced_mosaic').attr("disabled", false);
+            $('#edge_detection').attr("disabled", false);
+            $('#preview_edges').attr("disabled", false);
         }
 
         $("#view_master").click(function () {
@@ -174,6 +266,10 @@
 
         $("#view_mosaic").click(function () {
             im.src = "@Model.JSMosaicLocation" + "?rnd=" + Math.random();
+        });
+
+        $("#view_edges").click(function () {
+            im.src = "@Model.JSEdgeLocation" + "?rnd=" + Math.random();
         });
 
         $("#toggle_grid").click(function () {
@@ -185,10 +281,32 @@
         });
 
         $(".dropdown-menu").on('click', 'li', function () {
-            $(".btn:first-child").text("Tile Size : " + $(this).text());
-            $(".btn:first-child").val($(this).text());
+            $(".tile-size-button:first-child").text("Tile Size : " + $(this).text());
+            $(".tile-size-button:first-child").val($(this).text());      
             setSeparation(parseInt($(this).text()));
             drawResize();
+            var size = parseInt($(this).text());
+            $.event.trigger({
+                type: "customChartRedraw",
+                size: size
+            });
+        });
+
+        $("#edge_detection").click(function () {
+            if (getEnhanced(false)) {
+                $('#enhanced_mosaic').prop("checked", false);
+            }
+        });
+
+        $("#enhanced_mosaic").click(function () {
+            if (getEdgeDetection(false)) {
+                $('#edge_detection').prop("checked", false);
+            }
+        });
+        
+        $(document).on("customLibrarySuitability", function (evt) {
+            evt.preventDefault();
+            $("#library_suitability").text(evt.suitability + "%");
         });
 
         if ("@Model.State" == "@ProjectStructure.Types.State.Completed") {
@@ -197,6 +315,10 @@
         else {
             im.src = "@Model.JSMasterLocation" + "?rnd=" + Math.random();
             $('#view_mosaic').attr("disabled", true)
+        }
+
+        if ("@Model.EdgeLocation" == "") {
+            $('#view_edges').attr("disabled", true)
         }
 
         var newMosaicLocation = "";

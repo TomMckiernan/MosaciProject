@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Utility;
 
 namespace ProjectService
 {
@@ -37,7 +38,7 @@ namespace ProjectService
                 return new ProjectResponse() { Error = "Project with Id cannot be found" };
             }
 
-            response = UpdateSmallImageIds(db, response);
+            response = UpdateReadOnlyProperties(db, response);
             return new ProjectResponse() { Project = response };
         }
 
@@ -47,10 +48,12 @@ namespace ProjectService
     
             var response = collection.Find(x => true).ToList();
 
-            var responseUpdated = response.Select(x => UpdateSmallImageIds(db, x));
+            // This just gets the read only properties i.e tiles and edges
+            // Not needed in this request
+            //var responseUpdated = response.Select(x => UpdateReadOnlyProperties(db, x));
 
             var result = new ProjectMultipleResponse();
-            result.Projects.AddRange(responseUpdated);
+            result.Projects.AddRange(response);
             return result;
         }
 
@@ -126,7 +129,7 @@ namespace ProjectService
 
             if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location))
             {
-                return new ProjectResponse() { Error = "Location cannot be null or empty" };
+                return new ProjectResponse() { Error = "Id or Location cannot be null or empty" };
             }
 
             var update = Builders<ProjectStructure>.Update.Set(x => x.MosaicLocation, request.Location)
@@ -134,6 +137,21 @@ namespace ProjectService
             collection.UpdateOne(x => x.Id.Equals(request.Id), update);
 
             return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, MosaicLocation = request.Location } };
+        }
+
+        public ProjectResponse InsertEdgeFile(IMongoDatabase db, ProjectInsertEdgeFileRequest request)
+        {
+            var collection = db.GetCollection<ProjectStructure>("Project");
+
+            if (String.IsNullOrEmpty(request.Id) || String.IsNullOrEmpty(request.Location))
+            {
+                return new ProjectResponse() { Error = "Id, Location or edges cannot be null or empty" };
+            }
+
+            var update = Builders<ProjectStructure>.Update.Set(x => x.EdgeLocation, request.Location);
+            collection.UpdateOne(x => x.Id.Equals(request.Id), update);
+
+            return new ProjectResponse() { Project = new ProjectStructure() { Id = request.Id, EdgeLocation = request.Location } };
         }
 
         public ProjectResponse Delete(IMongoDatabase db, ProjectRequest request)
@@ -167,13 +185,29 @@ namespace ProjectService
             return stringList;
         }
 
-        private ProjectStructure UpdateSmallImageIds(IMongoDatabase db, ProjectStructure response)
+        private IEnumerable<PixelCoordinates> ReadEdges(IMongoDatabase db, string id)
+        {
+            var collection = db.GetCollection<BsonDocument>("Project");
+
+            var fields = Builders<BsonDocument>.Projection.Include(p => p["Edges"]);
+            var response = collection.Find(x => x["_id"].Equals(id)).Project(fields).FirstOrDefault();
+            if (response == null || !response.Contains("Edges"))
+            {
+                return new List<PixelCoordinates>();
+            }
+            var edges = response["Edges"].AsBsonArray.ToList();
+            var edgesList = edges.Select(i => i.toPixelCoordinate());
+            return edgesList;
+        }
+
+        private ProjectStructure UpdateReadOnlyProperties(IMongoDatabase db, ProjectStructure response)
         {
             var smallFileIds = ReadSmallFieldIds(db, response.Id);
             if (smallFileIds != null && smallFileIds.Count() > 0)
             {
                 response.SmallFileIds.AddRange(smallFileIds);
             }
+           
             return response;
         }
     }

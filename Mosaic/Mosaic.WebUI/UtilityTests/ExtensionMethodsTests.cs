@@ -84,5 +84,15 @@ namespace UtilityTests
             var difference = color.GetDifference(otherColor);
             Assert.AreEqual(1, difference);
         }
+
+        [TestMethod]
+        public void BsonValueInCorrectFormatConvertsToPixelFormat()
+        {
+            var coord = new PixelCoordinates() { X = 1, Y = 2 };
+            var bson = coord.ToBsonDocument().AsBsonValue;
+            var result = bson.toPixelCoordinate();
+            Assert.AreEqual(1, result.X);
+            Assert.AreEqual(2, result.Y);
+        }
     }
 }

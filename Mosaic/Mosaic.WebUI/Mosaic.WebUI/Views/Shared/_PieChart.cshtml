@@ -7,13 +7,13 @@
 <html>
 <body>
     <figure>
-        <div class="col-md-6">
+        <div class="col-md-6 pad-bottem">
             <canvas id="myCanvas"></canvas>
             <figcaption class="piechart-info">
                 Colours found in tile images
             </figcaption>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 pad-bottem">
             <canvas id="myMasterCanvas"></canvas>
             <figcaption class="piechart-info">
                 Colours found in master image
@@ -32,13 +32,40 @@
         var tilesColours = @Html.Raw(@Model.ColoursModel.JsonTileImageHexColours);
 
         var myCanvas = document.getElementById("myCanvas");
-        createPieChart(myCanvas, tilesData, tilesColours);
+        var tilePieChart = createPieChart(myCanvas, tilesData, tilesColours);
 
         var masterData = @Html.Raw(@Model.ColoursModel.JsonMasterImageColours);
         var masterColours = @Html.Raw(@Model.ColoursModel.JsonMasterImageHexColours);
 
-        myCanvas = document.getElementById("myMasterCanvas");
-        createPieChart(myCanvas, masterData, masterColours);
+        var myMasterCanvas = document.getElementById("myMasterCanvas");
+        var masterPieChart = createPieChart(myMasterCanvas, masterData, masterColours);
+
+        $(document).on("customChartRedraw", function (evt) {
+            evt.preventDefault();
+            updateColourAnalysis(evt.size, evt.size);
+        });
+
+        var updateColourAnalysis = function (height, width) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateColourAnalysis", "Generate")',
+                dataType: 'json',
+                cache: false,
+                data: { id: "@Model.ProjectId", height: height, width: width },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Invalid request");
+                },
+                success: function (response) {
+                    masterPieChart.data = JSON.parse(response.jsonMasterImageColours);
+                    masterPieChart.colors = JSON.parse(response.jsonMasterImageHexColours);
+                    masterPieChart.draw();
+                    $.event.trigger({
+                        type: "customLibrarySuitability",
+                        suitability: response.librarySuitability
+                    });
+                },
+            });
+        }
     });
 </script>
 

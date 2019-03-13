@@ -45,6 +45,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageMosaicService", "Image
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageMosaicServiceTests", "ImageMosaicServiceTests\ImageMosaicServiceTests.csproj", "{C2F045CD-90D8-4DBB-A98C-D337ACC47508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeDetectionService", "EdgeDetectionService\EdgeDetectionService.csproj", "{2B649A3A-48C3-4FA5-9C21-1D9A14501F06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeDetectionServiceTests", "EdgeDetectionServiceTests\EdgeDetectionServiceTests.csproj", "{1AB91255-8EB6-4C46-AE99-3EAD0D14834F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +107,14 @@ Global
 		{C2F045CD-90D8-4DBB-A98C-D337ACC47508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2F045CD-90D8-4DBB-A98C-D337ACC47508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2F045CD-90D8-4DBB-A98C-D337ACC47508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B649A3A-48C3-4FA5-9C21-1D9A14501F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B649A3A-48C3-4FA5-9C21-1D9A14501F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B649A3A-48C3-4FA5-9C21-1D9A14501F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B649A3A-48C3-4FA5-9C21-1D9A14501F06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AB91255-8EB6-4C46-AE99-3EAD0D14834F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB91255-8EB6-4C46-AE99-3EAD0D14834F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB91255-8EB6-4C46-AE99-3EAD0D14834F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB91255-8EB6-4C46-AE99-3EAD0D14834F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +137,8 @@ Global
 		{496FB012-7BF9-4934-8F7D-FCBE33274207} = {21186CB8-8355-4A32-847E-CE5FCF6F753A}
 		{EB1B5A33-8CD5-45DD-A98B-9C076F6464FA} = {FA0B4815-E855-4832-A479-EC09EDC32CB3}
 		{C2F045CD-90D8-4DBB-A98C-D337ACC47508} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
+		{2B649A3A-48C3-4FA5-9C21-1D9A14501F06} = {FA0B4815-E855-4832-A479-EC09EDC32CB3}
+		{1AB91255-8EB6-4C46-AE99-3EAD0D14834F} = {03BC8850-B308-4CC8-AFE7-5D6A102F2816}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {464F8E7A-E36D-46D9-B546-43556FA14995}

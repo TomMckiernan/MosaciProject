@@ -29,6 +29,7 @@ function createPieChart(myCanvas, data, colours) {
         }
     );
     myPiechart.draw();
+    return myPiechart;
 }
 
 var Piechart = function (options) {
@@ -63,6 +64,5 @@ var Piechart = function (options) {
             start_angle += slice_angle;
             color_index++;
         }
-
     }
 }

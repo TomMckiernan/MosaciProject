@@ -1,7 +1,7 @@
 ﻿can = document.getElementById("canvas");
 var ctxImage = can.getContext("2d");
 var im = new Image();
-var showGrid = true;
+var showGrid = false;
 var container = document.getElementById("image-container");
 var currentSeparation = 10;
 

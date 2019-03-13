@@ -14,6 +14,12 @@ namespace ImageMosaicService
         public double Difference { get; set; }
         public string Path { get; set; }
         private ArrayList _data;
+        public bool InQuadrants { get; set; }
+        public ImageInfo TLInfo { get; set; }
+        public ImageInfo TRInfo { get; set; }
+        public ImageInfo BLInfo { get; set; }
+        public ImageInfo BRInfo { get; set; }
+
         public ArrayList Data
         {
             get
@@ -35,6 +41,21 @@ namespace ImageMosaicService
         public ImageInfo(string filePath)
         {
             this.Path = filePath;
+            InQuadrants = false;
+        }
+
+        // Copies contents of another instance except quadrant info
+        public ImageInfo(ImageInfo other)
+        {
+            AverageTL = other.AverageTL;
+            AverageTR = other.AverageTR;
+            AverageBL = other.AverageBL;
+            AverageBR = other.AverageBR;
+            AverageWhole = other.AverageWhole;
+            Difference = other.Difference;
+            Path = other.Path;
+            _data = other._data;
+            InQuadrants = other.InQuadrants;
         }
     }
 }

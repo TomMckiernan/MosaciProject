@@ -36,9 +36,7 @@ namespace Mosaic.WebUITests.Models
         {
             var id = ObjectId.GenerateNewId().ToString();
             var model = new GenerateMosaicModel();
-
             var projectResponse = new ProjectResponse() { Error = "Error"};
-
             MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
 
             var response = model.Generate(MockMakerClient.Object, id);
@@ -50,9 +48,7 @@ namespace Mosaic.WebUITests.Models
         {
             var id = ObjectId.GenerateNewId().ToString();
             var model = new GenerateMosaicModel();
-
             var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
-
             MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
 
             var response = model.Generate(MockMakerClient.Object, id);
@@ -109,6 +105,38 @@ namespace Mosaic.WebUITests.Models
         }
 
         [TestMethod]
+        public void GenerateReturnErrorIfEdgeDetectionTrueAndThresholdNotValid()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+            MockMakerClient.Setup(x => x.ReadAllImageFiles(It.IsAny<IList<string>>())).Returns(new ImageFileIndexResponse() { });
+            MockMakerClient.Setup(x => x.ReadImageFile(It.IsAny<string>())).Returns(new ImageFileResponse() { });
+
+            var response = model.Generate(MockMakerClient.Object, id, edgeDetection:true, threshold:0);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void GenerateReturnErrorIfEnhancedAndEdgeDetectionBothTrue()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            var response = model.Generate(MockMakerClient.Object, id, enhanced:true, edgeDetection: true, threshold: 0);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
         public void ReadProjectDataSetsAllProjectPropertiesCorrectly()
         {
             var id = ObjectId.GenerateNewId().ToString();
@@ -137,6 +165,68 @@ namespace Mosaic.WebUITests.Models
             model.ReadProjectData(MockMakerClient.Object, id, false);
             Assert.AreEqual(id, model.PartialModel.Item1);
             Assert.AreEqual(model.State, model.PartialModel.Item2);
+        }
+
+        [TestMethod]
+        public void PreviewEdgesReturnsErrorIfIdNullOrEmpty()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+            var response = model.PreviewEdges(MockMakerClient.Object, null, 50);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void PreviewEdgesReturnsErrorIfReadProjectReturnsError()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+            var projectResponse = new ProjectResponse() { Error = "Error" };
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            var response = model.PreviewEdges(MockMakerClient.Object, id, 50);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void PreviewEdgesReturnsErrorIfReadImageFileReturnsError()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+            MockMakerClient.Setup(x => x.ReadImageFile(It.IsAny<string>())).Returns(new ImageFileResponse() { Error = "Error" });
+
+            var response = model.PreviewEdges(MockMakerClient.Object, id, 50);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void PreviewEdgesReturnsErrorIfThresholdIsBelow1()
+        {
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            var response = model.PreviewEdges(MockMakerClient.Object, id, 0);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }   
+
+        [TestMethod]
+        public void PreviewEdgesReturnsErrorIfThresholdIsAbove255()
+        {   
+            var id = ObjectId.GenerateNewId().ToString();
+            var model = new GenerateMosaicModel();
+            var projectResponse = new ProjectResponse() { Project = new ProjectStructure() { Id = id, LargeFileId = ObjectId.GenerateNewId().ToString() } };
+            projectResponse.Project.SmallFileIds.Add("1");
+            MockMakerClient.Setup(x => x.ReadProject(It.Is<string>(y => y.Equals(id)))).Returns(projectResponse);
+
+            var response = model.PreviewEdges(MockMakerClient.Object, id, 256);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
     }
 }

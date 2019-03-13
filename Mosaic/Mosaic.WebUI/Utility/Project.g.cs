@@ -27,17 +27,19 @@ public static partial class ProjectReflection {
           "CRIUCgxTbWFsbEZpbGVJZHMYAiADKAkiUgodUHJvamVjdEluc2VydExhcmdl",
           "RmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEwoLTGFyZ2VGaWxlSWQYAiABKAkS",
           "EAoITG9jYXRpb24YAyABKAkiPgoeUHJvamVjdEluc2VydE1vc2FpY0ZpbGVS",
-          "ZXF1ZXN0EgoKAmlkGAEgASgJEhAKCExvY2F0aW9uGAIgASgJIpsCChBQcm9q",
-          "ZWN0U3RydWN0dXJlEgoKAmlkGAEgASgJEhYKDlRpbWVPZkNyZWF0aW9uGAIg",
-          "ASgJEhMKC0xhcmdlRmlsZUlkGAMgASgJEhQKDFNtYWxsRmlsZUlkcxgEIAMo",
-          "CRIpCghQcm9ncmVzcxgFIAEoDjIXLlByb2plY3RTdHJ1Y3R1cmUuU3RhdGUS",
-          "FgoOTWFzdGVyTG9jYXRpb24YBiABKAkSFgoOTW9zYWljTG9jYXRpb24YByAB",
-          "KAkiXQoFU3RhdGUSCwoHQ1JFQVRFRBAAEg4KClNNQUxMQURERUQQARIOCgpM",
-          "QVJHRUFEREVEEAISDQoJQ09NUExFVEVEEAMSCwoHREVMRVRFRBAEEgsKB1VO",
-          "S05PV04QBSJECg9Qcm9qZWN0UmVzcG9uc2USIgoHUHJvamVjdBgBIAEoCzIR",
-          "LlByb2plY3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkiTQoXUHJvamVjdE11",
-          "bHRpcGxlUmVzcG9uc2USIwoIUHJvamVjdHMYASADKAsyES5Qcm9qZWN0U3Ry",
-          "dWN0dXJlEg0KBUVycm9yGAIgASgJYgZwcm90bzM="));
+          "ZXF1ZXN0EgoKAmlkGAEgASgJEhAKCExvY2F0aW9uGAIgASgJIjwKHFByb2pl",
+          "Y3RJbnNlcnRFZGdlRmlsZVJlcXVlc3QSCgoCaWQYASABKAkSEAoITG9jYXRp",
+          "b24YAiABKAkisQIKEFByb2plY3RTdHJ1Y3R1cmUSCgoCaWQYASABKAkSFgoO",
+          "VGltZU9mQ3JlYXRpb24YAiABKAkSEwoLTGFyZ2VGaWxlSWQYAyABKAkSFAoM",
+          "U21hbGxGaWxlSWRzGAQgAygJEikKCFByb2dyZXNzGAUgASgOMhcuUHJvamVj",
+          "dFN0cnVjdHVyZS5TdGF0ZRIWCg5NYXN0ZXJMb2NhdGlvbhgGIAEoCRIWCg5N",
+          "b3NhaWNMb2NhdGlvbhgHIAEoCRIUCgxFZGdlTG9jYXRpb24YCCABKAkiXQoF",
+          "U3RhdGUSCwoHQ1JFQVRFRBAAEg4KClNNQUxMQURERUQQARIOCgpMQVJHRUFE",
+          "REVEEAISDQoJQ09NUExFVEVEEAMSCwoHREVMRVRFRBAEEgsKB1VOS05PV04Q",
+          "BSJECg9Qcm9qZWN0UmVzcG9uc2USIgoHUHJvamVjdBgBIAEoCzIRLlByb2pl",
+          "Y3RTdHJ1Y3R1cmUSDQoFRXJyb3IYAiABKAkiTQoXUHJvamVjdE11bHRpcGxl",
+          "UmVzcG9uc2USIwoIUHJvamVjdHMYASADKAsyES5Qcm9qZWN0U3RydWN0dXJl",
+          "Eg0KBUVycm9yGAIgASgJYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -45,7 +47,8 @@ public static partial class ProjectReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertSmallFilesRequest), global::ProjectInsertSmallFilesRequest.Parser, new[]{ "Id", "SmallFileIds" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertLargeFileRequest), global::ProjectInsertLargeFileRequest.Parser, new[]{ "Id", "LargeFileId", "Location" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertMosaicFileRequest), global::ProjectInsertMosaicFileRequest.Parser, new[]{ "Id", "Location" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MasterLocation", "MosaicLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectInsertEdgeFileRequest), global::ProjectInsertEdgeFileRequest.Parser, new[]{ "Id", "Location" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProjectStructure), global::ProjectStructure.Parser, new[]{ "Id", "TimeOfCreation", "LargeFileId", "SmallFileIds", "Progress", "MasterLocation", "MosaicLocation", "EdgeLocation" }, null, new[]{ typeof(global::ProjectStructure.Types.State) }, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectResponse), global::ProjectResponse.Parser, new[]{ "Project", "Error" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ProjectMultipleResponse), global::ProjectMultipleResponse.Parser, new[]{ "Projects", "Error" }, null, null, null)
         }));
@@ -674,6 +677,163 @@ public sealed partial class ProjectInsertMosaicFileRequest : pb::IMessage<Projec
 
 }
 
+public sealed partial class ProjectInsertEdgeFileRequest : pb::IMessage<ProjectInsertEdgeFileRequest> {
+  private static readonly pb::MessageParser<ProjectInsertEdgeFileRequest> _parser = new pb::MessageParser<ProjectInsertEdgeFileRequest>(() => new ProjectInsertEdgeFileRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<ProjectInsertEdgeFileRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProjectReflection.Descriptor.MessageTypes[4]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertEdgeFileRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertEdgeFileRequest(ProjectInsertEdgeFileRequest other) : this() {
+    id_ = other.id_;
+    location_ = other.location_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public ProjectInsertEdgeFileRequest Clone() {
+    return new ProjectInsertEdgeFileRequest(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private string id_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Id {
+    get { return id_; }
+    set {
+      id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "Location" field.</summary>
+  public const int LocationFieldNumber = 2;
+  private string location_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Location {
+    get { return location_; }
+    set {
+      location_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as ProjectInsertEdgeFileRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(ProjectInsertEdgeFileRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (Location != other.Location) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id.Length != 0) hash ^= Id.GetHashCode();
+    if (Location.Length != 0) hash ^= Location.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Id);
+    }
+    if (Location.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Location);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+    }
+    if (Location.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Location);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(ProjectInsertEdgeFileRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id.Length != 0) {
+      Id = other.Id;
+    }
+    if (other.Location.Length != 0) {
+      Location = other.Location;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Id = input.ReadString();
+          break;
+        }
+        case 18: {
+          Location = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
   private static readonly pb::MessageParser<ProjectStructure> _parser = new pb::MessageParser<ProjectStructure>(() => new ProjectStructure());
   private pb::UnknownFieldSet _unknownFields;
@@ -682,7 +842,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[4]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -706,6 +866,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     progress_ = other.progress_;
     masterLocation_ = other.masterLocation_;
     mosaicLocation_ = other.mosaicLocation_;
+    edgeLocation_ = other.edgeLocation_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -790,6 +951,17 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
   }
 
+  /// <summary>Field number for the "EdgeLocation" field.</summary>
+  public const int EdgeLocationFieldNumber = 8;
+  private string edgeLocation_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string EdgeLocation {
+    get { return edgeLocation_; }
+    set {
+      edgeLocation_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ProjectStructure);
@@ -810,6 +982,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (Progress != other.Progress) return false;
     if (MasterLocation != other.MasterLocation) return false;
     if (MosaicLocation != other.MosaicLocation) return false;
+    if (EdgeLocation != other.EdgeLocation) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -823,6 +996,7 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     if (Progress != 0) hash ^= Progress.GetHashCode();
     if (MasterLocation.Length != 0) hash ^= MasterLocation.GetHashCode();
     if (MosaicLocation.Length != 0) hash ^= MosaicLocation.GetHashCode();
+    if (EdgeLocation.Length != 0) hash ^= EdgeLocation.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -861,6 +1035,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
       output.WriteRawTag(58);
       output.WriteString(MosaicLocation);
     }
+    if (EdgeLocation.Length != 0) {
+      output.WriteRawTag(66);
+      output.WriteString(EdgeLocation);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -887,6 +1065,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
     if (MosaicLocation.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(MosaicLocation);
+    }
+    if (EdgeLocation.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(EdgeLocation);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -917,6 +1098,9 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
     }
     if (other.MosaicLocation.Length != 0) {
       MosaicLocation = other.MosaicLocation;
+    }
+    if (other.EdgeLocation.Length != 0) {
+      EdgeLocation = other.EdgeLocation;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -957,6 +1141,10 @@ public sealed partial class ProjectStructure : pb::IMessage<ProjectStructure> {
           MosaicLocation = input.ReadString();
           break;
         }
+        case 66: {
+          EdgeLocation = input.ReadString();
+          break;
+        }
       }
     }
   }
@@ -987,7 +1175,7 @@ public sealed partial class ProjectResponse : pb::IMessage<ProjectResponse> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[5]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1150,7 +1338,7 @@ public sealed partial class ProjectMultipleResponse : pb::IMessage<ProjectMultip
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProjectReflection.Descriptor.MessageTypes[6]; }
+    get { return global::ProjectReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

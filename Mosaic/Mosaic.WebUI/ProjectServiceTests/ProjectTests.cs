@@ -35,6 +35,20 @@ namespace ProjectServiceTests
             return service.InsertMosaicFile(insertRequest);
         }
 
+        private ProjectResponse InsertEdgeFileHelper(Project service, string id)
+        {
+            var edges = new List<PixelCoordinates>() { new PixelCoordinates() { X = 0, Y = 0}, new PixelCoordinates() { X = 1, Y = 1 } };
+            var insertRequest = new ProjectInsertEdgeFileRequest() { Id = id, Location = "//EdgeLocation//test.jpg" };
+            return service.InsertEdgeFile(insertRequest);
+        }
+
+        private ProjectResponse InsertEdgeFileHelper2(Project service, string id)
+        {
+            var edges = new List<PixelCoordinates>() { new PixelCoordinates() { X = 5, Y = 5 }};
+            var insertRequest = new ProjectInsertEdgeFileRequest() { Id = id, Location = "//EdgeLocation//test2.jpg" };
+            return service.InsertEdgeFile(insertRequest);
+        }
+
         private ProjectResponse ReadProjectHelper(Project service, string id)
         {
             var request = new ProjectRequest() { Id = id };
@@ -147,7 +161,7 @@ namespace ProjectServiceTests
         }
 
         [TestMethod]
-        public void ReadAllProjectsReturnsAllProjectsIncludingSmallFileIds()
+        public void ReadAllProjectsReturnsAllProjectsNotIncludingSmallFileIds()
         {
             var createResponse1 = service.CreateProject();
             var createResponse2 = service.CreateProject();
@@ -159,8 +173,31 @@ namespace ProjectServiceTests
             var readResponse2 = readAllResponse.Projects.Where(x => x.Id.Equals(insertResponse2.Project.Id)).First();
 
             Assert.AreEqual(2, readAllResponse.Projects.Count);
-            Assert.AreEqual(insertResponse1.Project.SmallFileIds, readResponse1.SmallFileIds);
-            Assert.AreEqual(insertResponse2.Project.SmallFileIds, readResponse2.SmallFileIds);
+            //Assert.AreEqual(insertResponse1.Project.SmallFileIds, readResponse1.SmallFileIds);
+            //Assert.AreEqual(insertResponse2.Project.SmallFileIds, readResponse2.SmallFileIds);
+        }
+
+        [TestMethod]
+        public void InsertEdgeFileInsertsLocationIntoProject()
+        {
+            var createResponse = service.CreateProject();
+            // Insert edge file and edges into project
+            var insertResponse = InsertEdgeFileHelper(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse.Project.EdgeLocation, readResponse.Project.EdgeLocation);
+        }
+
+        [TestMethod]
+        public void InsertEdgeFileUpdateLocationIfOneAlreadyExists()
+        {
+            var createResponse = service.CreateProject();
+            // Insert edge file and edges into project
+            var insertResponse = InsertEdgeFileHelper(service, createResponse.Project.Id);
+            var insertResponse2 = InsertEdgeFileHelper2(service, createResponse.Project.Id);
+            var readResponse = ReadProjectHelper(service, insertResponse.Project.Id);
+
+            Assert.AreEqual(insertResponse2.Project.EdgeLocation, readResponse.Project.EdgeLocation);
         }
 
         [TestCleanup]

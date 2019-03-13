@@ -16,14 +16,16 @@ namespace Mosaic.WebUI.Models
         public int TileImageCount { get; set; }
         public string MasterLocation { get; set; }
         public string MosaicLocation { get; set; }
-        public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
+        public string EdgeLocation { get; set; }
         public string JSMasterLocation { get { return GetJSMasterLocation(); } }
+        public string JSMosaicLocation { get { return GetJSMosaicLocation(); } }
+        public string JSEdgeLocation { get { return GetJSEdgeLocation(); } }
         public ProjectStructure.Types.State State { get; set; }
         public GenerateMosaicColoursModel ColoursModel { get; set; }
         public Tuple<string, ProjectStructure.Types.State> PartialModel {get; set;}
 
         // To bool values are for the purpose of testing
-        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true)
+        public void ReadProjectData(IMakerClient client, string projectId, bool readColours = true, int height = 10, int width = 10)
         {
             var project = ProjectErrorCheck(client, projectId);
             if (String.IsNullOrEmpty(project.Error))
@@ -33,21 +35,28 @@ namespace Mosaic.WebUI.Models
                 State = project.Project.Progress;
                 MasterLocation = project.Project.MasterLocation;
                 MosaicLocation = project.Project.MosaicLocation;
+                EdgeLocation = project.Project.EdgeLocation;
                 PartialModel = new Tuple<string, ProjectStructure.Types.State>(ProjectId, State);
                 if (readColours)
                 {
-                    ColoursModel = new GenerateMosaicColoursModel(client, project);
+                    ColoursModel = GenerateColoursModel(client, project, height, width);
                 }
             }
         }
 
-        public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, bool enhanced = false)
+        public ImageMosaicResponse Generate(IMakerClient client, string id, bool random = false, int tileWidth = 10, int tileHeight = 10, bool colourBlended = false, 
+            bool enhanced = false, bool edgeDetection = false, int threshold = 110)
         {
             // Get project
             var project = ProjectErrorCheck(client, id);
             if (!String.IsNullOrEmpty(project.Error))
             {
                 return new ImageMosaicResponse() { Error = project.Error };
+            }
+
+            if (enhanced && edgeDetection)
+            {
+                return new ImageMosaicResponse() { Error = "Enhance and edge detection are mutually exclusive" };
             }
 
             //  Get all imagefileindexstructure files for the id
@@ -57,12 +66,54 @@ namespace Mosaic.WebUI.Models
             //  Get the image file index structure for the master image
             var masterFileId = project.Project.LargeFileId;
             var masterFile = client.ReadImageFile(masterFileId);
+
             if (!String.IsNullOrEmpty(tileFiles.Error) || !String.IsNullOrEmpty(masterFile.Error))
             {
                 return new ImageMosaicResponse() { Error = "Master or tile images cannot be read" };
             }
 
-            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced);
+            var edges = new List<PixelCoordinates>();
+            // Get the edge coordinates if option set
+            if (edgeDetection)
+            {
+                if (!ThresholdErrorCheck(threshold))
+                {
+                    return new ImageMosaicResponse() { Error = "Threshold must be in valid range" };
+                }
+                edges = client.GetEdgeCoordinates(id, masterFile.File, threshold).Edges.ToList();
+            }
+
+            return client.Generate(id, tileFiles.Files, masterFile.File, random, tileWidth, tileHeight, colourBlended, enhanced, edgeDetection, edges);
+        }
+
+        public EdgeDetectionResponse PreviewEdges(IMakerClient client, string id, int threshold)
+        {
+            // Get project
+            var project = ProjectErrorCheck(client, id);
+            if (!String.IsNullOrEmpty(project.Error))
+            {
+                return new EdgeDetectionResponse() { Error = project.Error };
+            }
+            if (!ThresholdErrorCheck(threshold))
+            {
+                return new EdgeDetectionResponse() { Error = "Threshold must be in valid range" };
+            }
+
+            //  Get the image file index structure for the master image
+            var masterFileId = project.Project.LargeFileId;
+            var masterFile = client.ReadImageFile(masterFileId);
+            if (!String.IsNullOrEmpty(masterFile.Error))
+            {
+                return new EdgeDetectionResponse() { Error = "Master image cannot be read" };
+            }
+
+            return client.PreviewEdges(id, masterFile.File, threshold);
+        }
+
+        public GenerateMosaicColoursModel GenerateColoursModel(IMakerClient client, ProjectResponse project, int height, int width)
+        {
+            var result = new GenerateMosaicColoursModel(client, project, height, width);
+            return result;
         }
 
         //Return project response
@@ -85,6 +136,15 @@ namespace Mosaic.WebUI.Models
             return project;
         }
 
+        private bool ThresholdErrorCheck(int threshold)
+        {
+            if (threshold < 1 || threshold > 255)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private string GetJSMasterLocation()
         {
             return MasterLocation.Replace(@"\", @"\\");
@@ -93,6 +153,11 @@ namespace Mosaic.WebUI.Models
         private string GetJSMosaicLocation()
         {
             return MosaicLocation.Replace(@"\", @"\\");
+        }
+
+        private string GetJSEdgeLocation()
+        {
+            return EdgeLocation.Replace(@"\", @"\\");
         }
     }
 }

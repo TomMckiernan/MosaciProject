@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+import "ImageFileIndex.proto";
+
+message EdgeDetectionRequest {
+    string id                        = 1;
+    ImageFileIndexStructure Master   = 2;
+	int32 threshold                  = 3;
+}
+
+message EdgeDetectionResponse {
+    repeated PixelCoordinates edges  = 1;
+    string location                  = 2;
+	string Error                     = 3;
+}
+
+message PixelCoordinates {
+    int32 x                      = 1;
+	int32 y                      = 2;
+}

@@ -1,5 +1,6 @@
 ﻿syntax = "proto3";
 import "ImageFileIndex.proto";
+import "EdgeDetection.proto";
 
 message ImageMosaicRequest {
     string Id                              = 1;
@@ -10,6 +11,8 @@ message ImageMosaicRequest {
 	int32 tileHeight                       = 6;
 	bool ColourBlended                     = 7;
 	bool Enhanced                          = 8;
+	bool EdgeDetection                     = 9;
+	repeated PixelCoordinates edges        = 10;
 }
 
 message ImageMosaicResponse {

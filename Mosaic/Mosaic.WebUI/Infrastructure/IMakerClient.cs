@@ -31,10 +31,17 @@ namespace Infrastructure
 
         ProjectResponse InsertMosaicFile(string id, string mosaicLocation);
 
+        ProjectResponse InsertEdgeFile(string id, string edgeLocation);
+
         ProjectResponse DeleteProject(string id);
 
-        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced);
+        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced, bool edgeDetection, List<PixelCoordinates> edges);
 
-        MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file);
+        MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width);
+
+        EdgeDetectionResponse PreviewEdges(string id, ImageFileIndexStructure master, int threshold);
+
+        EdgeDetectionResponse GetEdgeCoordinates(string id, ImageFileIndexStructure master, int threshold);
+
     }
 }

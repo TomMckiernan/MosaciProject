@@ -94,5 +94,21 @@ namespace ProjectServiceTests
             var response = new MongoProject().Delete(MockMongoDatabase.Object, request);
             Assert.IsFalse(String.IsNullOrEmpty(response.Error));
         }
+
+        [TestMethod]
+        public void InsertEdgeFileReturnsErrorIfIdEmpty()
+        {
+            var request = new ProjectInsertEdgeFileRequest() { Id = String.Empty };
+            var response = new MongoProject().InsertEdgeFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
+
+        [TestMethod]
+        public void InsertEdgeFileReturnsErrorIfNullEdgeLocation()
+        {
+            var request = new ProjectInsertEdgeFileRequest() { Id = ObjectId.GenerateNewId().ToString() };
+            var response = new MongoProject().InsertEdgeFile(MockMongoDatabase.Object, request);
+            Assert.IsFalse(String.IsNullOrEmpty(response.Error));
+        }
     }
 }
