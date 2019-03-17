@@ -35,7 +35,7 @@ namespace Infrastructure
 
         ProjectResponse DeleteProject(string id);
 
-        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced, bool edgeDetection, List<PixelCoordinates> edges);
+        ImageMosaicResponse Generate(string id, IList<ImageFileIndexStructure> tiles, ImageFileIndexStructure master, bool random, int width, int height, bool colourBlended, bool enhanced, int enhancedThreshold, bool edgeDetection, List<PixelCoordinates> edges);
 
         MasterImageColourResponse ReadMasterFileColours(ImageFileIndexStructure file, int height, int width);
 

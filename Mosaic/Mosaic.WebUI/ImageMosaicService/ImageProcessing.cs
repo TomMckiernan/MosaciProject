@@ -169,7 +169,7 @@ namespace ImageMosaicService
         }
 
         public Mosaic Render(Bitmap img, MosaicTileColour[,] colorMap, List<ImageInfo> imageInfos, bool random = false, bool 
-            colourBlended = false, bool enhanced = false, bool edgeDetection = false, List<PixelCoordinates> edges = null)
+            colourBlended = false, bool enhanced = false, int enhancedThreshold = 50, bool edgeDetection = false, List<PixelCoordinates> edges = null)
         {
             this.library = imageInfos;
             var newImg = new Bitmap(colorMap.GetLength(0) * tileSize.Width, colorMap.GetLength(1) * tileSize.Height);
@@ -201,7 +201,7 @@ namespace ImageMosaicService
             }
 
             // Get the threshold to spilt the tiles at
-            var threshold = imageSq.GetAverage();
+            var threshold = imageSq.GetAverage(enhancedThreshold);
 
             //// Recalculate the items in imageSq
             if (enhanced || edgeDetection)
